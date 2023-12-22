@@ -1,7 +1,7 @@
 package agh.ics.oop;
 
 import project.backend.OptionsParser;
-import project.backend.model.enums.MoveDirection;
+import agh.ics.oop.model.MoveDirection;
 
 import org.junit.jupiter.api.Test;
 

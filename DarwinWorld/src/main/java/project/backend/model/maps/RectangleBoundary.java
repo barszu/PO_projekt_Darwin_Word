@@ -1,8 +1,8 @@
-package project.backend.model;
+package project.backend.model.maps;
 
 import project.backend.model.models.Vector2d;
 
-public record Boundary(Vector2d lowerLeft , Vector2d upperRight) {
+public record RectangleBoundary(Vector2d lowerLeft , Vector2d upperRight) {
     // for toString map visualization
     //all getters and setters inside
     public int height() {

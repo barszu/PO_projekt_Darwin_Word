@@ -1,7 +1,7 @@
 package project.backend.model.observers;
 
-import project.backend.model.maps.WorldMap;
+import project.backend.model.maps.WorldMapable;
 
 public interface MapChangeListener {
-    void mapChanged(WorldMap worldMap, String message);
+    void mapChanged(WorldMapable worldMapable, String message);
 }

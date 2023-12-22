@@ -1,4 +1,4 @@
-package project.backend.model.enums;
+package agh.ics.oop.model;
 
 public enum MoveDirection {
     FORWARD,

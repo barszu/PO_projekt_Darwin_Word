@@ -1,6 +1,8 @@
-package project.backend.model.models;
+package project.backend.model.sprites;
 
-public class Grass implements WorldElement{
+import project.backend.model.models.Vector2d;
+
+public class Grass implements WorldElementable {
 
     private final Vector2d position;
 

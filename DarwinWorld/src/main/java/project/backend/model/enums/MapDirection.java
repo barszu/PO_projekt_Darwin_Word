@@ -3,46 +3,62 @@ package project.backend.model.enums;
 import project.backend.model.models.Vector2d;
 
 public enum MapDirection {
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST;
+    NORTH(0),
+    NORTH_EAST(1),
+    EAST(2),
+    SOUTH_EAST(3),
+    SOUTH(4),
+    SOUTH_WEST(5),
+    WEST(6),
+    NORTH_WEST(7);
+    private final int id; //starting from 0
+
+    private MapDirection(int id) {
+        this.id = id;
+    }
 
     public String toString(){
         return switch(this) {
-            case NORTH -> "N";
-            case SOUTH -> "S";
-            case EAST -> "E";
-            case WEST -> "W";
+            case NORTH      -> "N ";
+            case NORTH_EAST -> "NE";
+            case EAST       -> "E ";
+            case SOUTH_EAST -> "SE";
+            case SOUTH      -> "S ";
+            case SOUTH_WEST -> "SW";
+            case WEST       -> "W ";
+            case NORTH_WEST -> "NW";
         };
+    }
+
+    public static MapDirection getById(int id) {
+        for (MapDirection direction : values()) {
+            if (direction.id == id) {
+                return direction;
+            }
+        }
+        throw new IllegalArgumentException("Invalid direction id: " + id);
     }
 
     public MapDirection next(){
-        return switch (this){
-            case NORTH -> EAST;
-            case EAST -> SOUTH;
-            case SOUTH -> WEST;
-            case WEST -> NORTH;
-        };
+        return getById((this.id + 1)%8);
     }
 
     public MapDirection previous(){
-        return switch (this){
-            case NORTH -> WEST;
-            case WEST -> SOUTH;
-            case SOUTH -> EAST;
-            case EAST -> NORTH;
-        };
+        int newId = this.id - 1;
+        if (newId < 0) { newId += 8;}
+        return getById(Math.abs(newId));
     }
 
     public Vector2d toUnitVector() {
-        int x=0, y=0;
-        switch (this) {
-            case NORTH -> { x = 0; y = 1; }
-            case EAST -> { x = 1; y = 0; }
-            case WEST -> { x = -1; y = 0; }
-            case SOUTH -> { x = 0; y = -1; }
-        }
-        return new Vector2d(x, y);
+        return switch (this) {
+            case NORTH      -> new Vector2d(0, 1);
+            case NORTH_EAST -> new Vector2d(1, 1);
+            case EAST       -> new Vector2d(1, 0);
+            case SOUTH_EAST -> new Vector2d(1, -1);
+            case SOUTH      -> new Vector2d(0, -1);
+            case SOUTH_WEST -> new Vector2d(-1, -1);
+            case WEST       -> new Vector2d(-1, 0);
+            case NORTH_WEST -> new Vector2d(-1, 1);
+        };
     };
 }

@@ -1,14 +1,13 @@
 package project.backend.model.maps;
 
-import project.backend.model.Boundary;
-import project.backend.model.models.Grass;
+import project.backend.model.sprites.Grass;
 import project.backend.model.models.Vector2d;
-import project.backend.model.models.WorldElement;
+import project.backend.model.sprites.WorldElementable;
 import agh.ics.oop.my_package.RandomPositionGenerator;
 
 import java.util.*;
 
-public class GrassField extends AbstractWorldMap{
+public class GrassField extends AbstractWorldMap {
 
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
 
@@ -31,8 +30,8 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) { //as animal or grass
-        WorldElement animal = super.objectAt(position);
+    public WorldElementable objectAt(Vector2d position) { //as animal or grass
+        WorldElementable animal = super.objectAt(position);
         if (animal != null){
             return animal;
         }
@@ -48,8 +47,8 @@ public class GrassField extends AbstractWorldMap{
     }
 
 //    @Override
-    public Boundary getCurrentBounds(){ //only for GrassField
-        ArrayList<WorldElement> worldElementsList = new ArrayList<>(getElements());
+    public RectangleBoundary getCurrentBounds(){ //only for GrassField
+        ArrayList<WorldElementable> worldElementsList = new ArrayList<>(getElements());
 
         if (worldElementsList.isEmpty()){
             return null;
@@ -58,17 +57,17 @@ public class GrassField extends AbstractWorldMap{
         Vector2d mostLowerLeftPoint = worldElementsList.get(0).getPosition(); // "min"
         Vector2d mostUpperRightPoint = worldElementsList.get(0).getPosition(); // "max"
 
-        for (WorldElement worldElement : worldElementsList) {
-            Vector2d currentPos = worldElement.getPosition();
+        for (WorldElementable worldElementable : worldElementsList) {
+            Vector2d currentPos = worldElementable.getPosition();
             mostUpperRightPoint = currentPos.upperRight(mostUpperRightPoint) ; // for "max"
             mostLowerLeftPoint = currentPos.lowerLeft(mostLowerLeftPoint) ; // for "min"
         }
-        return new Boundary(mostLowerLeftPoint , mostUpperRightPoint);
+        return new RectangleBoundary(mostLowerLeftPoint , mostUpperRightPoint);
     }
 
     @Override
-    public Collection<WorldElement> getElements() {
-        Collection<WorldElement> elements = super.getElements();
+    public Collection<WorldElementable> getElements() {
+        Collection<WorldElementable> elements = super.getElements();
         elements.addAll(grasses.values());
         return elements;
     }

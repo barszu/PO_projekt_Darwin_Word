@@ -3,8 +3,8 @@ package agh.ics.oop.presenter;
 import project.backend.OptionsParser;
 import project.backend.Simulation;
 import project.backend.SimulationEngine;
-import project.backend.model.maps.WorldMap;
-import project.backend.model.enums.MoveDirection;
+import project.backend.model.maps.WorldMapable;
+import agh.ics.oop.model.MoveDirection;
 import project.backend.model.models.Vector2d;
 import project.backend.model.observers.MapChangeListener;
 import project.backend.model.util.GridMapDrawer;
@@ -21,11 +21,11 @@ import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
 
-    private WorldMap worldMap;
+    private WorldMapable worldMapable;
     private GridMapDrawer gridMapDrawer;
 
-    public void setWorldMap(WorldMap worldMap) {
-        this.worldMap = worldMap;
+    public void setWorldMap(WorldMapable worldMapable) {
+        this.worldMapable = worldMapable;
     }
 
     public void setGridMapDrawer(GridMapDrawer gridMapDrawer) {
@@ -45,11 +45,11 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     public void drawMap() { //setter for infoLabel?
         System.out.println("drawMap w SimulationPresenter zadzialalo");
-        infoLabel.setText(worldMap.toString());
+        infoLabel.setText(worldMapable.toString());
     }
 
     @Override
-    public void mapChanged(WorldMap worldMap, String message) {
+    public void mapChanged(WorldMapable worldMapable, String message) {
         Platform.runLater(() -> {
 //            drawMap();
             moveInfoLabel.setText(message);
@@ -68,9 +68,9 @@ public class SimulationPresenter implements MapChangeListener {
         List<MoveDirection> movesList = OptionsParser.parse(args);
 
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2) , new Vector2d(20,20));
-        Simulation simulation = new Simulation(movesList, positionsList, worldMap);
+        Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
-        setGridMapDrawer(new GridMapDrawer(mapGrid, worldMap));
+        setGridMapDrawer(new GridMapDrawer(mapGrid, worldMapable));
 
         SimulationEngine simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation)));
 //        simulationEngine.runAsyncInThreadPool();

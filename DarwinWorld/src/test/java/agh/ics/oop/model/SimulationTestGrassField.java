@@ -3,10 +3,9 @@ package agh.ics.oop.model;
 import project.backend.OptionsParser;
 import project.backend.Simulation;
 import project.backend.model.maps.GrassField;
-import project.backend.model.maps.WorldMap;
-import project.backend.model.models.Animal;
+import project.backend.model.maps.WorldMapable;
+import project.backend.model.sprites.Animal;
 import project.backend.model.enums.MapDirection;
-import project.backend.model.enums.MoveDirection;
 import project.backend.model.models.Vector2d;
 import org.junit.jupiter.api.Test;
 
@@ -22,13 +21,13 @@ class SimulationTestGrassField {
         String[] args = {"f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2),new Vector2d(10, 0) , new Vector2d(5,5));
-        WorldMap worldMap = new GrassField(10);
+        WorldMapable worldMapable = new GrassField(10);
 
-        Simulation simulation = new Simulation(movesList, positionsList, worldMap);
+        Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
         simulation.run(); //working as void on animals list
 
-        assertTrue(worldMap.toString().contains("*"));
+        assertTrue(worldMapable.toString().contains("*"));
 
         Animal animal1 = simulation.getAnimalsList().get(0);
         Animal animal2 = simulation.getAnimalsList().get(1);
@@ -51,9 +50,9 @@ class SimulationTestGrassField {
         String[] args = {"f","f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2),new Vector2d(2, 2));
-        WorldMap worldMap = new GrassField(12);
+        WorldMapable worldMapable = new GrassField(12);
 
-        Simulation simulation = new Simulation(movesList, positionsList, worldMap);
+        Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
         simulation.run(); //working as void on animals list
 
@@ -74,9 +73,9 @@ class SimulationTestGrassField {
         String[] args = {"f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2) , new Vector2d(20,20));
-        WorldMap worldMap = new GrassField(20);
+        WorldMapable worldMapable = new GrassField(20);
 
-        Simulation simulation = new Simulation(movesList, positionsList, worldMap);
+        Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
         simulation.run(); //working as void on animals list
 
@@ -96,14 +95,14 @@ class SimulationTestGrassField {
         String[] args = {"f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of();
-        WorldMap worldMap = new GrassField(20);
+        WorldMapable worldMapable = new GrassField(20);
 
-        Simulation simulation = new Simulation(movesList, positionsList, worldMap);
+        Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
         simulation.run(); //working as void on animals list
 
         assertEquals(simulation.getAnimalsList().size() , 0);
-        assertNotEquals(worldMap.toString() , "");
+        assertNotEquals(worldMapable.toString() , "");
     }
 
     @Test
@@ -112,13 +111,13 @@ class SimulationTestGrassField {
         String[] args = {"f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2) , new Vector2d(20,20));
-        WorldMap worldMap = new GrassField(20);
+        WorldMapable worldMapable = new GrassField(20);
 
-        Simulation simulation = new Simulation(movesList, positionsList, worldMap);
+        Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
         simulation.run(); //working as void on animals list
 
-        assertTrue(worldMap.getElements().size() == 22);
+        assertTrue(worldMapable.getElements().size() == 22);
     }
 
 }

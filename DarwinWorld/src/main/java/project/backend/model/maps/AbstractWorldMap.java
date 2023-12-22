@@ -1,17 +1,16 @@
 package project.backend.model.maps;
 
-import project.backend.model.Boundary;
 import project.backend.model.exceptions.PositionAlreadyOccupiedException;
 import project.backend.model.observers.MapChangeListener;
-import project.backend.model.models.Animal;
-import project.backend.model.enums.MoveDirection;
+import project.backend.model.sprites.Animal;
+import agh.ics.oop.model.MoveDirection;
 import project.backend.model.models.Vector2d;
-import project.backend.model.models.WorldElement;
+import project.backend.model.sprites.WorldElementable;
 import project.backend.model.util.MapVisualizer;
 
 import java.util.*;
 
-abstract class AbstractWorldMap implements WorldMap{
+abstract class AbstractWorldMap implements WorldMapable {
 
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer mapVis = new MapVisualizer(this);
@@ -70,7 +69,7 @@ abstract class AbstractWorldMap implements WorldMap{
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position){
+    public WorldElementable objectAt(Vector2d position){
         if (animals.containsKey(position)){ //by animal
             return animals.get(position);
         }
@@ -78,20 +77,20 @@ abstract class AbstractWorldMap implements WorldMap{
     }
 
     @Override
-    public Collection<WorldElement> getElements(){
+    public Collection<WorldElementable> getElements(){
         return new ArrayList<>(animals.values());
     }
 
     @Override
-    public abstract Boundary getCurrentBounds();
+    public abstract RectangleBoundary getCurrentBounds();
 
     @Override
     public String toString() {
-        Boundary mapBoundaryRepr = getCurrentBounds();
-        if (mapBoundaryRepr == null){ //some __repr__
+        RectangleBoundary mapRectangleBoundaryRepr = getCurrentBounds();
+        if (mapRectangleBoundaryRepr == null){ //some __repr__
             return mapVis.draw(new Vector2d(0,0),new Vector2d(1,1));
         }
-        return mapVis.draw(mapBoundaryRepr.lowerLeft() , mapBoundaryRepr.upperRight() );
+        return mapVis.draw(mapRectangleBoundaryRepr.lowerLeft() , mapRectangleBoundaryRepr.upperRight() );
     }
 
     // observers section

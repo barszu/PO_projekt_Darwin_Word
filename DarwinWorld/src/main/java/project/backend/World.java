@@ -4,7 +4,7 @@ import project.backend.model.maps.GrassField;
 import project.backend.model.maps.RectangularMap;
 import project.backend.model.observers.ConsoleMapDisplay;
 import project.backend.model.models.Vector2d;
-import project.backend.model.enums.MoveDirection;
+import agh.ics.oop.model.MoveDirection;
 
 import java.util.ArrayList;
 import java.util.List;

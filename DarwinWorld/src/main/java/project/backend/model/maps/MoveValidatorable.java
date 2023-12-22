@@ -1,8 +1,8 @@
-package project.backend.model;
+package project.backend.model.maps;
 
 import project.backend.model.models.Vector2d;
 
-public interface MoveValidator {
+public interface MoveValidatorable {
 
     /**
      * Indicate if any object can move to the given position.

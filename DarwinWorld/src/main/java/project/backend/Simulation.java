@@ -1,10 +1,10 @@
 package project.backend;
 
 //import agh.ics.oop.model.*;
-import project.backend.model.maps.WorldMap;
+import project.backend.model.maps.WorldMapable;
 import project.backend.model.exceptions.PositionAlreadyOccupiedException;
-import project.backend.model.models.Animal;
-import project.backend.model.enums.MoveDirection;
+import project.backend.model.sprites.Animal;
+import agh.ics.oop.model.MoveDirection;
 import project.backend.model.models.Vector2d;
 
 import java.util.ArrayList;
@@ -20,19 +20,19 @@ public class Simulation extends Thread {
 
     private final List<Animal> animalsList; //animals in the simulation
 
-    private final WorldMap worldMap;
+    private final WorldMapable worldMapable;
 
     //for rectangular map
-    public Simulation(List<MoveDirection> directionsList , List<Vector2d> positionsList , WorldMap worldMap ){
+    public Simulation(List<MoveDirection> directionsList , List<Vector2d> positionsList , WorldMapable worldMapable){
         this.directionsList = directionsList; //as link list
         this.animalsList = new ArrayList<>(); //as normal list because we will pick el from the middle
-        this.worldMap = worldMap;
+        this.worldMapable = worldMapable;
 
 
         for (Vector2d position: positionsList){
             Animal animal = new Animal(position);
             try {
-                worldMap.place(animal);
+                worldMapable.place(animal);
                 animalsList.add(animal);
             } catch (PositionAlreadyOccupiedException e) {
                 //nothing to do
@@ -50,7 +50,7 @@ public class Simulation extends Thread {
             // animal on animalIdx gets moved
             Animal animal = this.animalsList.get(animalIdx);
 //            animal.move(direction);
-            this.worldMap.move(animal,direction);
+            this.worldMapable.move(animal,direction);
 //            System.out.print(this.worldMap.toString());
 
 //            System.out.println("Zwierze %d: %s".formatted(animalIdx , animal.toString() ));

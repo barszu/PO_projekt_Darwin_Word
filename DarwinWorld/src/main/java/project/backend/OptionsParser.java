@@ -1,6 +1,6 @@
 package project.backend;
 
-import project.backend.model.enums.MoveDirection;
+import agh.ics.oop.model.MoveDirection;
 
 
 import java.util.LinkedList;

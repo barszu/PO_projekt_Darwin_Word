@@ -1,13 +1,11 @@
 package project.backend.model.maps;
 
-import project.backend.model.Boundary;
-import project.backend.model.MoveValidator;
-import project.backend.model.models.Animal;
-import project.backend.model.enums.MoveDirection;
+import project.backend.model.sprites.Animal;
+import agh.ics.oop.model.MoveDirection;
 import project.backend.model.models.Vector2d;
 import project.backend.model.exceptions.PositionAlreadyOccupiedException;
 import project.backend.model.observers.MapChangeListener;
-import project.backend.model.models.WorldElement;
+import project.backend.model.sprites.WorldElementable;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -18,7 +16,7 @@ import java.util.UUID;
  *
  * @author apohllo, idzik
  */
-public interface WorldMap extends MoveValidator {
+public interface WorldMapable extends MoveValidatorable {
     /**
      * Place a animal on the map.
      *
@@ -50,14 +48,14 @@ public interface WorldMap extends MoveValidator {
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
-    WorldElement objectAt(Vector2d position);
+    WorldElementable objectAt(Vector2d position);
 //    WorldElement objectAt(P position);
     @Override
     String toString();
 
-    Collection<WorldElement> getElements();
+    Collection<WorldElementable> getElements();
 
-    Boundary getCurrentBounds();
+    RectangleBoundary getCurrentBounds();
 
     //observers
     void addObserver(MapChangeListener observer);

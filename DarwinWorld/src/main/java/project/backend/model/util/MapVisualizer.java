@@ -1,10 +1,10 @@
 package project.backend.model.util;
 
 import project.backend.model.models.Vector2d;
-import project.backend.model.maps.WorldMap;
+import project.backend.model.maps.WorldMapable;
 
 /**
- * The map visualizer converts the {@link WorldMap} map into a string
+ * The map visualizer converts the {@link WorldMapable} map into a string
  * representation.
  *
  * @author apohllo, idzik
@@ -13,14 +13,14 @@ public class MapVisualizer {
     private static final String EMPTY_CELL = " ";
     private static final String FRAME_SEGMENT = "-";
     private static final String CELL_SEGMENT = "|";
-    private final WorldMap map;
+    private final WorldMapable map;
 
     /**
      * Initializes the MapVisualizer with an instance of map to visualize.
      *
      * @param map
      */
-    public MapVisualizer(WorldMap map) {
+    public MapVisualizer(WorldMapable map) {
         this.map = map;
     }
 

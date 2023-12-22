@@ -4,9 +4,8 @@ import project.backend.OptionsParser;
 import project.backend.Simulation;
 
 import project.backend.model.maps.RectangularMap;
-import project.backend.model.models.Animal;
+import project.backend.model.sprites.Animal;
 import project.backend.model.enums.MapDirection;
-import project.backend.model.enums.MoveDirection;
 import project.backend.model.models.Vector2d;
 import org.junit.jupiter.api.Test;
 

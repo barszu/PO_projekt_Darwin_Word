@@ -1,9 +1,9 @@
 package project.backend.model.util;
 
-import project.backend.model.Boundary;
-import project.backend.model.maps.WorldMap;
+import project.backend.model.maps.RectangleBoundary;
+import project.backend.model.maps.WorldMapable;
 import project.backend.model.models.Vector2d;
-import project.backend.model.models.WorldElement;
+import project.backend.model.sprites.WorldElementable;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
@@ -15,13 +15,13 @@ public class GridMapDrawer {
     private static final int CELL_HEIGHT = 20;
 
     private final GridPane mapGrid;
-    private final WorldMap map;
+    private final WorldMapable map;
 
-    private Boundary boundary;
+    private RectangleBoundary rectangleBoundary;
     public void updateBoundary() {
-        this.boundary = map.getCurrentBounds();
+        this.rectangleBoundary = map.getCurrentBounds();
     }
-    public GridMapDrawer(GridPane mapGrid, WorldMap map) {
+    public GridMapDrawer(GridPane mapGrid, WorldMapable map) {
         this.mapGrid = mapGrid;
         this.map = map;
     }
@@ -43,8 +43,8 @@ public class GridMapDrawer {
     }
 
     private void setCellsSizes() {
-        int gridHeight = boundary.height() + 1;
-        int gridWidth = boundary.width() + 1;
+        int gridHeight = rectangleBoundary.height() + 1;
+        int gridWidth = rectangleBoundary.width() + 1;
         for (int i = 0; i < gridHeight; i++) {
             mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
         }
@@ -56,22 +56,22 @@ public class GridMapDrawer {
 
     private void drawAxis() {
         addToMapGrid("y/x", 0, 0);
-        for (int x = boundary.lowerLeft().getX(); x <= boundary.upperRight().getX(); x++) {
-            addToMapGrid(Integer.toString(x), 1-boundary.lowerLeft().getX() + x, 0);
+        for (int x = rectangleBoundary.lowerLeft().getX(); x <= rectangleBoundary.upperRight().getX(); x++) {
+            addToMapGrid(Integer.toString(x), 1- rectangleBoundary.lowerLeft().getX() + x, 0);
         }
-        for (int y = boundary.upperRight().getY(); y >= boundary.lowerLeft().getY(); y--) {
-            addToMapGrid(Integer.toString(y), 0, boundary.upperRight().getY() - y + 1);
+        for (int y = rectangleBoundary.upperRight().getY(); y >= rectangleBoundary.lowerLeft().getY(); y--) {
+            addToMapGrid(Integer.toString(y), 0, rectangleBoundary.upperRight().getY() - y + 1);
         }
     }
 
     private void drawAllWorldElements() {
-        for (int x = boundary.lowerLeft().getX(); x <= boundary.upperRight().getX(); x++) {
-            for (int y = boundary.lowerLeft().getY(); y <= boundary.upperRight().getY(); y++) {
-                WorldElement element = map.objectAt(new Vector2d(x, y));
+        for (int x = rectangleBoundary.lowerLeft().getX(); x <= rectangleBoundary.upperRight().getX(); x++) {
+            for (int y = rectangleBoundary.lowerLeft().getY(); y <= rectangleBoundary.upperRight().getY(); y++) {
+                WorldElementable element = map.objectAt(new Vector2d(x, y));
                 String labelText = element != null ? element.toString() : "";
                 addToMapGrid(labelText,
-                        1 - boundary.lowerLeft().getX() + x,
-                        1 + boundary.upperRight().getY() -  y
+                        1 - rectangleBoundary.lowerLeft().getX() + x,
+                        1 + rectangleBoundary.upperRight().getY() -  y
                 );
             }
         }

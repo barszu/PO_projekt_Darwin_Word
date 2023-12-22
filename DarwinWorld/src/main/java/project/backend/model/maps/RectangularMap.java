@@ -1,12 +1,11 @@
 package project.backend.model.maps;
 
-import project.backend.model.Boundary;
 import project.backend.model.models.Vector2d;
 import agh.ics.oop.my_package.Rectangle;
 
 import java.util.UUID;
 
-public class RectangularMap extends AbstractWorldMap{
+public class RectangularMap extends AbstractWorldMap {
     private final Rectangle rectangleBox;
     private final int width;
     private final int height;
@@ -28,8 +27,8 @@ public class RectangularMap extends AbstractWorldMap{
     }
 
     @Override
-    public Boundary getCurrentBounds(){
-        return new Boundary(new Vector2d(0,0),new Vector2d(width,height));
+    public RectangleBoundary getCurrentBounds(){
+        return new RectangleBoundary(new Vector2d(0,0),new Vector2d(width,height));
     }
 
 
