@@ -1,7 +1,7 @@
-package project.backend.model.util;
+package agh.ics.oop.util;
 
-import project.backend.model.maps.RectangleBoundary;
-import project.backend.model.maps.WorldMapable;
+import project.backend.model.maps.mapsUtil.RectangleBoundary;
+import agh.ics.oop.model.WorldMap_able;
 import project.backend.model.models.Vector2d;
 import project.backend.model.sprites.WorldElementable;
 import javafx.geometry.HPos;
@@ -15,13 +15,13 @@ public class GridMapDrawer {
     private static final int CELL_HEIGHT = 20;
 
     private final GridPane mapGrid;
-    private final WorldMapable map;
+    private final WorldMap_able map;
 
     private RectangleBoundary rectangleBoundary;
     public void updateBoundary() {
         this.rectangleBoundary = map.getCurrentBounds();
     }
-    public GridMapDrawer(GridPane mapGrid, WorldMapable map) {
+    public GridMapDrawer(GridPane mapGrid, WorldMap_able map) {
         this.mapGrid = mapGrid;
         this.map = map;
     }

@@ -1,11 +1,9 @@
 package project.backend.model.sprites;
 import project.backend.global.GlobalOptions;
 import project.backend.global.GlobalVariables;
-import project.backend.model.maps.RectangleBoundary;
+import project.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.model.maps.MoveValidatorable;
 import project.backend.model.enums.MapDirection;
-import agh.ics.oop.model.MoveDirection;
-import project.backend.model.exceptions.PositionAlreadyOccupiedException;
 import project.backend.model.models.CyclicListExtras;
 import project.backend.model.models.Random;
 import project.backend.model.models.Vector2d;
@@ -168,31 +166,11 @@ public class Animal implements WorldElementable , Comparable<Animal> {
         this.eatenGrassNo++;
     }
 
-
-    //old
-    @Deprecated
-    public void move(MoveDirection direction, MoveValidatorable moveValidatorable) throws PositionAlreadyOccupiedException {
-        Vector2d newPosition = this.position;
-        switch (direction){
-            //changing direction by rotation
-            case RIGHT -> this.direction = this.direction.next();
-            case LEFT -> this.direction = this.direction.previous();
-            //changing position, go forward/backward with no rotation
-            case FORWARD -> newPosition = this.position.add(this.direction.toUnitVector());
-            case BACKWARD -> newPosition = this.position.subtract(this.direction.toUnitVector());
-        }
-        if (moveValidatorable.canMoveTo(newPosition)){
-            this.position = newPosition;
-        }
-        else {
-            throw new PositionAlreadyOccupiedException(newPosition);
-            // without changing position!
-        }
-    }
-
     //new, nie obsluguje dziwnego teleportowania na koniec mapy!
     //TODO: implement this!
-    public void move(MoveValidatorable moveValidatorable) throws PositionAlreadyOccupiedException{
+    public void move(MoveValidatorable moveValidatorable){
+        //TODO: zrobic tak ze zwierze zglasza mapie chec wejscia na pole (x,y) a mapa zwraca pole na ktoro powinno przejsc
+
         if (isDead){
             throw new IllegalStateException("Animal is dead! Cannot move!");
         }
@@ -201,13 +179,13 @@ public class Animal implements WorldElementable , Comparable<Animal> {
         this.currentGenotypeIndex = CyclicListExtras.getIncrementedIdx(currentGenotypeIndex , genotype.length);
 
         Vector2d newPosition = this.position.add(this.direction.toUnitVector());
-        if (moveValidatorable.canMoveTo(newPosition)){ //do zmiany problem to te zawiajane mapy
-            this.position = newPosition;
-        }
-        else {
-            throw new PositionAlreadyOccupiedException(newPosition);
+//        if (moveValidatorable.canMoveTo(newPosition)){ //do zmiany problem to te zawiajane mapy
+//            this.position = newPosition;
+//        }
+//        else {
+//            throw new PositionAlreadyOccupiedException(newPosition);
             // without changing position!
-        }
+//        }
     }
 
     //TODO: implement this arguments!!!

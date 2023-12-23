@@ -3,7 +3,6 @@ package agh.ics.oop.model;
 import project.backend.OptionsParser;
 import agh.ics.oop.Simulation;
 
-import project.backend.model.maps.RectangularMap;
 import project.backend.model.sprites.Animal;
 import project.backend.model.enums.MapDirection;
 import project.backend.model.models.Vector2d;

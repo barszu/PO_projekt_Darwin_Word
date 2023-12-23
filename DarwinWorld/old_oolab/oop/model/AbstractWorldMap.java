@@ -1,16 +1,16 @@
-package project.backend.model.maps;
+package agh.ics.oop.model;
 
-import project.backend.model.exceptions.PositionAlreadyOccupiedException;
-import project.backend.model.observers.MapChangeListener;
+import agh.ics.oop.exceptions.PositionAlreadyOccupiedException;
+import project.backend.model.maps.mapsUtil.RectangleBoundary;
+import agh.ics.oop.observers.MapChangeListener;
 import project.backend.model.sprites.Animal;
-import agh.ics.oop.model.MoveDirection;
 import project.backend.model.models.Vector2d;
 import project.backend.model.sprites.WorldElementable;
-import project.backend.model.util.MapVisualizer;
+import agh.ics.oop.util.MapVisualizer;
 
 import java.util.*;
 
-abstract class AbstractWorldMap implements WorldMapable {
+abstract class AbstractWorldMap implements WorldMap_able {
 
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer mapVis = new MapVisualizer(this);

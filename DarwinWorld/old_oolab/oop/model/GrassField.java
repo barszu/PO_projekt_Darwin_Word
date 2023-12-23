@@ -1,5 +1,6 @@
-package project.backend.model.maps;
+package agh.ics.oop.model;
 
+import project.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.model.sprites.Grass;
 import project.backend.model.models.Vector2d;
 import project.backend.model.sprites.WorldElementable;

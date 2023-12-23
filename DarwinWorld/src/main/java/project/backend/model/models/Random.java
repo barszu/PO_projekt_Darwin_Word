@@ -1,6 +1,6 @@
 package project.backend.model.models;
 
-import project.backend.model.maps.RectangleBoundary;
+import project.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.model.enums.MapDirection;
 
 public class Random {

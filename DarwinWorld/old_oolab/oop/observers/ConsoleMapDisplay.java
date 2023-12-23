@@ -1,13 +1,13 @@
-package project.backend.model.observers;
+package agh.ics.oop.observers;
 
-import project.backend.model.maps.WorldMapable;
+import agh.ics.oop.model.WorldMap_able;
 
 public class ConsoleMapDisplay implements MapChangeListener {
 
     private int updateCounter = 0;
 
     @Override
-    public synchronized void mapChanged(WorldMapable worldMapable, String message) {
+    public synchronized void mapChanged(WorldMap_able worldMapable, String message) {
 
         System.out.println(message);
         System.out.println("UUID: " + worldMapable.getId());

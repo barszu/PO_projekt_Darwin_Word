@@ -1,5 +1,6 @@
-package project.backend.model.maps;
+package agh.ics.oop.model;
 
+import project.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.model.models.Vector2d;
 import agh.ics.oop.my_package.Rectangle;
 

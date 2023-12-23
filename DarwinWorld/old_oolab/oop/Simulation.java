@@ -1,8 +1,8 @@
 package agh.ics.oop;
 
 //import agh.ics.oop.model.*;
-import project.backend.model.maps.WorldMapable;
-import project.backend.model.exceptions.PositionAlreadyOccupiedException;
+import agh.ics.oop.model.WorldMap_able;
+import agh.ics.oop.exceptions.PositionAlreadyOccupiedException;
 import project.backend.model.sprites.Animal;
 import agh.ics.oop.model.MoveDirection;
 import project.backend.model.models.Vector2d;
@@ -20,10 +20,10 @@ public class Simulation extends Thread {
 
     private final List<Animal> animalsList; //animals in the simulation
 
-    private final WorldMapable worldMapable;
+    private final WorldMap_able worldMapable;
 
     //for rectangular map
-    public Simulation(List<MoveDirection> directionsList , List<Vector2d> positionsList , WorldMapable worldMapable){
+    public Simulation(List<MoveDirection> directionsList , List<Vector2d> positionsList , WorldMap_able worldMapable){
         this.directionsList = directionsList; //as link list
         this.animalsList = new ArrayList<>(); //as normal list because we will pick el from the middle
         this.worldMapable = worldMapable;

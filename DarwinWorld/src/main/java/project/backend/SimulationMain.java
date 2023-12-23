@@ -4,7 +4,7 @@ import project.backend.global.GlobalOptions;
 import project.backend.global.GlobalVariables;
 import project.backend.model.enums.MapType;
 import project.backend.model.enums.MutationType;
-import project.backend.model.maps.RectangleBoundary;
+import project.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.model.models.Vector2d;
 import project.backend.model.sprites.Animal;
 
@@ -48,5 +48,10 @@ public class SimulationMain {
         animal.addEnergy(100);
         animal2.addEnergy(100);
         Animal animal3 = animal.reproduce(animal2);
+
+        System.out.println(animal);
+        System.out.println(animal2);
+        System.out.println(animal3);
+
     }
 }

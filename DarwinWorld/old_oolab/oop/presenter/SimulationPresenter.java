@@ -1,13 +1,13 @@
 package agh.ics.oop.presenter;
 
-import project.backend.OptionsParser;
+import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
-import project.backend.SimulationEngine;
-import project.backend.model.maps.WorldMapable;
+import agh.ics.oop.SimulationEngine;
+import agh.ics.oop.model.WorldMap_able;
 import agh.ics.oop.model.MoveDirection;
 import project.backend.model.models.Vector2d;
-import project.backend.model.observers.MapChangeListener;
-import project.backend.model.util.GridMapDrawer;
+import agh.ics.oop.observers.MapChangeListener;
+import agh.ics.oop.util.GridMapDrawer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,10 +21,10 @@ import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
 
-    private WorldMapable worldMapable;
+    private WorldMap_able worldMapable;
     private GridMapDrawer gridMapDrawer;
 
-    public void setWorldMap(WorldMapable worldMapable) {
+    public void setWorldMap(WorldMap_able worldMapable) {
         this.worldMapable = worldMapable;
     }
 
@@ -49,7 +49,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     @Override
-    public void mapChanged(WorldMapable worldMapable, String message) {
+    public void mapChanged(WorldMap_able worldMapable, String message) {
         Platform.runLater(() -> {
 //            drawMap();
             moveInfoLabel.setText(message);

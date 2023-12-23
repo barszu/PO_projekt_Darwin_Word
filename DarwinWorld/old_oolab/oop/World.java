@@ -1,9 +1,8 @@
-package project.backend;
+package agh.ics.oop;
 
-import agh.ics.oop.Simulation;
-import project.backend.model.maps.GrassField;
-import project.backend.model.maps.RectangularMap;
-import project.backend.model.observers.ConsoleMapDisplay;
+import agh.ics.oop.model.GrassField;
+import agh.ics.oop.model.RectangularMap;
+import agh.ics.oop.observers.ConsoleMapDisplay;
 import project.backend.model.models.Vector2d;
 import agh.ics.oop.model.MoveDirection;
 

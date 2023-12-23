@@ -20,7 +20,7 @@ public class SlightCorrection implements WayOfMutation_able{
         for (int idx : idxToChangeArray){
             //mutation of random idx to +- 1 gen value
             //treating as [0,1,2,3,4,5,6,7] cyclic list
-            genotype[idx] = CyclicListExtras.getNewIdx( idx , Random.pickOneOf(-1,1) , genotype.length);
+            genotype[idx] = CyclicListExtras.getNewIdx( idx , Random.pickOneOf(-1,1) , 8);
         }
     }
 }

@@ -1,10 +1,11 @@
-package project.backend.model.maps;
+package agh.ics.oop.model;
 
+import project.backend.model.maps.MoveValidatorable;
+import project.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.model.sprites.Animal;
-import agh.ics.oop.model.MoveDirection;
 import project.backend.model.models.Vector2d;
-import project.backend.model.exceptions.PositionAlreadyOccupiedException;
-import project.backend.model.observers.MapChangeListener;
+import agh.ics.oop.exceptions.PositionAlreadyOccupiedException;
+import agh.ics.oop.observers.MapChangeListener;
 import project.backend.model.sprites.WorldElementable;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.UUID;
  *
  * @author apohllo, idzik
  */
-public interface WorldMapable extends MoveValidatorable {
+public interface WorldMap_able extends MoveValidatorable {
     /**
      * Place a animal on the map.
      *

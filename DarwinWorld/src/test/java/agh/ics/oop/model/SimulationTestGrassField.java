@@ -2,8 +2,6 @@ package agh.ics.oop.model;
 
 import project.backend.OptionsParser;
 import agh.ics.oop.Simulation;
-import project.backend.model.maps.GrassField;
-import project.backend.model.maps.WorldMapable;
 import project.backend.model.sprites.Animal;
 import project.backend.model.enums.MapDirection;
 import project.backend.model.models.Vector2d;
@@ -21,7 +19,7 @@ class SimulationTestGrassField {
         String[] args = {"f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2),new Vector2d(10, 0) , new Vector2d(5,5));
-        WorldMapable worldMapable = new GrassField(10);
+        WorldMap_able worldMapable = new GrassField(10);
 
         Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
@@ -50,7 +48,7 @@ class SimulationTestGrassField {
         String[] args = {"f","f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2),new Vector2d(2, 2));
-        WorldMapable worldMapable = new GrassField(12);
+        WorldMap_able worldMapable = new GrassField(12);
 
         Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
@@ -73,7 +71,7 @@ class SimulationTestGrassField {
         String[] args = {"f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2) , new Vector2d(20,20));
-        WorldMapable worldMapable = new GrassField(20);
+        WorldMap_able worldMapable = new GrassField(20);
 
         Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
@@ -95,7 +93,7 @@ class SimulationTestGrassField {
         String[] args = {"f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of();
-        WorldMapable worldMapable = new GrassField(20);
+        WorldMap_able worldMapable = new GrassField(20);
 
         Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
@@ -111,7 +109,7 @@ class SimulationTestGrassField {
         String[] args = {"f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f","f"};
         List<MoveDirection> movesList = OptionsParser.parse(args);
         List<Vector2d> positionsList = List.of(new Vector2d(2, 2) , new Vector2d(20,20));
-        WorldMapable worldMapable = new GrassField(20);
+        WorldMap_able worldMapable = new GrassField(20);
 
         Simulation simulation = new Simulation(movesList, positionsList, worldMapable);
 
