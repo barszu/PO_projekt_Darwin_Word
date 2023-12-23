@@ -1,6 +1,6 @@
 package project.backend;
 
-import project.backend.Simulation;
+import agh.ics.oop.Simulation;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;

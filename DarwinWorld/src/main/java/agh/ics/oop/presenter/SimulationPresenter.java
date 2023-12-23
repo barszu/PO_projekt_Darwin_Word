@@ -1,7 +1,7 @@
 package agh.ics.oop.presenter;
 
 import project.backend.OptionsParser;
-import project.backend.Simulation;
+import agh.ics.oop.Simulation;
 import project.backend.SimulationEngine;
 import project.backend.model.maps.WorldMapable;
 import agh.ics.oop.model.MoveDirection;

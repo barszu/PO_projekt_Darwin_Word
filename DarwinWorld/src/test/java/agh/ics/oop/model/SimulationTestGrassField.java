@@ -1,7 +1,7 @@
 package agh.ics.oop.model;
 
 import project.backend.OptionsParser;
-import project.backend.Simulation;
+import agh.ics.oop.Simulation;
 import project.backend.model.maps.GrassField;
 import project.backend.model.maps.WorldMapable;
 import project.backend.model.sprites.Animal;

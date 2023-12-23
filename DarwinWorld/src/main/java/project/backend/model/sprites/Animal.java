@@ -1,14 +1,16 @@
 package project.backend.model.sprites;
+import project.backend.global.GlobalOptions;
+import project.backend.global.GlobalVariables;
 import project.backend.model.maps.RectangleBoundary;
 import project.backend.model.maps.MoveValidatorable;
 import project.backend.model.enums.MapDirection;
 import agh.ics.oop.model.MoveDirection;
 import project.backend.model.exceptions.PositionAlreadyOccupiedException;
+import project.backend.model.models.CyclicListExtras;
 import project.backend.model.models.Random;
 import project.backend.model.models.Vector2d;
 import project.backend.model.sprites.animalUtil.GenotypeMerger;
 
-import java.sql.Array;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +30,13 @@ public class Animal implements WorldElementable , Comparable<Animal> {
     private int eatenGrassNo = 0; //how much grass was eaten by this animal
     private final int spawnDate; //when animal was spawned
 
+    //global variables / options
+    //TODO: how to make static final from that?
+    private final GlobalOptions globalOptions;
+    private final GlobalVariables globalVariables;
+
+
+
     //getters
     public Vector2d getPosition() {
         return position;
@@ -39,56 +48,63 @@ public class Animal implements WorldElementable , Comparable<Animal> {
     public int[] getGenotype() {return genotype;}
 
     // constructors
+
+    @Deprecated //dangerous
     public Animal(){ //old
         this.direction = MapDirection.NORTH;
         this.position = new Vector2d(2,2);
         this.genotype = new int[5];
         this.energy = 10;
         this.spawnDate = 0;
+
+        this.globalOptions = null;
+        this.globalVariables = null;
     }
 
-    public Animal(Vector2d fixedPosition){ //old
+    @Deprecated //dangerous
+    public Animal(Vector2d fixedPosition){ //old , not working empty field
         this.direction = Random.randDirection();
         this.position = fixedPosition;
         this.genotype = new int[5];
         this.energy = 10;
         this.spawnDate = 0;
+
+        this.globalOptions = null;
+        this.globalVariables = null;
     }
 
-    public Animal(Vector2d fixedPosition , int genotypeLen , int energy){
-        if (genotypeLen <= 0){throw new IllegalArgumentException("genotypeLen must be >= 1");}
-        if (energy <= 0){throw new IllegalArgumentException("energy must be >= 1");}
-        this.direction = Random.randDirection();
-        this.position = fixedPosition;
-        this.genotype = new int[genotypeLen];
-        this.energy = energy;
-        this.currentGenotypeIndex = Random.randInt(0,genotypeLen-1);
+    //constructor for initial animals using only globalOptions and globalVariables
+    //TODO: only works for RectangularMap
+    public Animal(RectangleBoundary bound , GlobalOptions globalOptions , GlobalVariables globalVariables){
+        this.globalOptions = globalOptions;
+        this.globalVariables = globalVariables;
+
+        this.direction = Random.randDirection(); // random direction
+        this.position = Random.randPosition(bound); // random position in the map in bound
+        this.genotype = Random.randIntArray(0,7 , globalOptions.genotypeLength()); // random genotype
+        this.energy = globalOptions.initAnimalEnergy();
+        this.currentGenotypeIndex = Random.randInt(0,genotype.length-1);
+
         this.spawnDate = 0;
     }
 
-    //constructor for initial animals
-    public Animal(RectangleBoundary bound , int genotypeLen , int energy){
-        if (genotypeLen <= 0){throw new IllegalArgumentException("genotypeLen must be >= 1");}
-        if (energy <= 0){throw new IllegalArgumentException("energy must be >= 1");}
-        this.direction = Random.randDirection(); // random direction
-        this.position = Random.randPosition(bound); // random position in the map in bound
-        this.genotype = Random.randIntArray(0,7,genotypeLen); // random genotype
-        this.energy = energy;
-        this.currentGenotypeIndex = Random.randInt(0,genotypeLen-1);
+    //constructor for reproducted animal, passing by globalOptions and globalVariables
+    public Animal(Vector2d fixedPosition , int[] genotype , int energy ,
+                  GlobalOptions globalOptions , GlobalVariables globalVariables){
 
-        this.spawnDate = 1;
-    }
-
-    //constructor for reproducted animal
-    public Animal(Vector2d fixedPosition , int[] genotype , int energy , int spawnDate){
-        if (genotype.length <= 0){throw new IllegalArgumentException("genotype array must contain >= 1 el");}
         if (energy <= 0){throw new IllegalArgumentException("energy must be >= 1");}
+        if (genotype.length != globalOptions.genotypeLength()){
+            throw new IllegalStateException("Tried to init Animal when genotype.length != globalOptions.genotypeLength()");
+        }
+        this.globalOptions = globalOptions;
+        this.globalVariables = globalVariables;
+
         this.direction = Random.randDirection();
         this.position = fixedPosition;
         this.genotype = genotype.clone(); //TODO: maybe cloning is not necessary?
         this.energy = energy;
         this.currentGenotypeIndex = Random.randInt(0,genotype.length-1);
-        this.spawnDate = spawnDate;
+        this.spawnDate = globalVariables.getDate();
     }
 
     //energy methods
@@ -134,7 +150,7 @@ public class Animal implements WorldElementable , Comparable<Animal> {
 
 
     //strict animal methods
-    public void growUp(){
+    public void incrementAge(){
         if (this.isDead){
             throw new IllegalStateException("Animal is dead! Cannot grow up!");
         }
@@ -154,6 +170,7 @@ public class Animal implements WorldElementable , Comparable<Animal> {
 
 
     //old
+    @Deprecated
     public void move(MoveDirection direction, MoveValidatorable moveValidatorable) throws PositionAlreadyOccupiedException {
         Vector2d newPosition = this.position;
         switch (direction){
@@ -180,7 +197,8 @@ public class Animal implements WorldElementable , Comparable<Animal> {
             throw new IllegalStateException("Animal is dead! Cannot move!");
         }
         this.direction = MapDirection.getById(genotype[currentGenotypeIndex]);
-        this.currentGenotypeIndex = (currentGenotypeIndex + 1) % genotype.length;
+        //incrementing currentGenotypeIndex
+        this.currentGenotypeIndex = CyclicListExtras.getIncrementedIdx(currentGenotypeIndex , genotype.length);
 
         Vector2d newPosition = this.position.add(this.direction.toUnitVector());
         if (moveValidatorable.canMoveTo(newPosition)){ //do zmiany problem to te zawiajane mapy
@@ -192,18 +210,20 @@ public class Animal implements WorldElementable , Comparable<Animal> {
         }
     }
 
-    //TODO: implement this
-    public Animal reproduce(Animal other , int wellFedEnergy , int reproduceEnergyCost , int genotypeLen , int currDate){
+    //TODO: implement this arguments!!!
+    public Animal reproduce(Animal other){
     //reproduceEnergyCost < wellFedEnergy !
         if (this.isDead || other.isDead){throw new IllegalStateException("One of animals is dead! Cannot reproduce!");}
-        if (this.energy < wellFedEnergy || other.energy < wellFedEnergy){throw new IllegalStateException("One of animals is not well fed! Cannot reproduce!");}
+        if (this.energy < globalOptions.energyToBeFeed() || other.energy < globalOptions.energyToBeFeed()){
+            throw new IllegalStateException("One of animals is not well fed! Cannot reproduce!");}
 
-        int[] childGenotype = GenotypeMerger.merge(this , other , genotypeLen);
+        int[] childGenotype = GenotypeMerger.merge(this , other , globalOptions);
 
-        this.subtractEnergy(reproduceEnergyCost);
-        other.subtractEnergy(reproduceEnergyCost);
+        this.subtractEnergy(globalOptions.energyToBreeding());
+        other.subtractEnergy(globalOptions.energyToBreeding());
 
-        Animal child = new Animal(this.position , childGenotype , 2*reproduceEnergyCost , currDate);
+        Animal child = new Animal(this.position , childGenotype , 2*globalOptions.energyToBreeding() ,
+                                  globalOptions , globalVariables);
 
         this.childrenList.add(child);
         other.childrenList.add(child);

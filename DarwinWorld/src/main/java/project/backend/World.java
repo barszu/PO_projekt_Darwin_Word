@@ -1,5 +1,6 @@
 package project.backend;
 
+import agh.ics.oop.Simulation;
 import project.backend.model.maps.GrassField;
 import project.backend.model.maps.RectangularMap;
 import project.backend.model.observers.ConsoleMapDisplay;

@@ -1,33 +1,41 @@
 package project.backend.model.sprites.animalUtil;
 
+import project.backend.global.GlobalOptions;
 import project.backend.model.models.Random;
 import project.backend.model.sprites.Animal;
 
 public class GenotypeMerger {
     //TODO: globalne ustawienia! genotypeLen , mutationType , mutationChance
-    public static int[] merge(Animal Animal1, Animal Animal2 , int genotypeLen){
+    public static int[] merge(Animal Animal1, Animal Animal2 , GlobalOptions globalOptions){
         if (Animal1.getGenotype().length != Animal2.getGenotype().length){
-            System.out.println("WARNING: Genotypes are not of equal length");
-            return null;
+            throw new IllegalStateException("Genotypes of Animal1 , Animal2 are not of equal length!");
         }
+
         Animal AnimalsGenesOrder[] = {Animal1 , Animal2}; //left , right taking of slice
         if (Random.randInt(0,1) == 1){ //randomly change Animals order
             AnimalsGenesOrder = new Animal[]{Animal2 , Animal1};
         }
-        //bug warning! excluded idx!
-        int leftSliceEndIdx = genotypeLen * ((AnimalsGenesOrder[0].getEnergy()) / (Animal1.getEnergy() + Animal2.getEnergy()));
+
+        //TODO: bug warning! excluded idx!
+        final float ratio =  ( (float) AnimalsGenesOrder[0].getEnergy()) / ( (float) Animal1.getEnergy() + (float) Animal2.getEnergy());
+        final int leftSliceEndIdx = (int) (globalOptions.genotypeLength() * ratio);
 
         //rewrite genotype
-        int[] newGenotype = new int[genotypeLen];
+        int[] newGenotype = new int[globalOptions.genotypeLength()];
         for (int i = 0 ; i < leftSliceEndIdx ; i++){
             newGenotype[i] = AnimalsGenesOrder[0].getGenotype()[i];
         }
-        for (int i = leftSliceEndIdx ; i < genotypeLen ; i++){
+        for (int i = leftSliceEndIdx ; i < globalOptions.genotypeLength() ; i++){
             newGenotype[i] = AnimalsGenesOrder[1].getGenotype()[i];
         }
 
-        //TODO: mutate zaleznie od mutationType
-        WayOfMutation_able wayOfMutation = new SlightCorrection();
+        WayOfMutation_able wayOfMutation;
+        switch (globalOptions.mutationType()){
+            case SLIGHT_CORRECTION -> {wayOfMutation = new SlightCorrection(globalOptions);}
+            case FULL_RANDOM -> {wayOfMutation = new FullRandomMutation(globalOptions);}
+            default -> throw new IllegalStateException("Unexpected MutationType: " + globalOptions.mutationType());
+        }
+
         wayOfMutation.applyMutation(newGenotype);
 
 

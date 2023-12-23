@@ -1,4 +1,4 @@
-package project.backend;
+package agh.ics.oop;
 
 //import agh.ics.oop.model.*;
 import project.backend.model.maps.WorldMapable;

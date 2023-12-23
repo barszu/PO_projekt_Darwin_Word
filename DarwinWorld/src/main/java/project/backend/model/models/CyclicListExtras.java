@@ -2,35 +2,35 @@ package project.backend.model.models;
 
 public class CyclicListExtras {
 
-    private int size;
-
-    public CyclicListExtras(int ArraySize){
+    private static void checkArraySize(int ArraySize){ //helper
         if (ArraySize <= 0) {
             throw new IllegalArgumentException("ArraySize must be > 0");
         }
-        this.size = ArraySize;
     }
 
-    public int getIncrementedIdx(int idx){
-        return (idx + 1)%size;
+    public static int getIncrementedIdx(int idx , int ArraySize){
+        checkArraySize(ArraySize);
+        return (idx + 1)%ArraySize;
     }
 
-    public int getDecrementIdx(int idx){
+    public static int getDecrementedIdx(int idx , int ArraySize){
+        checkArraySize(ArraySize);
         if (idx - 1 < 0){
-            return size - 1;
+            return ArraySize - 1;
         }
         else{
             return idx - 1;
         }
     }
 
-    public int getNewIdx(int idx, int toAdd){
+    public static int getNewIdx(int idx, int toAdd , int ArraySize){
+        checkArraySize(ArraySize);
         if ((toAdd >= 0)) {
-            return (idx + toAdd) % size;
+            return (idx + toAdd) % ArraySize;
         } else {
             // TODO: check heuristics!!
-            return (size + ((idx + toAdd)%size));
-//            return ((idx + toAdd) % size + size) % size;
+            return (ArraySize + ((idx + toAdd)%ArraySize));
+//            return ((idx + toAdd) % ArraySize + ArraySize) % ArraySize;
         }
     }
 
