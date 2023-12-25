@@ -1,6 +1,7 @@
 package project.backend.model.models;
 
 import org.junit.jupiter.api.Test;
+import project.backend.backend.extras.CyclicListExtras;
 
 import static org.junit.jupiter.api.Assertions.*;
 
