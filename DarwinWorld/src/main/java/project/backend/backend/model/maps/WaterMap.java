@@ -3,9 +3,7 @@ package project.backend.backend.model.maps;
 import project.backend.backend.extras.Vector2d;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
-import project.backend.backend.model.sprites.Grass;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class WaterMap extends AbstractWorldMap{
@@ -18,8 +16,8 @@ public class WaterMap extends AbstractWorldMap{
     }
 
     @Override
-    public Vector2d canMoveTo(Vector2d newPosition , Vector2d oldPosition) {
-        if (super.canMoveTo(newPosition, oldPosition).equals(newPosition)) { //within the rectangle
+    public Vector2d validatePosition(Vector2d newPosition , Vector2d oldPosition) {
+        if (super.validatePosition(newPosition, oldPosition).equals(newPosition)) { //within the rectangle
             return newPosition;
         }
         //TODO: check water on newPosition!

@@ -22,7 +22,7 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
     private int currentGenotypeIndex; //current index to move
     private int energy; // if <= 0 then animal is dead
     private int age = 0; //age of animal
-    private List<Animal> childrenList = new LinkedList<>(); //children list not grandchildren!
+    private final List<Animal> childrenList = new LinkedList<>(); //children list not grandchildren!
     private boolean isDead = false; //is dead on this moment
     private int eatenGrassNo = 0; //how much grass was eaten by this animal
     private final int spawnDate; //when animal was spawned
@@ -174,7 +174,7 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
         this.currentGenotypeIndex = CyclicListExtras.getIncrementedIdx(currentGenotypeIndex , genotype.length);
 
         Vector2d newPosition = this.position.add(this.direction.toUnitVector());
-        newPosition = moveValidatorable.canMoveTo(newPosition , this.position);
+        newPosition = moveValidatorable.validatePosition(newPosition , this.position);
 
         this.position = newPosition;
     }

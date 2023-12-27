@@ -11,8 +11,8 @@ public class CylindricalGlobeMap extends AbstractWorldMap{
     }
 
     @Override
-    public Vector2d canMoveTo(Vector2d newPosition , Vector2d oldPosition) {
-        if ( super.canMoveTo(newPosition , oldPosition).equals(newPosition) ){ //within the rectangle
+    public Vector2d validatePosition(Vector2d newPosition , Vector2d oldPosition) {
+        if ( super.validatePosition(newPosition , oldPosition).equals(newPosition) ){ //within the rectangle
             return newPosition;
         }
         if (! newPosition.hasYbetween(0,super.globalOptions.mapHeight()-1)){// y not in rectangle

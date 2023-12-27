@@ -5,7 +5,7 @@ import project.backend.backend.extras.Random;
 import project.backend.backend.model.sprites.Animal;
 
 public class GenotypeMerger {
-    //TODO: globalne ustawienia! genotypeLen , mutationType , mutationChance
+
     public static int[] merge(Animal Animal1, Animal Animal2 , GlobalOptions globalOptions){
         if (Animal1.getGenotype().length != Animal2.getGenotype().length){
             throw new IllegalStateException("Genotypes of Animal1 , Animal2 are not of equal length!");

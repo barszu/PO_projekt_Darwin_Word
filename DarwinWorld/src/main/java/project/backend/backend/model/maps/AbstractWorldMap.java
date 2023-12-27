@@ -44,11 +44,19 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         this.rectangleBox = new RectangleBoundary(new Vector2d(0,0),
                 new Vector2d(globalOptions.mapWidth()-1,globalOptions.mapHeight()-1));
 
+        initAllAnimals();
+        placeGrasses(globalOptions.plantsPerDay()); //TODO: initPlantsNo ? in global options
+    }
+
+    @Override
+    public void updateEverything(){
+        //TODO: implement this!
+        moveAllAnimals();
     }
 
     @Override
     //default implementation, withing in Rectangle?
-    public Vector2d canMoveTo(Vector2d newPosition , Vector2d oldPosition){
+    public Vector2d validatePosition(Vector2d newPosition , Vector2d oldPosition){
         if (rectangleBox.contains(newPosition)){
             return newPosition;
         }
@@ -71,6 +79,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
             List<Animal> animalList = animalsDict.getListFrom(position);
             for (Animal animal : animalList) {
                 moveAnimal(animal);
+                //TODO: breed animals, problem mnogosciowy
             }
         }
     }
@@ -85,7 +94,8 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     }
 
     @Override
-    public void placeGrasses(int GrassNo) {
+    public void placeGrasses(int grassNo) { //init map , run
+        //TODO: Simon algorithm
         //TODO: use shuffle
     }
 
@@ -105,7 +115,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     }
 
     @Override
-    public Collection<WorldElement_able> getAllOccupantsFrom(Vector2d position) { // in sorted order
+    public List<WorldElement_able> getAllOccupantsFrom(Vector2d position) { // in sorted order
         //TODO: moze zwracac liste?
         //zwroc pusta liste jesli nie ma
         if (!animalsDict.containsKey(position)){

@@ -6,6 +6,7 @@ import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.WorldElement_able;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The WorldMap_able interface should be implemented by any class whose instances are intended to represent a world map.
@@ -13,6 +14,12 @@ import java.util.Collection;
  * as well as the retrieval of occupants from a certain position.
  */
 public interface WorldMap_able extends MoveValidator_able{
+
+
+    void updateEverything();
+
+
+
     /**
      * This method is used to initialize and place all animals on the map.
      * The number of animals to be initialized is determined by GlobalOptions.initAnimalsNo().
@@ -37,9 +44,9 @@ public interface WorldMap_able extends MoveValidator_able{
     //    ------------------------------------------
     /**
      * This method TRIES to place a certain number of grasses on the map.
-     * @param GrassNo This is the number of grasses to be placed on the map.
+     * @param grassNo This is the number of grasses to be placed on the map.
      */
-    void placeGrasses(int GrassNo);
+    void placeGrasses(int grassNo);
 
     //    ------------------------------------------
     /**
@@ -64,7 +71,7 @@ public interface WorldMap_able extends MoveValidator_able{
      * @param position This is a Vector2d object that represents the position from which the occupants are to be retrieved.
      * @return Collection<WorldElement_able> This returns a collection of all occupants from the given position, or an empty collection if there are no occupants.
      */
-    Collection<WorldElement_able> getAllOccupantsFrom(Vector2d position);
+    List<WorldElement_able> getAllOccupantsFrom(Vector2d position);
 
     //    ------------------------------------------
 
