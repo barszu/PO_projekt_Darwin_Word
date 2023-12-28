@@ -27,6 +27,11 @@ public class WaterMap extends AbstractWorldMap{
         return newPosition;
     }
 
+    @Override
+    public void initAllAnimals() {
+        //TODO: init animals on positions without water!
+    }
+
     //TODO: implement this method!
     private void initWaterPositions(int waterNo){
         //TODO: init water positions!
