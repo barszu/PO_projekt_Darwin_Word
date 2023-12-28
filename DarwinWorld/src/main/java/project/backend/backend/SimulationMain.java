@@ -29,6 +29,7 @@ public class SimulationMain {
         int initAnimalEnergy = 10;
         int initPlantEnergy = 5;
         int initAnimalsNo = 10;
+        int initPlantsNo = 10;
 
         //general simulation options
         int genotypeLength = 10;
@@ -39,7 +40,7 @@ public class SimulationMain {
         int minMutationsNo = 1;
         int maxMutationsNo = 3;
 
-        GlobalOptions G_OPTIONS = new GlobalOptions(mapWidth, mapHeight, mapType, mutationType, initAnimalEnergy, initPlantEnergy, initAnimalsNo, genotypeLength, energyPerPlant, plantsPerDay, energyToBeFeed, energyToBreeding, minMutationsNo, maxMutationsNo);
+        GlobalOptions G_OPTIONS = new GlobalOptions(mapWidth, mapHeight, mapType, mutationType, initAnimalEnergy, initPlantEnergy, initAnimalsNo, initPlantsNo, genotypeLength, energyPerPlant, plantsPerDay, energyToBeFeed, energyToBreeding, minMutationsNo, maxMutationsNo);
         GlobalVariables G_VAR = new GlobalVariables();
 
         RectangleBoundary bound = new RectangleBoundary(new Vector2d(0,0) , new Vector2d(10,10));

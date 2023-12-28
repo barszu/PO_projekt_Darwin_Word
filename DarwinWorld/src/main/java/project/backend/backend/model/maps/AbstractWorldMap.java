@@ -11,10 +11,7 @@ import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.Grass;
 import project.backend.backend.model.sprites.WorldElement_able;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap_able{
 //    TODO: init grasses!!!
@@ -31,10 +28,10 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
     //{ (x,y) : grass }
     protected final HashMap<Vector2d, Grass> grasses = new HashMap<>();
-
-    //TODO: biomes?
     protected final List<Vector2d> freeOfGrassPositions = new ArrayList<>();
-
+    protected final List<Vector2d> attractiveGrassFields= new ArrayList<>();
+    protected final List<Vector2d> nonAttractiveGrassFields= new ArrayList<>();
+    protected final List<Vector2d> jungle = new ArrayList<>();
     public AbstractWorldMap(GlobalOptions globalOptions , GlobalVariables globalVariables) {
         this.globalOptions = globalOptions;
         this.globalVariables = globalVariables;
@@ -44,8 +41,21 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         this.rectangleBox = new RectangleBoundary(new Vector2d(0,0),
                 new Vector2d(globalOptions.mapWidth()-1,globalOptions.mapHeight()-1));
 
+//      Approximately 20% of fields is considered more attractive for plants
+        for(int i=0; i<globalOptions.mapWidth();i++){
+            for(int j=0; i<globalOptions.mapHeight();j++){
+                int randNum = Random.randInt(1,5);
+                if(randNum==1){
+                    attractiveGrassFields.add(new Vector2d(i,j));
+                }
+                else{
+                    nonAttractiveGrassFields.add(new Vector2d(i,j));
+                }
+            }
+        }
+        generateJungle();
         initAllAnimals();
-        placeGrasses(globalOptions.plantsPerDay()); //TODO: initPlantsNo ? in global options
+        placeGrasses(globalOptions.initPlantsNo());
     }
 
     @Override
@@ -95,8 +105,29 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
     @Override
     public void placeGrasses(int grassNo) { //init map , run
-        //TODO: Simon algorithm
-        //TODO: use shuffle
+        Collections.shuffle(attractiveGrassFields);
+        Collections.shuffle(nonAttractiveGrassFields);
+        int attractiveIdx = 0;
+        int nonAttractiveIdx = 0;
+        int jungleIdx = 0;
+        for(int i=0;i<globalOptions.plantsPerDay();i++){
+            int decidingNumber = Random.randInt(1,5);
+            if(decidingNumber == 1 || jungleIdx >= jungle.size()){
+                int decidingNumber2 = Random.randInt(1,5);
+                if(decidingNumber2 == 1 || attractiveIdx >= attractiveGrassFields.size()){
+                    grasses.put(nonAttractiveGrassFields.get(nonAttractiveIdx), new Grass(nonAttractiveGrassFields.get(nonAttractiveIdx)));
+                    nonAttractiveIdx++;
+                }
+                else{
+                    grasses.put(attractiveGrassFields.get(attractiveIdx), new Grass(attractiveGrassFields.get(attractiveIdx)));
+                    attractiveIdx++;
+                }
+            }
+            else{
+                grasses.put(jungle.get(jungleIdx), new Grass(jungle.get(jungleIdx)));
+                jungleIdx++;
+            }
+        }
     }
 
     @Override
@@ -139,4 +170,37 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         }
 
     }
+
+//    Generates positions of fields in circle that has center in "center" and radius "radius"
+    public List<Vector2d> fieldsInRadius(int radius, Vector2d center){
+        List<Vector2d> fieldsToAdd = new ArrayList<>();
+        for(int i=center.getX()-radius; i<center.getX()+2*radius-1;i++){
+            for(int j=center.getY()-radius;j<center.getY()+2*radius-1;j++){
+                if(i>=0 && i<=globalOptions.mapWidth()-1 && j>=0 && j<= globalOptions.mapHeight()-1){
+                    if(Math.sqrt((center.getX()-i)^2+(center.getY()-j)^2)<=radius){
+                        fieldsToAdd.add(new Vector2d(i,j));
+                    }
+                }
+            }
+        }
+        return fieldsToAdd;
+    }
+
+    public void generateJungle(){
+        int numberOfForests = Random.randInt(1, 1+(int)(globalOptions.mapWidth()* globalOptions.mapHeight()/2500));
+        for(int i=0; i<numberOfForests; i++){
+            int x = Random.randInt(0, globalOptions.mapWidth()-1);
+            int y = Random.randInt(0, globalOptions.mapHeight()-1);
+            Vector2d newCenter = new Vector2d(x,y);
+            jungle.add(newCenter);
+            List<Vector2d> surroundings = fieldsInRadius((int)(globalOptions.mapWidth()/20),newCenter);
+            jungle.addAll(surroundings);
+        }
+        Collections.shuffle(jungle);
+        for(int i=0; i<numberOfForests*4; i++){
+            List<Vector2d> surroundings = fieldsInRadius((int)(globalOptions.mapWidth()/20), jungle.get(i));
+            jungle.addAll(surroundings);
+        }
+    }
+
 }

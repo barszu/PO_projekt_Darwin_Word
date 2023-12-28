@@ -17,6 +17,8 @@ public record GlobalOptions(
         int initPlantEnergy,
         int initAnimalsNo,
 
+        int initPlantsNo,
+
         //general simulation options
         int genotypeLength,
         int energyPerPlant,
