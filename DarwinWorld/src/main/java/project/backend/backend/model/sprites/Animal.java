@@ -165,6 +165,14 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
         this.eatenGrassNo++;
     }
 
+    public boolean checkIfDead(){
+        if (this.energy <= 0){
+            this.isDead = true;
+            return true;
+        }
+        return false;
+    }
+
     public void move(MoveValidator_able moveValidatorable){
           if (isDead){
             throw new IllegalStateException("Animal is dead! Cannot move!");

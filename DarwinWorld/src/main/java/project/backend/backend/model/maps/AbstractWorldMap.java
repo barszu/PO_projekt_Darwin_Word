@@ -50,13 +50,16 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
     @Override
     public void updateEverything(){
-        //TODO: implement this!
+        tryToRemoveAllDeadAnimals();
+        makeAllAnimalsOlder();
         moveAllAnimals();
+        tryToBreedAllAnimals();
+        placeGrasses(globalOptions.plantsPerDay());
     }
 
     @Override
-    //default implementation, withing in Rectangle?
     public Vector2d validatePosition(Vector2d newPosition , Vector2d oldPosition){
+        //default implementation, withing in Rectangle?
         if (rectangleBox.contains(newPosition)){
             return newPosition;
         }
@@ -66,31 +69,36 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     @Override
     public void initAllAnimals() {
         for (int i = 0; i < globalOptions.initAnimalsNo(); i++) {
-            //TODO: init animals! spawn on free positions
+            //animals can stack on the same position, position within rectangle
             Animal animal = new Animal(Random.randPosition(rectangleBox) , globalOptions , globalVariables);
-
             animalsDict.putInside(animal.getPosition() , animal);
         }
     }
 
     @Override
-    public void moveAllAnimals() {
-        for (Vector2d position : animalsDict.keySet()) {
-            List<Animal> animalList = animalsDict.getListFrom(position);
-            for (Animal animal : animalList) {
-                moveAnimal(animal);
-                //TODO: breed animals, problem mnogosciowy
+    public void tryToRemoveAllDeadAnimals() {
+        for (Animal animal : getAllAnimals()) {
+            if (animal.checkIfDead()){
+                animalsDict.removeFrom(animal.getPosition() , animal); //remove from map
             }
         }
     }
 
     @Override
-    public void moveAnimal(Animal animal) {
-        animalsDict.removeFrom(animal.getPosition() , animal);
-        animal.move(this);
-        animalsDict.putInside(animal.getPosition() , animal);
+    public void moveAllAnimals() {
+        for (Animal animal : getAllAnimals()) {
+            animalsDict.removeFrom(animal.getPosition(), animal); //temp removal
+            animal.move(this);
+            animalsDict.putInside(animal.getPosition(), animal);
+        }
+    }
 
-        //TODO: breed animals, problem mnogosciowy
+    @Override
+    public void makeAllAnimalsOlder(){
+        for (Animal animal : getAllAnimals()) {
+            animal.incrementAge();
+            animal.subtractEnergy(1);
+        }
     }
 
     @Override
@@ -100,31 +108,38 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     }
 
     @Override
-    public void tryToBreedAnimals(Animal animal1, Animal animal2) {
-        //they are on the same position!
-        if (animal1.getPosition().equals(animal2.getPosition())){
-            throw new IllegalArgumentException("Tried to breed animals on the different position!");
-        }
-
-
+    public void tryToBreedAllAnimals() {
+        //TODO: implement this Simon!
     }
 
     @Override
     public WorldElement_able getOccupantFrom(Vector2d position) {
-        return null;
+        List<Animal> res = animalsDict.getListFrom(position);
+        if (res != null){ //return first best animal
+            return res.get(0);
+        }
+        return grasses.get(position); //return grass or null if nothing there
     }
 
     @Override
     public List<WorldElement_able> getAllOccupantsFrom(Vector2d position) { // in sorted order
-        //TODO: moze zwracac liste?
-        //zwroc pusta liste jesli nie ma
-        if (!animalsDict.containsKey(position)){
-            return null;
+        List<WorldElement_able> res = new ArrayList<>();
+        List<Animal> animals = animalsDict.getListFrom(position);
+        Grass grass = grasses.get(position);
+
+        if (animals != null){res.addAll(animals);}
+        if (grass != null){res.add(grass);}
+        return res;
+    }
+
+    @Override
+    public List<Animal> getAllAnimals(){
+        List<Animal> res = new ArrayList<>();
+        for (Vector2d position : animalsDict.keySet()) {
+            List<Animal> animalList = animalsDict.getListFrom(position);
+            res.addAll(animalList);
         }
-
-        List<Animal> res = animalsDict.getListFrom(position);
-
-        return null;
+        return res;
     }
 
     @Override
