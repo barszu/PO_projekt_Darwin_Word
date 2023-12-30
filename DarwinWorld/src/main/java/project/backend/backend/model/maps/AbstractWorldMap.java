@@ -11,30 +11,21 @@ import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.Grass;
 import project.backend.backend.model.sprites.WorldElement_able;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap_able{
-//    TODO: init grasses!!!
     private final List<MapChangeListener> observersList = new ArrayList<>();
 
 
     protected final RectangleBoundary rectangleBox;
     protected final GlobalOptions globalOptions;
     protected final GlobalVariables globalVariables;
-
-    //{ (x,y) : ordered?[animal1, animal2, ...]
-    //TODO: ordrered list?
     protected final ListHashMap<Vector2d, Animal> animalsDict = new ListHashMap<>();
-
     //{ (x,y) : grass }
+    protected List<Animal> orderedAnimalList = new ArrayList<>();
     protected final HashMap<Vector2d, Grass> grasses = new HashMap<>();
-
-    //TODO: biomes?
-    protected final List<Vector2d> freeOfGrassPositions = new ArrayList<>();
-
+    protected List<Vector2d> stepFreePositions = new ArrayList<>();
+    protected List<Vector2d> jungleFreePositions = new ArrayList<>();
     public AbstractWorldMap(GlobalOptions globalOptions , GlobalVariables globalVariables) {
         this.globalOptions = globalOptions;
         this.globalVariables = globalVariables;
@@ -43,16 +34,15 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         // X , Y axis from normal quarter (1st)
         this.rectangleBox = new RectangleBoundary(new Vector2d(0,0),
                 new Vector2d(globalOptions.mapWidth()-1,globalOptions.mapHeight()-1));
-
-        initAllAnimals();
-        placeGrasses(globalOptions.plantsPerDay()); //TODO: initPlantsNo ? in global options
     }
 
     @Override
     public void updateEverything(){
         tryToRemoveAllDeadAnimals();
+        setHierarchy(orderedAnimalList);
         makeAllAnimalsOlder();
         moveAllAnimals();
+        feedAllAnimals();
         tryToBreedAllAnimals();
         placeGrasses(globalOptions.plantsPerDay());
     }
@@ -103,13 +93,49 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
     @Override
     public void placeGrasses(int grassNo) { //init map , run
-        //TODO: Simon algorithm
-        //TODO: use shuffle
+        Collections.shuffle(stepFreePositions);
+        Collections.shuffle(jungleFreePositions);
+        for(int i=0; i<grassNo;i++){
+            int decidingNumber = Random.randInt(1,5);
+            if(decidingNumber == 1 || jungleFreePositions.isEmpty()){
+                if(!stepFreePositions.isEmpty()){
+                    grasses.put(stepFreePositions.get(0), new Grass(stepFreePositions.get(0)));
+                    stepFreePositions.remove(0);
+                }
+            }
+            else{
+                grasses.put(jungleFreePositions.get(0), new Grass(jungleFreePositions.get(0)));
+                jungleFreePositions.remove(0);
+            }
+        }
+    }
+
+    public void addToFreeFields(Vector2d position){
+        int equator = (int)(globalOptions.mapHeight()/2);
+        int radius = (int)(globalOptions.mapHeight()/10);
+        if(position.getY() >= equator-radius && position.getY() <= equator+radius){
+            if(!jungleFreePositions.contains(position)){
+                jungleFreePositions.add(position);
+            }
+        }
+        else{
+            if(!stepFreePositions.contains(position)){
+                stepFreePositions.add(position);
+            }
+        }
     }
 
     @Override
     public void tryToBreedAllAnimals() {
-        //TODO: implement this Simon!
+        for(Vector2d position: animalsDict.keySet()){
+            List<Animal> animalsOnPosition = animalsDict.getListFrom(position);
+            animalsOnPosition.removeIf(animal -> animal.getEnergy() < globalOptions.energyToBreeding());
+            setHierarchy(animalsOnPosition);
+            int couplesNo = (int)(animalsOnPosition.size()/2);
+            for(int i=0; i<couplesNo; i++){
+                animalsDict.putInside(position, animalsOnPosition.get(2*i).reproduce(animalsOnPosition.get(2*i+1)));
+            }
+        }
     }
 
     @Override
@@ -153,5 +179,43 @@ public abstract class AbstractWorldMap implements WorldMap_able{
             observer.mapChanged(this , description);
         }
 
+    }
+
+    public void setHierarchy(List<Animal> animalList){
+        animalList.sort(new Comparator<Animal>() {
+            @Override
+            public int compare(Animal animal1, Animal animal2) {
+                if (animal1.getEnergy() != animal2.getEnergy()) {
+                    return Integer.compare(animal2.getEnergy(), animal1.getEnergy());
+                } else if (animal1.getAge() != animal2.getAge()) {
+                    return Integer.compare(animal2.getAge(), animal1.getAge());
+                } else if (animal1.getChildrenList().size() != animal2.getChildrenList().size()) {
+                    return Integer.compare(animal2.getChildrenList().size(), animal1.getChildrenList().size());
+                } else {
+                    return Double.compare(Math.random(), Math.random());
+                }
+            }
+        });
+    }
+
+    public void feedAllAnimals(){
+        for(Animal animal : orderedAnimalList){
+            if(grasses.remove(animal.getPosition()) != null){
+                animal.incrementEatenGrassNo();
+                animal.addEnergy(globalOptions.energyPerPlant());
+                addToFreeFields(animal.getPosition());
+            }
+        }
+    }
+
+    public void removeFromFreeFields(Vector2d position){
+        int equator = (int)(globalOptions.mapHeight()/2);
+        int radius = (int)(globalOptions.mapHeight()/10);
+        if(position.getY() >= equator-radius && position.getY() <= equator+radius){
+            jungleFreePositions.remove(position);
+        }
+        else{
+            stepFreePositions.remove(position);
+        }
     }
 }
