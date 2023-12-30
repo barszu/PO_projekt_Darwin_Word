@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.ChoiceBox?>
+
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="550.0" minWidth="850.0"
+            stylesheets="@../css/home-styles.css"
+            fx:controller="project.frontend.controllers.HomeController">
+
+    <center>
+<!--        <VBox>-->
+<!--            <HBox>-->
+<!--                <TextField fx:id="movesListTextField"/>-->
+<!--                <Button fx:id="startButton" minWidth="100" text="Start" />-->
+<!--            </HBox>-->
+<!--            <Label fx:id="moveInfoLabel"/>-->
+<!--            <Label fx:id="infoLabel" text="All animals will be living here!"/>-->
+<!--            <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" />-->
+<!--        </VBox>-->
+
+        <VBox>
+            <Label text="Map Options"/>
+            <HBox>
+                <Label text="Map Width"/>
+                <TextField fx:id="mapWidthField" promptText="Enter Map Width"/>
+            </HBox>
+            <HBox>
+                <Label text="Map Height"/>
+                <TextField fx:id="mapHeightField" promptText="Enter Map Height"/>
+            </HBox>
+
+
+            <Label text="Environment Options"/>
+            <HBox>
+                <Label text="Map Type"/>
+                <ChoiceBox fx:id="mapTypeChoiceBox" value="NORMAL_MAP">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="NORMAL_MAP"/>
+                            <String fx:value="WATER_MAP"/>
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+            </HBox>
+            <HBox>
+                <Label text="Mutation Type"/>
+                <ChoiceBox fx:id="mutationTypeChoiceBox" value="FULL_RANDOM">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="SLIGHT_CORRECTION"/>
+                            <String fx:value="FULL_RANDOM"/>
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+            </HBox>
+            <HBox>
+                <Label text="initAnimalEnergy"/>
+                <TextField fx:id="initAnimalEnergyField" promptText="Enter initAnimalEnergy"/>
+            </HBox>
+            <HBox>
+                <Label text="initPlantEnergy"/>
+                <TextField fx:id="initPlantEnergyField" promptText="Enter initPlantEnergy"/>
+            </HBox>
+            <HBox>
+                <Label text="initAnimalsNo"/>
+                <TextField fx:id="initAnimalsNoField" promptText="Enter initAnimalsNo"/>
+            </HBox>
+            <HBox>
+                <Label text="genotypeLength"/>
+                <TextField fx:id="genotypeLengthField" promptText="Enter genotypeLength"/>
+            </HBox>
+            <HBox>
+                <Label text="energyPerPlant"/>
+                <TextField fx:id="energyPerPlantField" promptText="Enter energyPerPlant"/>
+            </HBox>
+            <HBox>
+                <Label text="plantsPerDay"/>
+                <TextField fx:id="plantsPerDayField" promptText="Enter plantsPerDay"/>
+            </HBox>
+            <HBox>
+                <Label text="energyToBeFeed"/>
+                <TextField fx:id="energyToBeFeedField" promptText="Enter energyToBeFeed"/>
+            </HBox>
+            <HBox>
+                <Label text="energyToBreeding"/>
+                <TextField fx:id="energyToBreedingField" promptText="Enter energyToBreeding"/>
+            </HBox>
+            <HBox>
+                <Label text="minMutationsNo"/>
+                <TextField fx:id="minMutationsNoField" promptText="Enter minMutationsNo"/>
+            </HBox>
+            <HBox>
+                <Label text="maxMutationsNo"/>
+                <TextField fx:id="maxMutationsNoField" promptText="Enter maxMutationsNo"/>
+            </HBox>
+
+
+
+
+            <!-- Add other sections for remaining options -->
+            <Button fx:id="startButton" minWidth="100" text="Start" onAction="#onStartButtonClicked" />
+
+        </VBox>
+
+    </center>
+</BorderPane>

@@ -1,0 +1,23 @@
+/* styles.css */
+
+VBox {
+    -fx-spacing: 10;
+    -fx-padding: 10;
+}
+
+HBox {
+    -fx-spacing: 5;
+    -fx-start-margin: 10;
+}
+
+Label {
+    -fx-font-size: 14;
+}
+
+TextField {
+    -fx-prompt-text-fill: rgb(128, 128, 128);
+}
+
+ChoiceBox {
+    -fx-pref-width: 150;
+}
