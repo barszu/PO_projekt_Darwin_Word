@@ -18,11 +18,11 @@ public class SimulationMain {
         //args for GlobalOptions
 
         //map options
-        int mapWidth = 50;
-        int mapHeight = 50;
+        int mapWidth = 10;
+        int mapHeight = 10;
 
         //environment options
-        MapType mapType = MapType.WATER_MAP;
+        MapType mapType = MapType.NORMAL_MAP;
         MutationType mutationType = MutationType.SLIGHT_CORRECTION;
 
         //initial options
@@ -40,20 +40,24 @@ public class SimulationMain {
         int maxMutationsNo = 3;
 
         GlobalOptions G_OPTIONS = new GlobalOptions(mapWidth, mapHeight, mapType, mutationType, initAnimalEnergy, initPlantEnergy, initAnimalsNo, genotypeLength, energyPerPlant, plantsPerDay, energyToBeFeed, energyToBreeding, minMutationsNo, maxMutationsNo);
-        GlobalVariables G_VAR = new GlobalVariables();
-//
-        RectangleBoundary bound = new RectangleBoundary(new Vector2d(0,0) , new Vector2d(10,10));
 
-        Animal animal = new Animal(Random.randPosition(bound), G_OPTIONS , G_VAR);
-        Animal animal2 = new Animal(Random.randPosition(bound), G_OPTIONS , G_VAR);
-        animal.addEnergy(100);
-        animal2.addEnergy(100);
-        Animal animal3 = animal.reproduce(animal2);
+        Simulation simulation = new Simulation(G_OPTIONS, 1);
 
-        System.out.println(animal);
-        System.out.println(animal2);
-        System.out.println(animal3);
-        Simulation simulation = new Simulation(G_OPTIONS);
-        simulation.run();
+        // Symulacja działa przez 5 sekund, a następnie jest zatrzymywana
+        simulation.startSimulation();
+        try {Thread.sleep(5000);
+        } catch (InterruptedException e) {e.printStackTrace();}
+        simulation.stopSimulation();
+
+        // Odczekanie 2 sekundy, a następnie wznowienie symulacji na kolejne 3 sekundy
+        try {Thread.sleep(2000);
+        } catch (InterruptedException e) {e.printStackTrace();}
+        simulation.resumeSimulation();
+
+        try {Thread.sleep(5000);
+        } catch (InterruptedException e) {e.printStackTrace();
+        }
+        simulation.stopSimulation();
+
     }
 }

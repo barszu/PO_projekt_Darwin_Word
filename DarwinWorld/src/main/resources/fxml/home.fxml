@@ -24,15 +24,15 @@
             fx:controller="project.frontend.controllers.HomeController">
 
     <center>
-        <!--        <VBox>-->
-        <!--            <HBox>-->
-        <!--                <TextField fx:id="movesListTextField"/>-->
-        <!--                <Button fx:id="startButton" minWidth="100" text="Start" />-->
-        <!--            </HBox>-->
-        <!--            <Label fx:id="moveInfoLabel"/>-->
-        <!--            <Label fx:id="infoLabel" text="All animals will be living here!"/>-->
-        <!--            <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" />-->
-        <!--        </VBox>-->
+<!--        <VBox>-->
+<!--            <HBox>-->
+<!--                <TextField fx:id="movesListTextField"/>-->
+<!--                <Button fx:id="startButton" minWidth="100" text="Start" />-->
+<!--            </HBox>-->
+<!--            <Label fx:id="moveInfoLabel"/>-->
+<!--            <Label fx:id="infoLabel" text="All animals will be living here!"/>-->
+<!--            <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" />-->
+<!--        </VBox>-->
 
         <VBox>
             <Label text="Map Options"/>

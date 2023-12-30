@@ -207,11 +207,8 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
         return child;
     }
 
-    public int getAge() {
-        return age;
-    }
 
-    public List<Animal> getChildrenList() {
-        return childrenList;
-    }
+
+
+
 }
