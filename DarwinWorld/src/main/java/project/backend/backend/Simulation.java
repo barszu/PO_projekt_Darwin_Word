@@ -2,27 +2,19 @@ package project.backend.backend;
 
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
-import project.backend.backend.listeners.MapConsoleLogger;
 import project.backend.backend.model.maps.CylindricalGlobeMap;
 import project.backend.backend.model.maps.WaterMap;
 import project.backend.backend.model.maps.WorldMap_able;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Simulation extends Thread{
-    private Timer timer;
-
     private final WorldMap_able worldMap;
     private final GlobalVariables globalVariables;
     private final GlobalOptions globalOptions;
 
     private boolean isRunning = false;
-    private final int simulationId;
 
 
-    public Simulation(GlobalOptions globalOptions , int simulationId){
-        this.simulationId = simulationId;
+    public Simulation(GlobalOptions globalOptions){
         this.globalOptions = globalOptions;
         this.globalVariables = new GlobalVariables();
         switch (globalOptions.mapType()){
@@ -30,52 +22,29 @@ public class Simulation extends Thread{
             case WATER_MAP -> this.worldMap = new WaterMap(globalOptions,globalVariables);
             default -> throw new IllegalArgumentException("Unknown map type: " + globalOptions.mapType().toString());
         }
-        this.worldMap.addObserver(new MapConsoleLogger());
     }
 
-
-    public void startSimulation(){ //or resume
-
-        if (!isRunning) {
-            System.out.println("Simulation " + simulationId + " started");
-            isRunning = true;
-
-            setUpTimer();
-        }
-    }
-
-
-    public void stopSimulation() {
-        if (isRunning) {
-            System.out.println("Simulation " + simulationId + " stopped");
-            isRunning = false;
-
-            // Zatrzymywanie timera
-            timer.cancel();
-            timer.purge();
-        }
-    }
-
-    public void resumeSimulation() {
-        if (!isRunning) {
-            System.out.println("Simulation " + simulationId + " resumed");
-            isRunning = true;
-
-            setUpTimer();
-        }
-    }
-
-    private void setUpTimer(){
-        // Tworzenie i uruchamianie timera
-        timer = new Timer(true);
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                worldMap.updateEverything();
-                worldMap.notifyAllObservers("Day: " + globalVariables.getDate() + " has passed.");
-                globalVariables.addDay();
-            }
-        }, 0, 1000); // Aktualizacja co sekundę
+    //TODO: implement this method!
+    public void start(){ //or resume
+//        this.isRunning = true;
+//        while(this.isRunning){
+////            TODO: update everithing on map!!!
+//            this.worldMap.updateEverything();
+//
+//        }
+        WaterMap waterMap = new WaterMap(globalOptions, globalVariables);
+        System.out.println("lista wody: "+waterMap.getWaterPositions());
+        System.out.println("lista krawędzi: "+waterMap.getWaterEdges());
+        waterMap.updateEverything();
+        System.out.println("lista wody: "+waterMap.getWaterPositions());
+        System.out.println("lista krawędzi: "+waterMap.getWaterEdges());
+        waterMap.updateEverything();
+        System.out.println("lista wody: "+waterMap.getWaterPositions());
+        System.out.println("lista krawędzi: "+waterMap.getWaterEdges());
+        waterMap.updateEverything();
+        System.out.println("lista wody: "+waterMap.getWaterPositions());
+        System.out.println("lista krawędzi: "+waterMap.getWaterEdges());
+        waterMap.updateEverything();
     }
 
 }
