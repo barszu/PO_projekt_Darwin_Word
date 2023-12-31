@@ -8,24 +8,6 @@ public class CylindricalGlobeMap extends AbstractWorldMap{
 
     public CylindricalGlobeMap(GlobalOptions globalOptions, GlobalVariables globalVariables) {
         super(globalOptions, globalVariables);
-        int equator = globalOptions.mapHeight()/2;
-        int radius = globalOptions.mapHeight()/10;
-        for(int i=0; i<globalOptions.mapWidth();i++){
-            for(int j=0; j< globalOptions.mapHeight();j++){
-                if(j>=equator-radius && j<=equator+radius){
-                    jungleFreePositions.add(new Vector2d(i,j));
-                }
-                else{
-                        stepFreePositions.add(new Vector2d(i,j));
-                    }
-
-                }
-            }
-
-        orderedAnimalList.addAll(getAllAnimals());
-        initAllAnimals();
-        setHierarchy(orderedAnimalList);
-        placeGrasses(globalOptions.energyPerPlant());
     }
 
     @Override
@@ -51,6 +33,11 @@ public class CylindricalGlobeMap extends AbstractWorldMap{
                 + oldPosition.toString() +
                 "map: ["+globalOptions.mapWidth()+globalOptions.mapHeight()+"]");
 //        return oldPosition; //if something went wrong
+    }
+
+    @Override
+    public String toString(){
+        return super.toString();
     }
 
 }

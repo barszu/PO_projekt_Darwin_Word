@@ -16,6 +16,8 @@ public class WaterMap extends AbstractWorldMap{
     private final List<Vector2d> waterPositions = new ArrayList<>();
     private int waterPhase;
     private List<Vector2d> waterEdges = new ArrayList<>();
+
+
     public WaterMap(GlobalOptions globalOptions, GlobalVariables globalVariables) {
         super(globalOptions, globalVariables);
         waterPhase = 0;
@@ -27,21 +29,21 @@ public class WaterMap extends AbstractWorldMap{
             for(int j=0; j< globalOptions.mapHeight();j++){
                 if(j>=equator-radius && j<=equator+radius){
                     if(!waterPositions.contains(new Vector2d(i,j))){
-                        jungleFreePositions.add(new Vector2d(i,j));
+//                        jungleFreePositions.add(new Vector2d(i,j));
                     }
                 }
                 else{
                     if(!waterPositions.contains(new Vector2d(i,j))){
-                        stepFreePositions.add(new Vector2d(i,j));
+//                        stepFreePositions.add(new Vector2d(i,j));
                     }
 
                 }
             }
         }
 
-        orderedAnimalList.addAll(getAllAnimals());
+//        orderedAnimalList.addAll(getAllAnimals());
         initAllAnimals();
-        setHierarchy(orderedAnimalList);
+//        setHierarchy(orderedAnimalList);
         placeGrasses(globalOptions.energyPerPlant());
     }
 
@@ -94,7 +96,7 @@ public class WaterMap extends AbstractWorldMap{
         return fieldsToAdd;
     }
 
-    public void generateWater(){
+    public void generateWater(){ //TODO: podczas initu mapy tworzone
 //        Approximately one water pool on 50x50 map field
         int numberOfPools = Random.randInt(1, 1+(int)(globalOptions.mapWidth()* globalOptions.mapHeight()/2500));
         for(int i=0; i<numberOfPools; i++){
@@ -143,25 +145,25 @@ public class WaterMap extends AbstractWorldMap{
                         grasses.remove(neighborAbove);
                         newEdges.add(neighborAbove);
                         waterPositions.add(neighborAbove);
-                        removeFromFreeFields(neighborAbove);
+//                        removeFromFreeFields(neighborAbove);
                     }
                     if (!waterPositions.contains(neighborBelow)) {
                         grasses.remove(neighborBelow);
                         newEdges.add(neighborBelow);
                         waterPositions.add(neighborBelow);
-                        removeFromFreeFields(neighborBelow);
+//                        removeFromFreeFields(neighborBelow);
                     }
                     if (!waterPositions.contains(neighborLeft)) {
                         grasses.remove(neighborLeft);
                         newEdges.add(neighborLeft);
                         waterPositions.add(neighborLeft);
-                        removeFromFreeFields(neighborLeft);
+//                        removeFromFreeFields(neighborLeft);
                     }
                     if (!waterPositions.contains(neighborRight)) {
                         grasses.remove(neighborRight);
                         newEdges.add(neighborRight);
                         waterPositions.add(neighborRight);
-                        removeFromFreeFields(neighborRight);
+//                        removeFromFreeFields(neighborRight);
                     }
                 }
                 waterEdges = newEdges;
@@ -177,22 +179,22 @@ public class WaterMap extends AbstractWorldMap{
                     if (waterPositions.contains(neighborAbove) && !waterEdges.contains(neighborAbove)) {
                         newEdges.add(neighborAbove);
                         waterPositions.remove(edge);
-                        addToFreeFields(edge);
+//                        addToFreeFields(edge);
                     }
                     if (waterPositions.contains(neighborBelow) && !waterEdges.contains(neighborBelow)) {
                         newEdges.add(neighborBelow);
                         waterPositions.remove(edge);
-                        addToFreeFields(edge);
+//                        addToFreeFields(edge);
                     }
                     if (waterPositions.contains(neighborLeft) && !waterEdges.contains(neighborLeft)) {
                         newEdges.add(neighborLeft);
                         waterPositions.remove(edge);
-                        addToFreeFields(edge);
+//                        addToFreeFields(edge);
                     }
                     if (waterPositions.contains(neighborRight) && !waterEdges.contains(neighborRight)) {
                         newEdges.add(neighborRight);
                         waterPositions.remove(edge);
-                        addToFreeFields(edge);
+//                        addToFreeFields(edge);
                     }
                 }
                 waterEdges = newEdges;
