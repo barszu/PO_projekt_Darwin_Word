@@ -76,6 +76,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     public void tryToRemoveAllDeadAnimals() {
         for (Animal animal : getAllAnimals()) {
             if (animal.checkIfDead()){
+                System.out.println("Animal "+animal+" has died at: " + animal.getPosition());
                 animalsDict.removeFrom(animal.getPosition() , animal); //remove from map
             }
         }
@@ -84,9 +85,11 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     @Override
     public void moveAllAnimals() {
         for (Animal animal : getAllAnimals()) {
+            Vector2d oldPosition = animal.getPosition();
             animalsDict.removeFrom(animal.getPosition(), animal); //temp removal
             animal.move(this);
             animalsDict.putInside(animal.getPosition(), animal);
+            System.out.println("Animal "+animal+" has moved from: " + oldPosition + " to: " + animal.getPosition());
         }
     }
 
@@ -106,6 +109,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
                 Vector2d position = biomes.giveFreePosition();
                 Grass grass = new Grass(position);
                 grasses.put(position, grass);
+                System.out.println("Grass has benn placed at: " + position);
             } catch (NoPositionLeftException e) {
                 //nothing to do
                 System.out.println("No position left for grass! Day: " + globalVariables.getDate());
@@ -188,6 +192,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
                 grasses.remove(grassPosition);
                 biomes.handOverPosition(grassPosition);
+                System.out.println("Animal "+animal+" has eaten grass at: " + grassPosition);
             }
         }
     }

@@ -1,5 +1,6 @@
 package project.backend.backend.model.maps;
 
+import project.backend.backend.extras.CyclicListExtras;
 import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
 import project.backend.backend.global.GlobalOptions;
@@ -18,7 +19,18 @@ public class WaterMap extends AbstractWorldMap{
     private List<Vector2d> waterEdges = new ArrayList<>();
 
 
+    public List<Vector2d> getWaterPositions() {
+        return waterPositions;
+    }
+    public List<Vector2d> getWaterEdges() {
+        return waterEdges;
+    }
+
+
+
     public WaterMap(GlobalOptions globalOptions, GlobalVariables globalVariables) {
+        //TODO: stawiajac wode zabierz ja z wolych buforow poprostu
+//        TODO: usun trawe z wody (relokacja) || stawiaj trawe po wodzie -> calkiem nowy konstruktor
         super(globalOptions, globalVariables);
         waterPhase = 0;
         generateWater();
@@ -49,12 +61,9 @@ public class WaterMap extends AbstractWorldMap{
 
     @Override
     public void updateEverything(){
-        if(waterPhase == 4){
-            waterPhase = 0;
-        }
         moveWater(waterPhase);
         super.updateEverything();
-        waterPhase++;
+        waterPhase = CyclicListExtras.getIncrementedIdx(waterPhase,4);
     }
     @Override
     public Vector2d validatePosition(Vector2d newPosition , Vector2d oldPosition) {
@@ -71,6 +80,7 @@ public class WaterMap extends AbstractWorldMap{
     @Override
     public void initAllAnimals() {
         //TODO: init animals on positions without water!
+//        TODO: -> shuffle?
     }
 
     //TODO: implement this method!
@@ -141,29 +151,14 @@ public class WaterMap extends AbstractWorldMap{
                     Vector2d neighborBelow = new Vector2d(edge.getX(), edge.getY() + 1);
                     Vector2d neighborLeft = new Vector2d(edge.getX() - 1, edge.getY());
                     Vector2d neighborRight = new Vector2d(edge.getX() + 1, edge.getY());
-                    if (!waterPositions.contains(neighborAbove)) {
-                        grasses.remove(neighborAbove);
-                        newEdges.add(neighborAbove);
-                        waterPositions.add(neighborAbove);
-//                        removeFromFreeFields(neighborAbove);
-                    }
-                    if (!waterPositions.contains(neighborBelow)) {
-                        grasses.remove(neighborBelow);
-                        newEdges.add(neighborBelow);
-                        waterPositions.add(neighborBelow);
-//                        removeFromFreeFields(neighborBelow);
-                    }
-                    if (!waterPositions.contains(neighborLeft)) {
-                        grasses.remove(neighborLeft);
-                        newEdges.add(neighborLeft);
-                        waterPositions.add(neighborLeft);
-//                        removeFromFreeFields(neighborLeft);
-                    }
-                    if (!waterPositions.contains(neighborRight)) {
-                        grasses.remove(neighborRight);
-                        newEdges.add(neighborRight);
-                        waterPositions.add(neighborRight);
-//                        removeFromFreeFields(neighborRight);
+
+                    for (Vector2d neighbor : new Vector2d[]{neighborAbove, neighborBelow, neighborLeft, neighborRight}) {
+                        if (!waterPositions.contains(neighbor)) {
+                            grasses.remove(neighbor);
+                            newEdges.add(neighbor);
+                            waterPositions.add(neighbor);
+//                          removeFromFreeFields(neighbor);
+                        }
                     }
                 }
                 waterEdges = newEdges;
@@ -176,25 +171,13 @@ public class WaterMap extends AbstractWorldMap{
                     Vector2d neighborBelow = new Vector2d(edge.getX(), edge.getY() + 1);
                     Vector2d neighborLeft = new Vector2d(edge.getX() - 1, edge.getY());
                     Vector2d neighborRight = new Vector2d(edge.getX() + 1, edge.getY());
-                    if (waterPositions.contains(neighborAbove) && !waterEdges.contains(neighborAbove)) {
-                        newEdges.add(neighborAbove);
-                        waterPositions.remove(edge);
-//                        addToFreeFields(edge);
-                    }
-                    if (waterPositions.contains(neighborBelow) && !waterEdges.contains(neighborBelow)) {
-                        newEdges.add(neighborBelow);
-                        waterPositions.remove(edge);
-//                        addToFreeFields(edge);
-                    }
-                    if (waterPositions.contains(neighborLeft) && !waterEdges.contains(neighborLeft)) {
-                        newEdges.add(neighborLeft);
-                        waterPositions.remove(edge);
-//                        addToFreeFields(edge);
-                    }
-                    if (waterPositions.contains(neighborRight) && !waterEdges.contains(neighborRight)) {
-                        newEdges.add(neighborRight);
-                        waterPositions.remove(edge);
-//                        addToFreeFields(edge);
+
+                    for (Vector2d neighbor : new Vector2d[]{neighborAbove, neighborBelow, neighborLeft, neighborRight}) {
+                        if (waterPositions.contains(neighbor) && !waterEdges.contains(neighbor)){
+                            newEdges.add(neighbor);
+                            waterPositions.remove(edge);
+//                          addToFreeFields(edge);
+                        }
                     }
                 }
                 waterEdges = newEdges;
@@ -202,11 +185,5 @@ public class WaterMap extends AbstractWorldMap{
         }
     }
 
-    public List<Vector2d> getWaterPositions() {
-        return waterPositions;
-    }
 
-    public List<Vector2d> getWaterEdges() {
-        return waterEdges;
-    }
 }
