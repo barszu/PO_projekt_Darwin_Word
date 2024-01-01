@@ -22,7 +22,8 @@ public class SimulationMain {
         int mapHeight = 10;
 
         //environment options
-        MapType mapType = MapType.NORMAL_MAP;
+//        MapType mapType = MapType.NORMAL_MAP;
+        MapType mapType = MapType.WATER_MAP;
         MutationType mutationType = MutationType.SLIGHT_CORRECTION;
 
         //initial options

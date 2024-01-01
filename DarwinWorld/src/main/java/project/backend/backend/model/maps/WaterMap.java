@@ -5,6 +5,10 @@ import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
+import project.backend.backend.model.maps.mapsUtil.Biomes;
+import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
+import project.backend.backend.model.sprites.Animal;
+import project.backend.backend.model.sprites.WorldElement_able;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,11 +16,10 @@ import java.util.HashSet;
 import java.util.List;
 
 public class WaterMap extends AbstractWorldMap{
-    //TODO: problem -> how to move a water ?
-
+    //TODO: do przegadania cos co zwraca biom? zeby mapa wiedziala co printowac
     private final List<Vector2d> waterPositions = new ArrayList<>();
     private int waterPhase;
-    private List<Vector2d> waterEdges = new ArrayList<>();
+    private List<Vector2d> waterEdges = new ArrayList<>(); //egdes from waterPositions
 
 
     public List<Vector2d> getWaterPositions() {
@@ -29,33 +32,17 @@ public class WaterMap extends AbstractWorldMap{
 
 
     public WaterMap(GlobalOptions globalOptions, GlobalVariables globalVariables) {
-        //TODO: stawiajac wode zabierz ja z wolych buforow poprostu
-//        TODO: usun trawe z wody (relokacja) || stawiaj trawe po wodzie -> calkiem nowy konstruktor
         super(globalOptions, globalVariables);
+
         waterPhase = 0;
         generateWater();
         waterEdges.addAll(findWaterEdges());
-        int equator = globalOptions.mapHeight()/2;
-        int radius = globalOptions.mapHeight()/10;
-        for(int i=0; i<globalOptions.mapWidth();i++){
-            for(int j=0; j< globalOptions.mapHeight();j++){
-                if(j>=equator-radius && j<=equator+radius){
-                    if(!waterPositions.contains(new Vector2d(i,j))){
-//                        jungleFreePositions.add(new Vector2d(i,j));
-                    }
-                }
-                else{
-                    if(!waterPositions.contains(new Vector2d(i,j))){
-//                        stepFreePositions.add(new Vector2d(i,j));
-                    }
-
-                }
-            }
+//        if waterPositions does not contain a 'position' -> it is a free position (for grasses and maybe animals?)
+        for (Vector2d waterPosition : waterPositions) {
+            biomes.giveExactFreePosition(waterPosition); //kicking that position from free positions
         }
 
-//        orderedAnimalList.addAll(getAllAnimals());
         initAllAnimals();
-//        setHierarchy(orderedAnimalList);
         placeGrasses(globalOptions.energyPerPlant());
     }
 
@@ -67,10 +54,9 @@ public class WaterMap extends AbstractWorldMap{
     }
     @Override
     public Vector2d validatePosition(Vector2d newPosition , Vector2d oldPosition) {
-        if (super.validatePosition(newPosition, oldPosition).equals(newPosition)) { //within the rectangle
-            return newPosition;
+        if (!super.validatePosition(newPosition, oldPosition).equals(newPosition)) { //not within the rectangle
+            return oldPosition;
         }
-        //TODO: check water on newPosition!
         if(waterPositions.contains(newPosition)){
             return oldPosition;
         }
@@ -79,18 +65,32 @@ public class WaterMap extends AbstractWorldMap{
 
     @Override
     public void initAllAnimals() {
-        //TODO: init animals on positions without water!
-//        TODO: -> shuffle?
+        List<Vector2d> notWaterPositions = biomes.getAllFreePositions(); // positions without water
+        for (int i = 0; i < globalOptions.initAnimalsNo(); i++) {
+            int decidingNumber = Random.randInt(0, notWaterPositions.size()-1);
+            Animal animal = new Animal(notWaterPositions.get(decidingNumber), globalOptions , globalVariables);
+            animalsDict.putInside(animal.getPosition() , animal);
+        }
     }
 
-    //TODO: implement this method!
-    private void initWaterPositions(int waterNo){
-        //TODO: init water positions!
+    @Override
+    public String getBiomeRepresentation(Vector2d position){
+        if(waterPositions.contains(position)){
+            return "#";
+        }
+        return super.getBiomeRepresentation(position);
     }
+
+
+
+
+
+
+    //water generation part
 
     //    finds a circle of points on map at most "radius" fields far from "center" (Euclidean distance)
-//    NOTE: returns only fields that aren't in waterPositions yet
-    public List<Vector2d> fieldsInRadius(int radius, Vector2d center){
+    //    NOTE: returns only fields that aren't in waterPositions yet
+    private List<Vector2d> fieldsInRadius(int radius, Vector2d center){
         List<Vector2d> fieldsToAdd = new ArrayList<>();
         for(int i=center.getX()-radius; i<center.getX()+2*radius;i++){
             for(int j=center.getY()-radius;j<center.getY()+2*radius;j++){
@@ -106,7 +106,7 @@ public class WaterMap extends AbstractWorldMap{
         return fieldsToAdd;
     }
 
-    public void generateWater(){ //TODO: podczas initu mapy tworzone
+    private void generateWater(){ //TODO: podczas initu mapy tworzone
 //        Approximately one water pool on 50x50 map field
         int numberOfPools = Random.randInt(1, 1+(int)(globalOptions.mapWidth()* globalOptions.mapHeight()/2500));
         for(int i=0; i<numberOfPools; i++){
@@ -124,7 +124,7 @@ public class WaterMap extends AbstractWorldMap{
         }
     }
 
-    public List<Vector2d> findWaterEdges(){
+    private List<Vector2d> findWaterEdges(){
         List<Vector2d> edges = new ArrayList<>();
         for(Vector2d position : waterPositions){
             Vector2d neighborAbove = new Vector2d(position.getX(), position.getY() - 1);
@@ -141,7 +141,7 @@ public class WaterMap extends AbstractWorldMap{
         return edges;
     }
 
-    public void moveWater(int waterPhase) {
+    private void moveWater(int waterPhase) {
         switch (waterPhase) {
             case 0, 1 -> {
 //                inflows 0, 1

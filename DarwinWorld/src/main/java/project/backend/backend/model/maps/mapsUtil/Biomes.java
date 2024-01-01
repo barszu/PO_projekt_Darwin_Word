@@ -52,7 +52,7 @@ public class Biomes {
         throw new NoPositionLeftException(); //no places left in jungle or step
     }
 
-    public Vector2d giveExactFreePosition(Vector2d position) throws NoPositionLeftException{
+    public Vector2d giveExactFreePosition(Vector2d position){
         //gives exacly position, logic inside
         if (!rectangleBox.contains(position)){
             throw new IllegalArgumentException("There is no such position {"+position+"} in rectangle "+rectangleBox);}
@@ -93,6 +93,22 @@ public class Biomes {
                 throw new IllegalArgumentException("Position {"+position+"} is already in free buffer in steppe");
             }
             stepFreePositions.add(position);
+        }
+    }
+
+    public List<Vector2d> getAllFreePositions() {
+        List<Vector2d> allFreePositions = new ArrayList<>();
+        allFreePositions.addAll(stepFreePositions);
+        allFreePositions.addAll(jungleFreePositions);
+        return allFreePositions;
+    }
+
+    public String getBiomeRepresentation(Vector2d position) {
+        if (position.getY() >= equator-radius && position.getY() <= equator+radius){
+            return ".";
+        }
+        else{
+            return " ";
         }
     }
 

@@ -65,6 +65,10 @@ public interface WorldMap_able extends MoveValidator_able{
     void makeAllAnimalsOlder();
     //    ------------------------------------------
 
+
+    String getBiomeRepresentation(Vector2d position);
+    //   ------------------------------------------
+
     /**
      * This method is used to get the strongest occupant from a certain position.
      * In first place Animal, then Grass.

@@ -38,10 +38,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
                 new Vector2d(globalOptions.mapWidth()-1,globalOptions.mapHeight()-1));
 
         this.biomes = new Biomes(this.rectangleBox);
-        initAllAnimals();
-        placeGrasses(globalOptions.energyPerPlant());
-
-        //TODO: zajrzyj do tego -> hermetyzacja
+        //and others...
     }
 
     @Override
@@ -63,14 +60,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         return oldPosition;
     }
 
-    @Override
-    public void initAllAnimals() {
-        for (int i = 0; i < globalOptions.initAnimalsNo(); i++) {
-            //animals can stack on the same position, position within rectangle
-            Animal animal = new Animal(Random.randPosition(rectangleBox) , globalOptions , globalVariables);
-            animalsDict.putInside(animal.getPosition() , animal);
-        }
-    }
+
 
     @Override
     public void tryToRemoveAllDeadAnimals() {
@@ -201,6 +191,11 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     public String toString() {
         MapVisualizer mapVis = new MapVisualizer(this);
         return mapVis.draw(rectangleBox.lowerLeft() , rectangleBox.upperRight().add(new Vector2d(1,1)) );
+    }
+
+    @Override
+    public String getBiomeRepresentation(Vector2d position) {
+        return biomes.getBiomeRepresentation(position);
     }
 
 
