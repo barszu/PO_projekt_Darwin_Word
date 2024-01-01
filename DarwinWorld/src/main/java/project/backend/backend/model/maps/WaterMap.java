@@ -108,7 +108,7 @@ public class WaterMap extends AbstractWorldMap{
 
     private void generateWater(){ //TODO: podczas initu mapy tworzone
 //        Approximately one water pool on 50x50 map field
-        int numberOfPools = Random.randInt(1, 1+(int)(globalOptions.mapWidth()* globalOptions.mapHeight()/2500));
+        int numberOfPools = Random.randInt(1, 1+globalOptions.mapWidth()* globalOptions.mapHeight()/400);
         for(int i=0; i<numberOfPools; i++){
             int x = Random.randInt(0, globalOptions.mapWidth()-1);
             int y = Random.randInt(0, globalOptions.mapHeight()-1);
@@ -118,7 +118,8 @@ public class WaterMap extends AbstractWorldMap{
             waterPositions.addAll(surroundings);
         }
         Collections.shuffle(waterPositions);
-        for(int i=0; i<numberOfPools*4; i++){
+        int newNumberOfPools = Math.min(numberOfPools*4,waterPositions.size());
+        for(int i=0; i<newNumberOfPools; i++){
             List<Vector2d> surroundings = fieldsInRadius(globalOptions.mapWidth()/20, waterPositions.get(i));
             waterPositions.addAll(surroundings);
         }
