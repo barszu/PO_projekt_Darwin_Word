@@ -1,13 +1,17 @@
 package project.backend.backend.model.maps;
 
+import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
+import project.backend.backend.model.sprites.Animal;
 
 public class CylindricalGlobeMap extends AbstractWorldMap{
 
     public CylindricalGlobeMap(GlobalOptions globalOptions, GlobalVariables globalVariables) {
         super(globalOptions, globalVariables);
+        initAllAnimals();
+        placeGrasses(globalOptions.energyPerPlant());
     }
 
     @Override
@@ -33,6 +37,20 @@ public class CylindricalGlobeMap extends AbstractWorldMap{
                 + oldPosition.toString() +
                 "map: ["+globalOptions.mapWidth()+globalOptions.mapHeight()+"]");
 //        return oldPosition; //if something went wrong
+    }
+
+    @Override
+    public String toString(){
+        return super.toString();
+    }
+
+    @Override
+    public void initAllAnimals() {
+        for (int i = 0; i < globalOptions.initAnimalsNo(); i++) {
+            //animals can stack on the same position, position within rectangle
+            Animal animal = new Animal(Random.randPosition(rectangleBox) , globalOptions , globalVariables);
+            animalsDict.putInside(animal.getPosition() , animal);
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package project.backend.backend;
 
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
+import project.backend.backend.listeners.ConsoleMapDisplay;
 import project.backend.backend.listeners.MapConsoleLogger;
 import project.backend.backend.model.maps.CylindricalGlobeMap;
 import project.backend.backend.model.maps.WaterMap;
@@ -30,7 +31,8 @@ public class Simulation extends Thread{
             case WATER_MAP -> this.worldMap = new WaterMap(globalOptions,globalVariables);
             default -> throw new IllegalArgumentException("Unknown map type: " + globalOptions.mapType().toString());
         }
-        this.worldMap.addObserver(new MapConsoleLogger());
+//        this.worldMap.addObserver(new MapConsoleLogger());
+        this.worldMap.addObserver(new ConsoleMapDisplay());
     }
 
 

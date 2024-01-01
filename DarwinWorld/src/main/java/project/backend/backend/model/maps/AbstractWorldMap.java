@@ -1,39 +1,32 @@
 package project.backend.backend.model.maps;
 
+import project.backend.backend.exceptions.NoPositionLeftException;
 import project.backend.backend.extras.ListHashMap;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
 import project.backend.backend.listeners.MapChangeListener;
+import project.backend.backend.model.maps.mapsUtil.Biomes;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
 import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.Grass;
 import project.backend.backend.model.sprites.WorldElement_able;
+import project.backend.backend.util.MapVisualizer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap_able{
-//    TODO: init grasses!!!
     private final List<MapChangeListener> observersList = new ArrayList<>();
 
-
+    protected final Biomes biomes;
     protected final RectangleBoundary rectangleBox;
     protected final GlobalOptions globalOptions;
     protected final GlobalVariables globalVariables;
-
-    //{ (x,y) : ordered?[animal1, animal2, ...]
-    //TODO: ordrered list?
     protected final ListHashMap<Vector2d, Animal> animalsDict = new ListHashMap<>();
-
     //{ (x,y) : grass }
     protected final HashMap<Vector2d, Grass> grasses = new HashMap<>();
 
-    //TODO: biomes?
-    protected final List<Vector2d> freeOfGrassPositions = new ArrayList<>();
 
     public AbstractWorldMap(GlobalOptions globalOptions , GlobalVariables globalVariables) {
         this.globalOptions = globalOptions;
@@ -44,8 +37,8 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         this.rectangleBox = new RectangleBoundary(new Vector2d(0,0),
                 new Vector2d(globalOptions.mapWidth()-1,globalOptions.mapHeight()-1));
 
-        initAllAnimals();
-        placeGrasses(globalOptions.plantsPerDay()); //TODO: initPlantsNo ? in global options
+        this.biomes = new Biomes(this.rectangleBox);
+        //and others...
     }
 
     @Override
@@ -53,6 +46,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         tryToRemoveAllDeadAnimals();
         makeAllAnimalsOlder();
         moveAllAnimals();
+        feedAllAnimals();
         tryToBreedAllAnimals();
         placeGrasses(globalOptions.plantsPerDay());
     }
@@ -66,19 +60,13 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         return oldPosition;
     }
 
-    @Override
-    public void initAllAnimals() {
-        for (int i = 0; i < globalOptions.initAnimalsNo(); i++) {
-            //animals can stack on the same position, position within rectangle
-            Animal animal = new Animal(Random.randPosition(rectangleBox) , globalOptions , globalVariables);
-            animalsDict.putInside(animal.getPosition() , animal);
-        }
-    }
+
 
     @Override
     public void tryToRemoveAllDeadAnimals() {
         for (Animal animal : getAllAnimals()) {
             if (animal.checkIfDead()){
+                System.out.println("Animal "+animal+" has died at: " + animal.getPosition());
                 animalsDict.removeFrom(animal.getPosition() , animal); //remove from map
             }
         }
@@ -87,9 +75,11 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     @Override
     public void moveAllAnimals() {
         for (Animal animal : getAllAnimals()) {
+            Vector2d oldPosition = animal.getPosition();
             animalsDict.removeFrom(animal.getPosition(), animal); //temp removal
             animal.move(this);
             animalsDict.putInside(animal.getPosition(), animal);
+            System.out.println("Animal "+animal+" has moved from: " + oldPosition + " to: " + animal.getPosition());
         }
     }
 
@@ -101,24 +91,57 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         }
     }
 
+
     @Override
     public void placeGrasses(int grassNo) { //init map , run
-        //TODO: Simon algorithm
-        //TODO: use shuffle
+        for (int i=0; i<grassNo; i++){
+            try {
+                Vector2d position = biomes.giveFreePosition();
+                Grass grass = new Grass(position);
+                grasses.put(position, grass);
+                System.out.println("Grass has benn placed at: " + position);
+            } catch (NoPositionLeftException e) {
+                //nothing to do
+                System.out.println("No position left for grass! Day: " + globalVariables.getDate());
+            }
+        }
     }
+
+
 
     @Override
     public void tryToBreedAllAnimals() {
-        //TODO: implement this Simon!
+        for(Vector2d position: animalsDict.keySet()){
+            setHierarchy(position);
+            List<Animal> animalsOnPosition = animalsDict.getListFrom(position); //raw list
+
+            int couplesNo = animalsOnPosition.size()/2;
+            //TODO: out of list danger!
+            for(int i=0; i<couplesNo; i++){
+                Animal leftAnimal = animalsOnPosition.get(2*i);
+                Animal rightAnimal = animalsOnPosition.get(2*i+1);
+                if (leftAnimal.isWellFed() && rightAnimal.isWellFed()){
+                    Animal child = leftAnimal.reproduce(rightAnimal);
+                    animalsDict.putInside(position, child);
+                }
+                else{
+                    break;
+                    //there will be no more well fed animals on this position, because list is sorted
+                }
+            }
+        }
     }
 
     @Override
     public WorldElement_able getOccupantFrom(Vector2d position) {
-        List<Animal> res = animalsDict.getListFrom(position);
-        if (res != null){ //return first best animal
-            return res.get(0);
+        if (animalsDict.containsKey(position)){
+            setHierarchy(position);
+            return animalsDict.getListFrom(position).get(0); //return first best animal
         }
-        return grasses.get(position); //return grass or null if nothing there
+        else if (grasses.containsKey(position)){
+            return grasses.get(position); //return grass
+        }
+        return null;
     }
 
     @Override
@@ -142,6 +165,50 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         return res;
     }
 
+    //Sets Animal order within animals on same position
+    public void setHierarchy(Vector2d position){
+        animalsDict.getListFrom(position).sort(Animal::compareTo);
+    }
+
+    //claims one grass for one animal
+    public void feedAllAnimals(){
+        for(Vector2d grassPosition: new ArrayList<>(grasses.keySet()) ){ //TODO: problem nadpisywania slownika?
+            if (animalsDict.containsKey(grassPosition)){
+                setHierarchy(grassPosition);
+                Animal animal = animalsDict.getListFrom(grassPosition).get(0);
+
+                animal.incrementEatenGrassNo();
+                animal.addEnergy(globalOptions.energyPerPlant());
+
+                grasses.remove(grassPosition);
+                biomes.handOverPosition(grassPosition);
+                System.out.println("Animal "+animal+" has eaten grass at: " + grassPosition);
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        MapVisualizer mapVis = new MapVisualizer(this);
+        return mapVis.draw(rectangleBox.lowerLeft() , rectangleBox.upperRight().add(new Vector2d(1,1)) );
+    }
+
+    @Override
+    public String getBiomeRepresentation(Vector2d position) {
+        return biomes.getBiomeRepresentation(position);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public void addObserver(MapChangeListener observer) {observersList.add(observer);}
     @Override
@@ -154,4 +221,6 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         }
 
     }
+
+
 }

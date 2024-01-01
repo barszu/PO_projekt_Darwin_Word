@@ -1,7 +1,8 @@
-package agh.ics.oop.util;
+package project.backend.backend.util;
 
-import project.backend.model.models.Vector2d;
-import agh.ics.oop.model.WorldMap_able;
+
+import project.backend.backend.extras.Vector2d;
+import project.backend.backend.model.maps.WorldMap_able;
 
 /**
  * The map visualizer converts the {@link WorldMap_able} map into a string
@@ -75,12 +76,17 @@ public class MapVisualizer {
     }
 
     private String drawObject(Vector2d currentPosition) {
-        if (this.map.isOccupied(currentPosition)) {
-            Object object = this.map.objectAt(currentPosition);
-            if (object != null) {
-                return object.toString();
-            }
+//        if (this.map.isOccupied(currentPosition)) {
+//            Object object = this.map.objectAt(currentPosition);
+//            if (object != null) {
+//                return object.toString();
+//            }
+//        }
+        Object occupant = this.map.getOccupantFrom(currentPosition);
+        if (occupant != null){
+            return occupant.toString();
         }
-        return EMPTY_CELL;
+        return this.map.getBiomeRepresentation(currentPosition);
+//        return EMPTY_CELL;
     }
 }

@@ -43,6 +43,12 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
     }
     public int getEnergy() {return energy;}
     public int[] getGenotype() {return genotype;}
+    public int getAge() {
+        return age;
+    }
+    public List<Animal> getChildrenList() {
+        return childrenList;
+    }
 
     // constructors
 
@@ -118,15 +124,16 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
     //others implementing methods
     @Override
     public String toString() {
-        return "Animal{" +
-            "direction=" + direction +
-            ", position=" + position +
-            ", genotype=" + Arrays.toString(genotype) +
-            ", currentGenotypeIndex=" + currentGenotypeIndex +
-            ", energy=" + energy +
-            '}';
+//        return "Animal{" +
+//            "direction=" + direction +
+//            ", position=" + position +
+//            ", genotype=" + Arrays.toString(genotype) +
+//            ", currentGenotypeIndex=" + currentGenotypeIndex +
+//            ", energy=" + energy +
+//            '}';
 //        return "Animal{" + direction.toString() + position.toString() + '}';
 //        return direction.toString();
+        return "A";
     }
     public boolean isAt(Vector2d position){
         return this.position.equals(position);
@@ -173,6 +180,10 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
         return false;
     }
 
+    public boolean isWellFed(){
+        return this.energy >= globalOptions.energyToBeFeed();
+    }
+
     public void move(MoveValidator_able moveValidatorable){
           if (isDead){
             throw new IllegalStateException("Animal is dead! Cannot move!");
@@ -206,8 +217,6 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
 
         return child;
     }
-
-
 
 
 
