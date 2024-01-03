@@ -2,6 +2,7 @@ package project.backend.backend.model.maps;
 
 import project.backend.backend.listeners.MapChangeListener;
 import project.backend.backend.extras.Vector2d;
+import project.backend.backend.model.enums.BiomeField;
 import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.WorldElement_able;
 
@@ -66,7 +67,7 @@ public interface WorldMap_able extends MoveValidator_able{
     //    ------------------------------------------
 
 
-    String getBiomeRepresentation(Vector2d position);
+    BiomeField getBiomeRepresentation(Vector2d position);
     //   ------------------------------------------
 
     /**
