@@ -3,6 +3,7 @@ package project.backend.backend.model.maps.mapsUtil;
 import project.backend.backend.exceptions.NoPositionLeftException;
 import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
+import project.backend.backend.model.enums.BiomeField;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,12 +104,12 @@ public class Biomes {
         return allFreePositions;
     }
 
-    public String getBiomeRepresentation(Vector2d position) {
+    public BiomeField getBiomeRepresentation(Vector2d position) {
         if (position.getY() >= equator-radius && position.getY() <= equator+radius){
-            return ".";
+            return BiomeField.JUNGLE;
         }
         else{
-            return " ";
+            return BiomeField.STEP;
         }
     }
 

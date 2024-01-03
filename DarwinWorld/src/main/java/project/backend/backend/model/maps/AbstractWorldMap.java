@@ -5,6 +5,7 @@ import project.backend.backend.extras.ListHashMap;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
 import project.backend.backend.listeners.MapChangeListener;
+import project.backend.backend.model.enums.BiomeField;
 import project.backend.backend.model.maps.mapsUtil.Biomes;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.extras.Random;
@@ -194,7 +195,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     }
 
     @Override
-    public String getBiomeRepresentation(Vector2d position) {
+    public BiomeField getBiomeRepresentation(Vector2d position) {
         return biomes.getBiomeRepresentation(position);
     }
 
