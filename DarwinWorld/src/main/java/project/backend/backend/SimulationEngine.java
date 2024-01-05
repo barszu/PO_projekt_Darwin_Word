@@ -19,7 +19,7 @@ public class SimulationEngine {
             simulation.start();
         }
     }
-    public void runASync() {
+    public void runAsync() {
         for(Simulation simulation : this.simulations) {
             simulation.start();
         }
