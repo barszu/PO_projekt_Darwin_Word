@@ -5,6 +5,7 @@ import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
+import project.backend.backend.model.enums.BiomeField;
 import project.backend.backend.model.maps.mapsUtil.Biomes;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.model.sprites.Animal;
@@ -74,9 +75,9 @@ public class WaterMap extends AbstractWorldMap{
     }
 
     @Override
-    public String getBiomeRepresentation(Vector2d position){
+    public BiomeField getBiomeRepresentation(Vector2d position){
         if(waterPositions.contains(position)){
-            return "#";
+            return BiomeField.WATER;
         }
         return super.getBiomeRepresentation(position);
     }
