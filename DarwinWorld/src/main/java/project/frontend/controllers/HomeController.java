@@ -2,12 +2,24 @@ package project.frontend.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
+import javafx.stage.Stage;
+import project.backend.backend.global.GlobalOptions;
+import project.backend.backend.model.enums.MapType;
+import project.backend.backend.model.enums.MutationType;
 
-public class HomeController {
+import java.io.IOException;
+import java.util.Map;
+
+public class HomeController{
+
+    private GlobalOptions G_OPTIONS;
 
     @FXML
     private TextField mapWidthField;
@@ -93,15 +105,73 @@ public class HomeController {
         alert.showAndWait();
     }
 
-    public void onStartButtonClicked(ActionEvent actionEvent) {
-        System.out.println("Start button clicked");
-        if (verifyFields()) {
-            System.out.println("Verification passed!");
-        }
-        else {
-            System.out.println("Verification failed!");
+    private int getIntFromTextField(TextField textField, String fieldName) {
+        try {
+            String text = textField.getText().trim();
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, fieldName + " must be a valid integer.");
+            return 0;
         }
     }
 
+    public static <T extends Enum<T>> T stringToEnum(Class<T> enumType, String value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Value cannot be null");
+        }
+
+        try {
+            return Enum.valueOf(enumType, value);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid value for enum " + enumType.getSimpleName() + ": " + value);
+        }
+    }
+
+    public void parseOptions() {
+        try {
+            int mapWidth = getIntFromTextField(mapWidthField, "Map Width");
+            int mapHeight = getIntFromTextField(mapHeightField, "Map Height");
+            MapType mapType = stringToEnum(MapType.class, mapTypeChoiceBox.getValue());
+            MutationType mutationType = stringToEnum(MutationType.class, mutationTypeChoiceBox.getValue());
+            int initAnimalEnergy = getIntFromTextField(initAnimalEnergyField, "Initial Animal Energy");
+            int initPlantEnergy = getIntFromTextField(initPlantEnergyField, "Initial Plant Energy");
+            int initAnimalsNo = getIntFromTextField(initAnimalsNoField, "Initial Animals Number");
+            int genotypeLength = getIntFromTextField(genotypeLengthField, "Genotype Length");
+            int energyPerPlant = getIntFromTextField(energyPerPlantField, "Energy Per Plant");
+            int plantsPerDay = getIntFromTextField(plantsPerDayField, "Plants Per Day");
+            int energyToBeFeed = getIntFromTextField(energyToBeFeedField, "Energy To Be Fed");
+            int energyToBreeding = getIntFromTextField(energyToBreedingField, "Energy To Breeding");
+            int minMutationsNo = getIntFromTextField(minMutationsNoField, "Min Mutations Number");
+            int maxMutationsNo = getIntFromTextField(maxMutationsNoField, "Max Mutations Number");
+            G_OPTIONS = new GlobalOptions(mapWidth, mapHeight, mapType, mutationType, initAnimalEnergy, initPlantEnergy, initAnimalsNo, genotypeLength, energyPerPlant, plantsPerDay, energyToBeFeed, energyToBreeding, minMutationsNo, maxMutationsNo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error parsing options");
+        }
+    }
+
+
+    public void onStartButtonClicked(ActionEvent actionEvent) {
+        if (verifyFields()) {
+            Stage currentStage = (Stage) startButton.getScene().getWindow();
+            Stage primaryStage = new Stage();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/simulationGUI.fxml"));
+                Parent root = loader.load();
+                parseOptions();
+                SimulationController simulationController = loader.getController();
+                primaryStage.setTitle("Darwin's Evolution");
+                primaryStage.setScene(new Scene(root));
+                primaryStage.show();
+//                currentStage.close();
+                simulationController.start(G_OPTIONS);
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Error loading main application");
+            }
+        } else {
+            System.out.println("Verification failed!");
+        }
+    }
 
 }

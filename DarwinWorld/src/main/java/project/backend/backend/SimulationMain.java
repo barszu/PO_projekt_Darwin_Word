@@ -18,8 +18,8 @@ public class SimulationMain {
         //args for GlobalOptions
 
         //map options
-        int mapWidth = 70;
-        int mapHeight = 70;
+        int mapWidth = 50;
+        int mapHeight = 50;
 
         //environment options
 //        MapType mapType = MapType.NORMAL_MAP;

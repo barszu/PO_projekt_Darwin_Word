@@ -3,6 +3,7 @@ package project.backend.backend;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
 import project.backend.backend.listeners.ConsoleMapDisplay;
+import project.backend.backend.listeners.MapChangeListener;
 import project.backend.backend.listeners.MapConsoleLogger;
 import project.backend.backend.model.maps.CylindricalGlobeMap;
 import project.backend.backend.model.maps.WaterMap;
@@ -13,6 +14,10 @@ import java.util.TimerTask;
 
 public class Simulation extends Thread{
     private Timer timer;
+
+    public WorldMap_able getWorldMap() {
+        return worldMap;
+    }
 
     private final WorldMap_able worldMap;
     private final GlobalVariables globalVariables;
@@ -32,7 +37,17 @@ public class Simulation extends Thread{
             default -> throw new IllegalArgumentException("Unknown map type: " + globalOptions.mapType().toString());
         }
 //        this.worldMap.addObserver(new MapConsoleLogger());
-        this.worldMap.addObserver(new ConsoleMapDisplay());
+//        this.worldMap.addObserver(new ConsoleMapDisplay());
+    }
+
+
+    public void addListenerToMap(MapChangeListener l){
+        worldMap.addObserver(l);
+    }
+
+    @Override
+    public void run(){
+        startSimulation();
     }
 
 

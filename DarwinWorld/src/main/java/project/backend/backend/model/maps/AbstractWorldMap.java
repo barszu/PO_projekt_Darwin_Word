@@ -20,6 +20,11 @@ import java.util.*;
 public abstract class AbstractWorldMap implements WorldMap_able{
     private final List<MapChangeListener> observersList = new ArrayList<>();
 
+    @Override
+    public RectangleBoundary getBoundary() {
+        return rectangleBox;
+    }
+
     protected final Biomes biomes;
     protected final RectangleBoundary rectangleBox;
     protected final GlobalOptions globalOptions;
