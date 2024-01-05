@@ -187,8 +187,8 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
         return this.energy >= globalOptions.energyToBeFeed();
     }
 
-    public int getSuccessorsNo(Animal theFather) {
-        return SuccessorDFS.searchSuccessorsNo(theFather);
+    public int getSuccessorsNo() {
+        return SuccessorDFS.searchSuccessorsNo(this);
     }
 
     public void move(MoveValidator_able moveValidatorable){
