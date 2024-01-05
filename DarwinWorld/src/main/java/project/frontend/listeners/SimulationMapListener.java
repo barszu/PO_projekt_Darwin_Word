@@ -10,6 +10,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
 import project.backend.backend.extras.Vector2d;
 import project.backend.backend.listeners.MapChangeListener;
+import project.backend.backend.model.enums.BiomeField;
 import project.backend.backend.model.maps.WorldMap_able;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.model.sprites.WorldElement_able;
@@ -67,13 +68,21 @@ public class SimulationMapListener implements MapChangeListener {
 
         for(int x=0; x<rows; x++){
             for(int y=0; y<columns; y++){
-                WorldElement_able el = worldMap.getOccupantFrom(new Vector2d(x,y));
-                //TODO: to future change
+                Vector2d position = new Vector2d(x,y);
+                WorldElement_able el = worldMap.getOccupantFrom(position);
+
+                Text worldElement;
                 if (el != null){
-                    Text worldElement = new Text(el.toString());
-                    mapGrid.setHalignment(worldElement, HPos.CENTER);
-                    mapGrid.add(worldElement, el.getPosition().getX()+1, el.getPosition().getY()+1);
+                    worldElement = new Text(el.toString());
+
                 }
+                else {
+                    BiomeField biomeField = worldMap.getBiomeRepresentation(position);
+                    worldElement = new Text(biomeField.toString());
+                }
+
+                mapGrid.setHalignment(worldElement, HPos.CENTER);
+                mapGrid.add(worldElement, position.getX()+1, position.getY()+1);
             }
         }
     }
