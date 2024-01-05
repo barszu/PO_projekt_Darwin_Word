@@ -10,6 +10,7 @@ import project.backend.backend.model.maps.mapsUtil.Biomes;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
+import project.backend.backend.model.maps.mapsUtil.SuccessorDFS;
 import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.Grass;
 import project.backend.backend.model.sprites.WorldElement_able;
@@ -204,6 +205,27 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         return biomes.getBiomeRepresentation(position);
     }
 
+    @Override
+    public int getBestGenotype() {
+        HashMap<Integer , Integer> geneCntMap = new HashMap<>();
+        for (Animal animal : getAllAnimals()) {
+            for (int gene : animal.getGenotype()) {
+                geneCntMap.put(gene , geneCntMap.getOrDefault(gene , 0) + 1);
+            }
+        }
+        Integer bestGene = Collections.max(geneCntMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+        return (int) bestGene;
+    }
+
+    @Override
+    public int getAnimalsNo(){
+        return getAllAnimals().size();
+    }
+
+    @Override
+    public int getGrassesNo(){
+        return grasses.size();
+    }
 
 
 
