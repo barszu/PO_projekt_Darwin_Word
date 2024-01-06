@@ -1,4 +1,4 @@
-package project.backend.backend.model.maps.mapsUtil;
+package project.backend.backend.model.sprites.animalUtil;
 
 import project.backend.backend.model.sprites.Animal;
 import java.util.HashSet;

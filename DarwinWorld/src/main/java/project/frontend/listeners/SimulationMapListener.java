@@ -71,18 +71,24 @@ public class SimulationMapListener implements MapChangeListener {
                 Vector2d position = new Vector2d(x,y);
                 WorldElement_able el = worldMap.getOccupantFrom(position);
 
-                Text worldElement;
+                Text cellText;
                 if (el != null){
-                    worldElement = new Text(el.toString());
+                    cellText = new Text(el.toString());
 
                 }
                 else {
                     BiomeField biomeField = worldMap.getBiomeRepresentation(position);
-                    worldElement = new Text(biomeField.toString());
+                    if (biomeField == null){
+                        cellText = new Text("@");
+                    }
+                    else{
+                        cellText = new Text(biomeField.toString());
+                    }
+
                 }
 
-                mapGrid.setHalignment(worldElement, HPos.CENTER);
-                mapGrid.add(worldElement, position.getX()+1, position.getY()+1);
+                mapGrid.setHalignment(cellText, HPos.CENTER);
+                mapGrid.add(cellText, position.getX()+1, position.getY()+1);
             }
         }
     }

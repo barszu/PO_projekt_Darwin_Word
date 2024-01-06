@@ -105,11 +105,23 @@ public class Biomes {
     }
 
     public BiomeField getBiomeRepresentation(Vector2d position) {
-        if (position.getY() >= equator-radius && position.getY() <= equator+radius){
+//        if (position.hasYbetween(equator-radius,equator+radius)){
+//            return BiomeField.JUNGLE;
+//        }
+//        else{
+//            return BiomeField.STEP;
+//        }
+        if (!rectangleBox.contains(position)){
+            return null;
+        }
+        if (jungleFreePositions.contains(position)){
             return BiomeField.JUNGLE;
         }
-        else{
+        else if (stepFreePositions.contains(position)){
             return BiomeField.STEP;
+        }
+        else{
+            return null;
         }
     }
 
