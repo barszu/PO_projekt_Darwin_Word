@@ -1,30 +1,34 @@
 package project.frontend.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
 import project.backend.backend.Simulation;
-import project.backend.backend.global.GlobalOptions;
-import project.backend.backend.global.GlobalVariables;
 import project.frontend.listeners.SimulationMapListener;
-public class SimulationController {
+
+public class SimulationController { //strikte zajmuje sie kontrolowaniem symulacji zatrzymywanie sterowanie fxml itd
     @FXML
     private GridPane mapGrid;
 
-    Simulation worldMapSimulation;
+    @FXML
+    private Button startButton;
 
-    public void start(GlobalOptions G_OPTIONS) { //also constructor?
-        GlobalVariables G_VARIABLES = new GlobalVariables();
+    @FXML
+    private Button stopButton;
 
-        this.worldMapSimulation = new Simulation(G_OPTIONS , 1);
+    private Simulation worldMapSimulation;
 
+    public void setWorldMapSimulation(Simulation worldMapSimulation) {
+    	this.worldMapSimulation = worldMapSimulation;
         worldMapSimulation.addListenerToMap( new SimulationMapListener(mapGrid, worldMapSimulation.getWorldMap()));
-        worldMapSimulation.start();
     }
 
-    public void stop() {
-    	worldMapSimulation.stopSimulation();
+    public void onStartSimulationButtonClicked(ActionEvent actionEvent) {
+        worldMapSimulation.startSimulation();
     }
 
-
+    public void onStopSimulationButtonClicked(ActionEvent actionEvent) {
+        worldMapSimulation.stopSimulation();
+    }
 }

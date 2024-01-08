@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.model.enums.MapType;
 import project.backend.backend.model.enums.MutationType;
+import project.frontend.SimulationApp;
 
 import java.io.IOException;
 import java.util.Map;
@@ -157,32 +158,12 @@ public class HomeController{
 
             //TODO: necesary???
             if (G_OPTIONS == null) {
-                throw new IllegalStateException("G_OPTIONS is null");
+                showAlert(Alert.AlertType.ERROR, "Error parsing options");
             }
 
-            Stage currentStage = (Stage) startButton.getScene().getWindow();
-            Stage primaryStage = new Stage();
+//            Stage currentStage = (Stage) startButton.getScene().getWindow();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/simulationGUI.fxml"));
-                Parent root = loader.load();
-
-                SimulationController simulationController = loader.getController();
-                primaryStage.setTitle("Darwin's Evolution");
-                Scene scene = new Scene(root);
-                primaryStage.setScene(scene);
-//                scene.getStylesheets().add("styles.css");
-                primaryStage.show();
-//                currentStage.close();
-                simulationController.start(G_OPTIONS);
-
-                //zamkniecie okna z symulacja i symulacji
-                primaryStage.setOnCloseRequest(e -> {
-                    e.consume();
-                    simulationController.stop();
-                    primaryStage.close();
-                });
-
-
+                new SimulationApp(G_OPTIONS , 1).show(new Stage());
             } catch (IOException e) {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Error loading simulation app");

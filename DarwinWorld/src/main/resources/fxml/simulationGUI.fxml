@@ -15,6 +15,10 @@
 <center>
     <VBox>
         <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" />
+        <HBox>
+            <Button fx:id="startButton" text="Start" onAction="#onStartSimulationButtonClicked"/>
+            <Button fx:id="stopButton" text="Stop" onAction="#onStopSimulationButtonClicked"/>
+        </HBox>
     </VBox>
 </center>
 </BorderPane>
