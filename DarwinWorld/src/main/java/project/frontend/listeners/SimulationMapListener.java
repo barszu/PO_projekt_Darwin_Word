@@ -58,11 +58,13 @@ public class SimulationMapListener implements MapChangeListener {
                 if (el != null){
                     square.getStyleClass().add(el.toString());
 
+
                 }
                 else {
                     BiomeField biomeField = worldMap.getBiomeRepresentation(position);
                     square.getStyleClass().add(biomeField.toString());
                 }
+
             }
         }
     }

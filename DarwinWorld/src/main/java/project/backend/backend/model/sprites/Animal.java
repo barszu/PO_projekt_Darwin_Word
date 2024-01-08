@@ -1,6 +1,7 @@
 package project.backend.backend.model.sprites;
 import project.backend.backend.global.GlobalVariables;
 import project.backend.backend.model.enums.MapDirection;
+import project.backend.backend.model.sprites.animalUtil.SuccessorDFS;
 import project.backend.backend.model.sprites.animalUtil.GenotypeMerger;
 import project.backend.backend.extras.CyclicListExtras;
 import project.backend.backend.global.GlobalOptions;
@@ -8,7 +9,6 @@ import project.backend.backend.model.maps.MoveValidator_able;
 import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,6 +49,8 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
     public List<Animal> getChildrenList() {
         return childrenList;
     }
+    public int getSpawnDate() {return spawnDate;}
+
 
     // constructors
 
@@ -182,6 +184,10 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
 
     public boolean isWellFed(){
         return this.energy >= globalOptions.energyToBeFeed();
+    }
+
+    public int getSuccessorsNo() {
+        return SuccessorDFS.searchSuccessorsNo(this);
     }
 
     public void move(MoveValidator_able moveValidatorable){

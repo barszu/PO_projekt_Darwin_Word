@@ -129,15 +129,11 @@ public class WaterMap extends AbstractWorldMap{
     private List<Vector2d> findWaterEdges(){
         List<Vector2d> edges = new ArrayList<>();
         for(Vector2d position : waterPositions){
-            Vector2d neighborAbove = new Vector2d(position.getX(), position.getY() - 1);
-            Vector2d neighborBelow = new Vector2d(position.getX(), position.getY() + 1);
-            Vector2d neighborLeft = new Vector2d(position.getX() - 1, position.getY());
-            Vector2d neighborRight = new Vector2d(position.getX() + 1, position.getY());
-            if(!waterPositions.contains(neighborAbove) ||
-                    !waterPositions.contains(neighborBelow) ||
-                    !waterPositions.contains(neighborLeft) ||
-                    !waterPositions.contains(neighborRight)){
-                edges.add(position);
+            for (Vector2d neighbor : getNeighbors(position)) {
+                if(!waterPositions.contains(neighbor)){
+                    edges.add(position);
+                    break;
+                }
             }
         }
         return edges;
@@ -149,18 +145,22 @@ public class WaterMap extends AbstractWorldMap{
 //                inflows 0, 1
                 List<Vector2d> newEdges = new ArrayList<>();
                 for (Vector2d edge : waterEdges) {
-                    Vector2d neighborAbove = new Vector2d(edge.getX(), edge.getY() - 1);
-                    Vector2d neighborBelow = new Vector2d(edge.getX(), edge.getY() + 1);
-                    Vector2d neighborLeft = new Vector2d(edge.getX() - 1, edge.getY());
-                    Vector2d neighborRight = new Vector2d(edge.getX() + 1, edge.getY());
-
-                    for (Vector2d neighbor : new Vector2d[]{neighborAbove, neighborBelow, neighborLeft, neighborRight}) {
+                    for (Vector2d neighbor : getNeighbors(edge)) {
                         if (!waterPositions.contains(neighbor)) {
-                            grasses.remove(neighbor);
+//                            TODO: uwaga neighbor wychodzi poza reclangleBox!
+
+                            if (grasses.containsKey(neighbor)){ //flooded grass removed
+                                grasses.remove(neighbor);
+                                biomes.handOverPosition(neighbor);
+                            }
+
+
                             newEdges.add(neighbor);
                             waterPositions.add(neighbor);
 //                          removeFromFreeFields(neighbor);
-//                            biomes.giveExactFreePosition(neighbor);
+
+                            if (rectangleBox.contains(neighbor)){biomes.giveExactFreePosition(neighbor);}
+
                         }
                     }
                 }
@@ -170,23 +170,31 @@ public class WaterMap extends AbstractWorldMap{
 //                outflows 2, 3
                 List<Vector2d> newEdges = new ArrayList<>();
                 for (Vector2d edge : waterEdges) {
-                    Vector2d neighborAbove = new Vector2d(edge.getX(), edge.getY() - 1);
-                    Vector2d neighborBelow = new Vector2d(edge.getX(), edge.getY() + 1);
-                    Vector2d neighborLeft = new Vector2d(edge.getX() - 1, edge.getY());
-                    Vector2d neighborRight = new Vector2d(edge.getX() + 1, edge.getY());
-
-                    for (Vector2d neighbor : new Vector2d[]{neighborAbove, neighborBelow, neighborLeft, neighborRight}) {
+                    for (Vector2d neighbor : getNeighbors(edge)) {
                         if (waterPositions.contains(neighbor) && !waterEdges.contains(neighbor)){
                             newEdges.add(neighbor);
                             waterPositions.remove(edge);
 
-//                            biomes.handOverPosition(edge);
+//                          addToFreeFields(edge);
+
+                            try { //try to hand over position to biomes
+                                biomes.handOverPosition(edge);
+                            } catch (IllegalArgumentException ignored) {}
+
                         }
                     }
                 }
                 waterEdges = newEdges;
             }
         }
+    }
+
+    private Vector2d[] getNeighbors(Vector2d position){
+        Vector2d neighborAbove = new Vector2d(position.getX(), position.getY() + 1);
+        Vector2d neighborBelow = new Vector2d(position.getX(), position.getY() - 1);
+        Vector2d neighborLeft = new Vector2d(position.getX() - 1, position.getY());
+        Vector2d neighborRight = new Vector2d(position.getX() + 1, position.getY());
+        return new Vector2d[]{neighborAbove, neighborBelow, neighborLeft, neighborRight};
     }
 
 
