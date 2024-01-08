@@ -23,6 +23,8 @@ public class Simulation extends Thread{
     private final GlobalVariables globalVariables;
     private final GlobalOptions globalOptions;
 
+    public boolean isRunning() {return isRunning;}
+
     private boolean isRunning = false;
     private final int simulationId;
 
@@ -47,14 +49,14 @@ public class Simulation extends Thread{
 
     @Override
     public void run(){
+        System.out.println("Simulation " + simulationId + " has started (begun)");
         startSimulation();
     }
 
 
     public void startSimulation(){ //or resume
-
         if (!isRunning) {
-            System.out.println("Simulation " + simulationId + " started");
+            System.out.println("Simulation " + simulationId + " started (resumed)");
             isRunning = true;
 
             setUpTimer();
@@ -73,14 +75,6 @@ public class Simulation extends Thread{
         }
     }
 
-    public void resumeSimulation() {
-        if (!isRunning) {
-            System.out.println("Simulation " + simulationId + " resumed");
-            isRunning = true;
-
-            setUpTimer();
-        }
-    }
 
     private void setUpTimer(){
         // Tworzenie i uruchamianie timera

@@ -53,7 +53,7 @@ public class SimulationMain {
         // Odczekanie 2 sekundy, a następnie wznowienie symulacji na kolejne 3 sekundy
         try {Thread.sleep(2000);
         } catch (InterruptedException e) {e.printStackTrace();}
-        simulation.resumeSimulation();
+        simulation.startSimulation();
 
         try {Thread.sleep(5000);
         } catch (InterruptedException e) {e.printStackTrace();

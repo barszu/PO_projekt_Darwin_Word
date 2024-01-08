@@ -174,6 +174,7 @@ public class WaterMap extends AbstractWorldMap{
                         if (waterPositions.contains(neighbor) && !waterEdges.contains(neighbor)){
                             newEdges.add(neighbor);
                             waterPositions.remove(edge);
+
 //                          addToFreeFields(edge);
 
                             try { //try to hand over position to biomes

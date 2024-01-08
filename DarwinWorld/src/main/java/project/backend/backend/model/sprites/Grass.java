@@ -20,6 +20,6 @@ public class Grass implements WorldElement_able {
 
     @Override
     public String toString() {
-        return "*";
+        return "grass";
     }
 }

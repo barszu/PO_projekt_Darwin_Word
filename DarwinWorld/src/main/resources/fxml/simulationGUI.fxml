@@ -9,12 +9,16 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
-            stylesheets="@../css/home-styles.css"
+            stylesheets="@../css/styles.css"
             fx:controller="project.frontend.controllers.SimulationController">
 
 <center>
     <VBox>
         <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" />
+        <HBox>
+            <Button fx:id="startButton" text="Start" onAction="#onStartSimulationButtonClicked"/>
+            <Button fx:id="stopButton" text="Stop" onAction="#onStopSimulationButtonClicked"/>
+        </HBox>
     </VBox>
 </center>
 </BorderPane>
