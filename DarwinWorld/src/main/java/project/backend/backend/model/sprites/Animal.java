@@ -133,7 +133,7 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
 //            '}';
 //        return "Animal{" + direction.toString() + position.toString() + '}';
 //        return direction.toString();
-        return "A";
+        return "animal";
     }
     public boolean isAt(Vector2d position){
         return this.position.equals(position);

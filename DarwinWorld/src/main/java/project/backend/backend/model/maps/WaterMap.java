@@ -160,6 +160,7 @@ public class WaterMap extends AbstractWorldMap{
                             newEdges.add(neighbor);
                             waterPositions.add(neighbor);
 //                          removeFromFreeFields(neighbor);
+//                            biomes.giveExactFreePosition(neighbor);
                         }
                     }
                 }
@@ -178,7 +179,8 @@ public class WaterMap extends AbstractWorldMap{
                         if (waterPositions.contains(neighbor) && !waterEdges.contains(neighbor)){
                             newEdges.add(neighbor);
                             waterPositions.remove(edge);
-//                          addToFreeFields(edge);
+
+//                            biomes.handOverPosition(edge);
                         }
                     }
                 }

@@ -7,9 +7,9 @@ public enum BiomeField {
 
     public String toString(){
         return switch(this) {
-            case STEP -> ".";
-            case JUNGLE -> "-";
-            case WATER -> "#";
+            case STEP -> "step";
+            case JUNGLE -> "jungle";
+            case WATER -> "water";
         };
     }
 

@@ -1,0 +1,19 @@
+.grass {
+    -fx-fill: #55e060;
+}
+
+.animal {
+    -fx-fill: #feb3ff;
+}
+
+.jungle {
+    -fx-fill: #065e0d;
+}
+
+.water {
+    -fx-fill: blue;
+}
+
+.step {
+    -fx-fill: green;
+}

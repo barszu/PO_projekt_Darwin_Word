@@ -161,7 +161,9 @@ public class HomeController{
                 parseOptions();
                 SimulationController simulationController = loader.getController();
                 primaryStage.setTitle("Darwin's Evolution");
-                primaryStage.setScene(new Scene(root));
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+//                scene.getStylesheets().add("styles.css");
                 primaryStage.show();
 //                currentStage.close();
                 simulationController.start(G_OPTIONS);
