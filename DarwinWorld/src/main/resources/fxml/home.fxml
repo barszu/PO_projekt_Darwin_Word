@@ -99,11 +99,11 @@
                 <Label text="maxMutationsNo"/>
                 <TextField fx:id="maxMutationsNoField" promptText="Enter maxMutationsNo"/>
             </HBox>
-
-
+            <Button fx:id="createDummyDataButton" minWidth="100" text="Create Dummy Data" onAction="#onCreateDummyDataButtonClicked" />
             <Button fx:id="startButton" minWidth="100" text="Start" onAction="#onStartButtonClicked" />
-
         </VBox>
+
+
 
     </center>
 </BorderPane>

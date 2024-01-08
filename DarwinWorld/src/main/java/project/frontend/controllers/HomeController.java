@@ -19,8 +19,6 @@ import java.util.Map;
 
 public class HomeController{
 
-    private GlobalOptions G_OPTIONS;
-
     @FXML
     private TextField mapWidthField;
 
@@ -127,7 +125,8 @@ public class HomeController{
         }
     }
 
-    public void parseOptions() {
+    public GlobalOptions parseOptions() {
+        GlobalOptions G_OPTIONS = null;
         try {
             int mapWidth = getIntFromTextField(mapWidthField, "Map Width");
             int mapHeight = getIntFromTextField(mapHeightField, "Map Height");
@@ -148,17 +147,25 @@ public class HomeController{
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error parsing options");
         }
+        return G_OPTIONS;
     }
 
 
     public void onStartButtonClicked(ActionEvent actionEvent) {
         if (verifyFields()) {
+            GlobalOptions G_OPTIONS = parseOptions();
+
+            //TODO: necesary???
+            if (G_OPTIONS == null) {
+                throw new IllegalStateException("G_OPTIONS is null");
+            }
+
             Stage currentStage = (Stage) startButton.getScene().getWindow();
             Stage primaryStage = new Stage();
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/simulationGUI.fxml"));
                 Parent root = loader.load();
-                parseOptions();
+
                 SimulationController simulationController = loader.getController();
                 primaryStage.setTitle("Darwin's Evolution");
                 Scene scene = new Scene(root);
@@ -167,13 +174,36 @@ public class HomeController{
                 primaryStage.show();
 //                currentStage.close();
                 simulationController.start(G_OPTIONS);
+
+                //zamkniecie okna z symulacja i symulacji
+                primaryStage.setOnCloseRequest(e -> {
+                    e.consume();
+                    simulationController.stop();
+                    primaryStage.close();
+                });
+
+
             } catch (IOException e) {
                 e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Error loading main application");
+                showAlert(Alert.AlertType.ERROR, "Error loading simulation app");
             }
         } else {
             System.out.println("Verification failed!");
         }
     }
 
+    public void onCreateDummyDataButtonClicked(ActionEvent actionEvent) {
+        mapWidthField.setText("20");
+        mapHeightField.setText("20");
+        initAnimalEnergyField.setText("10");
+        initPlantEnergyField.setText("10");
+        initAnimalsNoField.setText("10");
+        genotypeLengthField.setText("10");
+        energyPerPlantField.setText("10");
+        plantsPerDayField.setText("10");
+        energyToBeFeedField.setText("10");
+        energyToBreedingField.setText("5");
+        minMutationsNoField.setText("1");
+        maxMutationsNoField.setText("3");
+    }
 }

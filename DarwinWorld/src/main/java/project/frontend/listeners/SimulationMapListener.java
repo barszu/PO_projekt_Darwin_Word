@@ -19,13 +19,11 @@ import project.backend.backend.model.sprites.WorldElement_able;
 public class SimulationMapListener implements MapChangeListener {
 
     private final WorldMap_able worldMap;
-    private final Label textLabel;
     private final GridPane mapGrid;
 
     public static final int SQUARE_SIZE = 20;
 //    px
-    public SimulationMapListener(Label label , GridPane mapGrid, WorldMap_able worldMap){
-        this.textLabel = label;
+    public SimulationMapListener(GridPane mapGrid, WorldMap_able worldMap){
         this.worldMap = worldMap;
         this.mapGrid = mapGrid;
     }
