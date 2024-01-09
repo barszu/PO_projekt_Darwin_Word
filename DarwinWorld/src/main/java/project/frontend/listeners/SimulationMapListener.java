@@ -49,8 +49,8 @@ public class SimulationMapListener implements MapChangeListener {
         RectangleBoundary rectangleBox = this.worldMap.getBoundary();
         int columns = rectangleBox.width();
         int rows = rectangleBox.height();
-        for(int x=0; x<rows; x++){
-            for(int y=0; y<columns; y++){
+        for(int x=0; x<columns; x++){
+            for(int y=0; y<rows; y++){
                 Vector2d position = new Vector2d(x,y);
                 WorldElement_able el = worldMap.getOccupantFrom(position);
                 Rectangle square = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
