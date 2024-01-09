@@ -2,21 +2,19 @@ package project.frontend.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import project.backend.backend.exceptions.OptionsValidateException;
 import project.backend.backend.global.GlobalOptions;
+import project.backend.backend.global.GlobalOptionsValidator;
 import project.backend.backend.model.enums.MapType;
 import project.backend.backend.model.enums.MutationType;
 import project.frontend.SimulationApp;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class HomeController{
 
@@ -65,7 +63,7 @@ public class HomeController{
     @FXML
     private Button startButton;
 
-    public boolean verifyFields(){
+    public boolean verifyFieldsCarelessly(){
         boolean isValid = true;
         isValid = isValid && isValidIntField(mapWidthField, "Map width");
         isValid = isValid && isValidIntField(mapHeightField, "Map height");
@@ -143,24 +141,27 @@ public class HomeController{
             int energyToBreeding = getIntFromTextField(energyToBreedingField, "Energy To Breeding");
             int minMutationsNo = getIntFromTextField(minMutationsNoField, "Min Mutations Number");
             int maxMutationsNo = getIntFromTextField(maxMutationsNoField, "Max Mutations Number");
+
             G_OPTIONS = new GlobalOptions(mapWidth, mapHeight, mapType, mutationType, initAnimalEnergy, initPlantEnergy, initAnimalsNo, genotypeLength, energyPerPlant, plantsPerDay, energyToBeFeed, energyToBreeding, minMutationsNo, maxMutationsNo);
+            GlobalOptionsValidator.validate(G_OPTIONS);
+
+        } catch (OptionsValidateException e) {
+            e.getFieldName(); //TODO: mozna sporzytkowac do wyswietlenia komunikatu
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error parsing options");
+            return null;
         }
         return G_OPTIONS;
     }
 
 
     public void onStartButtonClicked(ActionEvent actionEvent) {
-        if (verifyFields()) {
-            GlobalOptions G_OPTIONS = parseOptions();
-
-            //TODO: necesary???
-            if (G_OPTIONS == null) {
-                showAlert(Alert.AlertType.ERROR, "Error parsing options");
-            }
-
+        if (!verifyFieldsCarelessly()) {return;} //if no int's or < 0, stop
+        GlobalOptions G_OPTIONS = parseOptions();
+        if (G_OPTIONS != null) { //if options are valid
 //            Stage currentStage = (Stage) startButton.getScene().getWindow();
             try {
                 new SimulationApp(G_OPTIONS , 1).show(new Stage());
@@ -170,6 +171,7 @@ public class HomeController{
             }
         } else {
             System.out.println("Verification failed!");
+            return;
         }
     }
 
