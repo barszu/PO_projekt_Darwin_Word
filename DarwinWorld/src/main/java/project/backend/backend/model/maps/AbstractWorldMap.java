@@ -195,7 +195,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     @Override
     public String toString() {
         MapVisualizer mapVis = new MapVisualizer(this);
-        return mapVis.draw(rectangleBox.lowerLeft() , rectangleBox.upperRight().add(new Vector2d(1,1)) );
+        return mapVis.draw(rectangleBox.lowerLeft() , rectangleBox.upperRight() );
     }
 
     @Override

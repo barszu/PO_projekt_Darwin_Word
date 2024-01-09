@@ -63,6 +63,8 @@ public class HomeController{
     @FXML
     private Button startButton;
 
+    private int openedSimulationWindowsNo = 1;
+
     public boolean verifyFieldsCarelessly(){
         boolean isValid = true;
         isValid = isValid && isValidIntField(mapWidthField, "Map width");
@@ -164,7 +166,8 @@ public class HomeController{
         if (G_OPTIONS != null) { //if options are valid
 //            Stage currentStage = (Stage) startButton.getScene().getWindow();
             try {
-                new SimulationApp(G_OPTIONS , 1).show(new Stage());
+                new SimulationApp(G_OPTIONS , openedSimulationWindowsNo).show(new Stage());
+                openedSimulationWindowsNo++;
             } catch (IOException e) {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Error loading simulation app");

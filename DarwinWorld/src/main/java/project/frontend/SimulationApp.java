@@ -27,7 +27,7 @@ public class SimulationApp{ //strikte zajmuje sie sprawa watkow i okienek
 
         SimulationController simulationController = loader.getController();
 
-        stage.setTitle("Darwin's Evolution");
+        stage.setTitle("Darwin's Evolution" + " - Simulation " + worldMapSimulation.getSimulationId());
         Scene scene = new Scene(root);
         stage.setScene(scene);
 //                scene.getStylesheets().add("styles.css");

@@ -89,4 +89,7 @@ public class Simulation extends Thread{
         }, 0, 1000); // Aktualizacja co sekundę
     }
 
+    public int getSimulationId() {
+        return simulationId;
+    }
 }

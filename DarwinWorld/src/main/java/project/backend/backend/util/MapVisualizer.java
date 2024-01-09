@@ -86,7 +86,12 @@ public class MapVisualizer {
         if (occupant != null){
             return occupant.toString();
         }
-        return this.map.getBiomeRepresentation(currentPosition).toString();
+        occupant = this.map.getBiomeRepresentation(currentPosition);
+//        return this.map.getBiomeRepresentation(currentPosition).toString();
+        if (occupant != null){
+            return occupant.toString();
+        }
+        return "@NULL@";
 //        return EMPTY_CELL;
     }
 }
