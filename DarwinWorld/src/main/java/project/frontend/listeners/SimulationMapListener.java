@@ -16,7 +16,7 @@ import project.backend.backend.model.maps.WorldMap_able;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.model.sprites.WorldElement_able;
 
-public class SimulationMapListener implements MapChangeListener {
+public class SimulationMapListener implements MapChangeListener { //TODO: 2 razy jest worldMap ??? poprawic -> Simon
 
     private final WorldMap_able worldMap;
     private final GridPane mapGrid;
@@ -32,7 +32,7 @@ public class SimulationMapListener implements MapChangeListener {
     @Override
     public void mapChanged(WorldMap_able worldMap_able, String message) {
         Platform.runLater(() ->{
-            System.out.println("map changed");
+            System.out.println("map UI has changed, day: TODO" );
 //            this.textLabel.setText(worldMap_able.toString());
             drawMap();
         });
