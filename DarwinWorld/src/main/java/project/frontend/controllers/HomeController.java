@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import project.backend.backend.exceptions.OptionsValidateException;
+import project.backend.backend.extras.Random;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalOptionsValidator;
 import project.backend.backend.model.enums.MapType;
@@ -17,6 +18,7 @@ import project.frontend.SimulationApp;
 import project.frontend.fileManagers.ConfigFileManager;
 
 import java.io.IOException;
+import java.util.List;
 
 public class HomeController{
 
@@ -227,5 +229,10 @@ public class HomeController{
             System.out.println("Verification failed!");
             return;
         }
+    }
+
+    public void onloadRandomConfigButtonClicked(ActionEvent event) {
+        List<GlobalOptions> globalOptionsList = ConfigFileManager.readAllConfigs();
+        setOptions(globalOptionsList.get(Random.randInt(0, globalOptionsList.size() - 1)));
     }
 }
