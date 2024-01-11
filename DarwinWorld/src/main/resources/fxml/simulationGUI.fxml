@@ -21,19 +21,19 @@
         </HBox>
         <HBox>
             <Label text="Simulation Status: "/>
-            <Label fx:id="simulationStatus" />
+            <Label fx:id="simulationStatusLabel"/>
         </HBox>
         <HBox>
             <Label text="Simulation Day: "/>
-            <Label fx:id="simulationDay"/>
+            <Label fx:id="simulationDayLabel"/>
         </HBox>
         <HBox>
             <Label text="Simulation Animals No: "/>
-            <Label fx:id="simulationAnimalsNo"/>
+            <Label fx:id="simulationAnimalsNoLabel"/>
         </HBox>
         <HBox>
-            <Label text="Simulation Plants No: "/>
-            <Label fx:id="simulationPlantsNo"/>
+            <Label text="Simulation Grasses No: "/>
+            <Label fx:id="simulationGrassesNoLabel"/>
         </HBox>
 
 

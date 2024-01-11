@@ -1,5 +1,6 @@
 package project.backend.backend.model.maps;
 
+import project.backend.backend.global.GlobalVariables;
 import project.backend.backend.listeners.MapChangeListener;
 import project.backend.backend.extras.Vector2d;
 
@@ -100,6 +101,8 @@ public interface WorldMap_able extends MoveValidator_able{
     int getBestGenotype();
     int getAnimalsNo();
     int getGrassesNo();
+
+    GlobalVariables getGlobalVariables();
 
 
     /**

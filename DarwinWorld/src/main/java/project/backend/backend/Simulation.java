@@ -8,7 +8,10 @@ import project.backend.backend.listeners.MapConsoleLogger;
 import project.backend.backend.model.maps.CylindricalGlobeMap;
 import project.backend.backend.model.maps.WaterMap;
 import project.backend.backend.model.maps.WorldMap_able;
+import project.frontend.listeners.SimulationStatusListener;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,6 +30,8 @@ public class Simulation extends Thread{
 
     private boolean isRunning = false;
     private final int simulationId;
+
+    private final List<SimulationStatusListener> listeners = new LinkedList<>();
 
 
     public Simulation(GlobalOptions globalOptions , int simulationId){
@@ -60,6 +65,7 @@ public class Simulation extends Thread{
             isRunning = true;
 
             setUpTimer();
+            notifyListeners();
         }
     }
 
@@ -72,6 +78,8 @@ public class Simulation extends Thread{
             // Zatrzymywanie timera
             timer.cancel();
             timer.purge();
+
+            notifyListeners();
         }
     }
 
@@ -91,5 +99,19 @@ public class Simulation extends Thread{
 
     public int getSimulationId() {
         return simulationId;
+    }
+
+    public int getDay() {
+        return globalVariables.getDate();
+    }
+
+    public void addListener(SimulationStatusListener l){
+        listeners.add(l);
+    }
+
+    public void notifyListeners(){
+        for (SimulationStatusListener l : listeners){
+            l.notify(isRunning);
+        }
     }
 }

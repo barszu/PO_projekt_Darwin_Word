@@ -225,6 +225,11 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         return grasses.size();
     }
 
+    @Override
+    public GlobalVariables getGlobalVariables() {
+        return globalVariables;
+    }
+
 
 
 

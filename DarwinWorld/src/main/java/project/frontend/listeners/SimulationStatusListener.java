@@ -1,5 +1,6 @@
 package project.frontend.listeners;
 
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 
 public class SimulationStatusListener {
@@ -11,9 +12,15 @@ public class SimulationStatusListener {
 
     public void notify(boolean isRunning){
         if (isRunning){
-            simulationStatusLabel.setText("Running");
+            Platform.runLater(() ->{
+                simulationStatusLabel.setText("Running");
+            });
+
         } else {
-            simulationStatusLabel.setText("Stopped");
+            Platform.runLater(() ->{
+                simulationStatusLabel.setText("Stopped");
+            });
+
         }
     }
 }
