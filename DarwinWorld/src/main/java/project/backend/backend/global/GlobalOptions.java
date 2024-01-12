@@ -26,4 +26,26 @@ public record GlobalOptions(
         int minMutationsNo,
         int maxMutationsNo
 
-) {}
+) {
+
+
+    @Override
+    public String toString() {
+        return
+                "mapWidth=" + mapWidth + "\n" +
+                "mapHeight=" + mapHeight + "\n" +
+                "mapType=" + mapType + "\n" +
+                "mutationType=" + mutationType + "\n" +
+                "initAnimalEnergy=" + initAnimalEnergy + "\n" +
+                "initPlantEnergy=" + initPlantEnergy + "\n" +
+                "initAnimalsNo=" + initAnimalsNo + "\n" +
+                "genotypeLength=" + genotypeLength + "\n" +
+                "energyPerPlant=" + energyPerPlant + "\n" +
+                "plantsPerDay=" + plantsPerDay + "\n" +
+                "energyToBeFeed=" + energyToBeFeed + "\n" +
+                "energyToBreeding=" + energyToBreeding + "\n" +
+                "minMutationsNo=" + minMutationsNo + "\n" +
+                "maxMutationsNo=" + maxMutationsNo + "\n"
+                ;
+    }
+}

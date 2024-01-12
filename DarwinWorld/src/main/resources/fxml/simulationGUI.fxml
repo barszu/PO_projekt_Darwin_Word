@@ -19,6 +19,24 @@
             <Button fx:id="startButton" text="Start" onAction="#onStartSimulationButtonClicked"/>
             <Button fx:id="stopButton" text="Stop" onAction="#onStopSimulationButtonClicked"/>
         </HBox>
+        <HBox>
+            <Label text="Simulation Status: "/>
+            <Label fx:id="simulationStatusLabel"/>
+        </HBox>
+        <HBox>
+            <Label text="Simulation Day: "/>
+            <Label fx:id="simulationDayLabel"/>
+        </HBox>
+        <HBox>
+            <Label text="Simulation Animals No: "/>
+            <Label fx:id="simulationAnimalsNoLabel"/>
+        </HBox>
+        <HBox>
+            <Label text="Simulation Grasses No: "/>
+            <Label fx:id="simulationGrassesNoLabel"/>
+        </HBox>
+
+
     </VBox>
 </center>
 </BorderPane>

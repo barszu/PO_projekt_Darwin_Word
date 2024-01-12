@@ -99,7 +99,12 @@
                 <Label text="maxMutationsNo"/>
                 <TextField fx:id="maxMutationsNoField" promptText="Enter maxMutationsNo"/>
             </HBox>
-            <Button fx:id="createDummyDataButton" minWidth="100" text="Create Dummy Data" onAction="#onCreateDummyDataButtonClicked" />
+            <HBox>
+                <Button fx:id="saveNewConfig" minWidth="100" text="Save as new config" onAction="#onSaveNewConfigClicked" />
+                <Button fx:id="loadConfigButton" minWidth="100" text="Load Config" onAction="#onloadConfigButtonClicked"/>
+                <Button fx:id="loadRandomConfigButton" minWidth="100" text="I'm feeling lucky!" onAction="#onloadRandomConfigButtonClicked"/>
+            </HBox>
+
             <Button fx:id="startButton" minWidth="100" text="Start" onAction="#onStartButtonClicked" />
         </VBox>
 
