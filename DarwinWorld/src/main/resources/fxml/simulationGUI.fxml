@@ -35,7 +35,23 @@
             <Label text="Simulation Grasses No: "/>
             <Label fx:id="simulationGrassesNoLabel"/>
         </HBox>
+        <!--        Clicked animal data-->
 
+        <HBox>
+            <Label fx:id="clickedAnimalHeader"/>
+        </HBox>
+        <HBox>
+            <Label fx:id="clickedAnimalgrassEatenN0"/>
+        </HBox>
+        <HBox>
+            <Label fx:id="clickedAnimalEnergyNo"/>
+        </HBox>
+        <HBox>
+            <Label fx:id="clickedAnimalGenome"/>
+        </HBox>
+        <HBox>
+            <Label fx:id="clickedAnimalDescendantsNo"/>
+        </HBox>
 
     </VBox>
 </center>

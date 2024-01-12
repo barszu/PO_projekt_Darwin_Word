@@ -33,8 +33,8 @@ public class SimulationApp{ //strikte zajmuje sie sprawa watkow i okienek
 //                scene.getStylesheets().add("styles.css");
         stage.show();
 //                currentStage.close();
-
-        simulationController.setWorldMapSimulation(worldMapSimulation);
+        int squareSize = (int) stage.getHeight()/ Math.max(G_OPTIONS.mapHeight(),G_OPTIONS.mapWidth());
+        simulationController.setWorldMapSimulation(worldMapSimulation, squareSize);
         worldMapSimulation.start(); //simulation start now
 
 

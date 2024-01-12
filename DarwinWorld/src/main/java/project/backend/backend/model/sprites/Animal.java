@@ -32,6 +32,8 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
     private final GlobalOptions globalOptions;
     private final GlobalVariables globalVariables;
 
+    private String color;
+
 
 
     //getters
@@ -83,7 +85,6 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
     public Animal(Vector2d fixedPosition , GlobalOptions globalOptions , GlobalVariables globalVariables){
         this.globalOptions = globalOptions;
         this.globalVariables = globalVariables;
-
         this.direction = Random.randDirection(); // random direction
         this.position = fixedPosition; // random position in the map in bound
         this.genotype = Random.randIntArray(0,7 , globalOptions.genotypeLength()); // random genotype
@@ -126,16 +127,7 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
     //others implementing methods
     @Override
     public String toString() {
-//        return "Animal{" +
-//            "direction=" + direction +
-//            ", position=" + position +
-//            ", genotype=" + Arrays.toString(genotype) +
-//            ", currentGenotypeIndex=" + currentGenotypeIndex +
-//            ", energy=" + energy +
-//            '}';
-//        return "Animal{" + direction.toString() + position.toString() + '}';
-//        return direction.toString();
-        return "animal";
+        return color;
     }
     public boolean isAt(Vector2d position){
         return this.position.equals(position);
@@ -224,6 +216,7 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
         return child;
     }
 
-
-
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

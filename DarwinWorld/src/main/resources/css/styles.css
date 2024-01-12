@@ -2,8 +2,24 @@
     -fx-fill: #55e060;
 }
 
-.animal {
-    -fx-fill: #feb3ff;
+.veryBadHealth {
+    -fx-fill: #991733;
+}
+
+.badHealth{
+    -fx-fill: #ed7790;
+}
+
+.neutralHealth{
+    -fx-fill: #ffffff;
+}
+
+.goodHealth{
+    -fx-fill: #abeeff;
+}
+
+.veryGoodHealth{
+    -fx-fill: #26c5ed;
 }
 
 .jungle {
