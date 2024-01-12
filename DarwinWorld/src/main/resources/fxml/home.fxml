@@ -26,20 +26,16 @@
     <center>
         <VBox>
             <Label text="Map Options"/>
-            <HBox>
-                <Label text="Map Width"/>
-                <TextField fx:id="mapWidthField" promptText="Enter Map Width"/>
-            </HBox>
-            <HBox>
-                <Label text="Map Height"/>
-                <TextField fx:id="mapHeightField" promptText="Enter Map Height"/>
-            </HBox>
+            <GridPane hgap="10" vgap="5">
 
+                <Label text="Map Width" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="mapWidthField" promptText="Enter Map Width" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-            <Label text="Environment Options"/>
-            <HBox>
-                <Label text="Map Type"/>
-                <ChoiceBox fx:id="mapTypeChoiceBox" value="NORMAL_MAP">
+                <Label text="Map Height" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="mapHeightField" promptText="Enter Map Height" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Map Type" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <ChoiceBox fx:id="mapTypeChoiceBox" value="NORMAL_MAP" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="NORMAL_MAP"/>
@@ -47,10 +43,9 @@
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-            </HBox>
-            <HBox>
-                <Label text="Mutation Type"/>
-                <ChoiceBox fx:id="mutationTypeChoiceBox" value="FULL_RANDOM">
+
+                <Label text="Mutation Type" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <ChoiceBox fx:id="mutationTypeChoiceBox" value="FULL_RANDOM" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="SLIGHT_CORRECTION"/>
@@ -58,47 +53,39 @@
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-            </HBox>
-            <HBox>
-                <Label text="initAnimalEnergy"/>
-                <TextField fx:id="initAnimalEnergyField" promptText="Enter initAnimalEnergy"/>
-            </HBox>
-            <HBox>
-                <Label text="initPlantEnergy"/>
-                <TextField fx:id="initPlantEnergyField" promptText="Enter initPlantEnergy"/>
-            </HBox>
-            <HBox>
-                <Label text="initAnimalsNo"/>
-                <TextField fx:id="initAnimalsNoField" promptText="Enter initAnimalsNo"/>
-            </HBox>
-            <HBox>
-                <Label text="genotypeLength"/>
-                <TextField fx:id="genotypeLengthField" promptText="Enter genotypeLength"/>
-            </HBox>
-            <HBox>
-                <Label text="energyPerPlant"/>
-                <TextField fx:id="energyPerPlantField" promptText="Enter energyPerPlant"/>
-            </HBox>
-            <HBox>
-                <Label text="plantsPerDay"/>
-                <TextField fx:id="plantsPerDayField" promptText="Enter plantsPerDay"/>
-            </HBox>
-            <HBox>
-                <Label text="energyToBeFeed"/>
-                <TextField fx:id="energyToBeFeedField" promptText="Enter energyToBeFeed"/>
-            </HBox>
-            <HBox>
-                <Label text="energyToBreeding"/>
-                <TextField fx:id="energyToBreedingField" promptText="Enter energyToBreeding"/>
-            </HBox>
-            <HBox>
-                <Label text="minMutationsNo"/>
-                <TextField fx:id="minMutationsNoField" promptText="Enter minMutationsNo"/>
-            </HBox>
-            <HBox>
-                <Label text="maxMutationsNo"/>
-                <TextField fx:id="maxMutationsNoField" promptText="Enter maxMutationsNo"/>
-            </HBox>
+
+                <Label text="initAnimalEnergy" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <TextField fx:id="initAnimalEnergyField" promptText="Enter initAnimalEnergy" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                <Label text="initPlantEnergy" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <TextField fx:id="initPlantEnergyField" promptText="Enter initPlantEnergy" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                <Label text="initAnimalsNo" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <TextField fx:id="initAnimalsNoField" promptText="Enter initAnimalsNo" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+                <Label text="genotypeLength" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                <TextField fx:id="genotypeLengthField" promptText="Enter genotypeLength" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+                <Label text="energyPerPlant" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                <TextField fx:id="energyPerPlantField" promptText="Enter energyPerPlant" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+
+                <Label text="plantsPerDay" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+                <TextField fx:id="plantsPerDayField" promptText="Enter plantsPerDay" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+
+                <Label text="energyToBeFeed" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+                <TextField fx:id="energyToBeFeedField" promptText="Enter energyToBeFeed" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+
+                <Label text="energyToBreeding" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
+                <TextField fx:id="energyToBreedingField" promptText="Enter energyToBreeding" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+
+                <Label text="minMutationsNo" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+                <TextField fx:id="minMutationsNoField" promptText="Enter minMutationsNo" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+
+                <Label text="maxMutationsNo" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
+                <TextField fx:id="maxMutationsNoField" promptText="Enter maxMutationsNo" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+
+            </GridPane>
+
             <HBox>
                 <Button fx:id="saveNewConfig" minWidth="100" text="Save as new config" onAction="#onSaveNewConfigClicked" />
                 <Button fx:id="loadConfigButton" minWidth="100" text="Load Config" onAction="#onloadConfigButtonClicked"/>
