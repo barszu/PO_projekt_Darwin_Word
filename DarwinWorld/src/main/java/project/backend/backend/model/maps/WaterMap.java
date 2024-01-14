@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class WaterMap extends AbstractWorldMap{
-    //TODO: do przegadania cos co zwraca biom? zeby mapa wiedziala co printowac
     private final List<Vector2d> waterPositions = new ArrayList<>();
     private int waterPhase;
     private List<Vector2d> waterEdges = new ArrayList<>(); //egdes from waterPositions

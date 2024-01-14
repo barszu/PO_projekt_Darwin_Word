@@ -8,8 +8,16 @@ import javafx.scene.control.Button;
 import project.backend.backend.Simulation;
 import project.frontend.listeners.*;
 
-public class SimulationController {//strikte zajmuje sie kontrolowaniem symulacji zatrzymywanie sterowanie fxml itd
+public class SimulationController {
 
+    //strikte zajmuje sie kontrolowaniem symulacji zatrzymywanie sterowanie fxml itd
+    @FXML
+    public Label clickedAnimalgrassEatenN0;
+    @FXML
+    public Label clickedAnimalEnergyNo;
+    public Label clickedAnimalHeader;
+    public Label clickedAnimalGenome;
+    public Label clickedAnimalDescendantsNo;
     @FXML
     private Label simulationStatusLabel;
     @FXML
@@ -31,13 +39,12 @@ public class SimulationController {//strikte zajmuje sie kontrolowaniem symulacj
 
     private Simulation worldMapSimulation;
 
-    public void setWorldMapSimulation(Simulation worldMapSimulation) {
+    public void setWorldMapSimulation(Simulation worldMapSimulation, int squareSize) {
     	this.worldMapSimulation = worldMapSimulation;
-        worldMapSimulation.addListenerToMap( new SimulationMapListener(mapGrid, worldMapSimulation.getWorldMap()));
+        worldMapSimulation.addListenerToMap( new SimulationMapListener(mapGrid, worldMapSimulation.getWorldMap(), squareSize, clickedAnimalHeader, clickedAnimalgrassEatenN0, clickedAnimalEnergyNo, clickedAnimalGenome, clickedAnimalDescendantsNo));
         worldMapSimulation.addListenerToMap(new SimulationDayListener(simulationDayLabel));
         worldMapSimulation.addListenerToMap(new SimulationAnimalNoListener(simulationAnimalsNoLabel));
         worldMapSimulation.addListenerToMap(new SimulationGrassesNoListener(simulationGrassesNoLabel));
-
 
         simulationStatusLabel.setText("Initialized & Running");
         worldMapSimulation.addListener(new SimulationStatusListener(simulationStatusLabel));

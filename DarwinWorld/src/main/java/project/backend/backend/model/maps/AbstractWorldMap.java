@@ -2,6 +2,7 @@ package project.backend.backend.model.maps;
 
 import project.backend.backend.exceptions.NoPositionLeftException;
 import project.backend.backend.extras.ListHashMap;
+import project.backend.backend.extras.MathUtils;
 import project.backend.backend.global.GlobalOptions;
 import project.backend.backend.global.GlobalVariables;
 import project.backend.backend.listeners.MapChangeListener;
@@ -16,6 +17,8 @@ import project.backend.backend.util.MapVisualizer;
 
 import java.util.*;
 
+import static project.backend.backend.extras.MathUtils.isBetween;
+
 public abstract class AbstractWorldMap implements WorldMap_able{
     private final List<MapChangeListener> observersList = new ArrayList<>();
 
@@ -23,7 +26,6 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     public RectangleBoundary getBoundary() {
         return rectangleBox;
     }
-
     protected final Biomes biomes;
     protected final RectangleBoundary rectangleBox;
     protected final GlobalOptions globalOptions;
@@ -53,7 +55,36 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         moveAllAnimals();
         feedAllAnimals();
         tryToBreedAllAnimals();
+        updateColors();
         placeGrasses(globalOptions.plantsPerDay());
+    }
+
+    private void updateColors() {
+        for(int x=0; x<rectangleBox.width();x++){
+            for(int y=0; y<rectangleBox.height();y++){
+                try {
+                    Animal animal = (Animal) getOccupantFrom(new Vector2d(x,y));
+                    int energy = animal.getEnergy();
+                    int bestEnergy = globalOptions.energyToBreeding();
+                    if(isBetween(0, energy, bestEnergy/5)){
+                        animal.setColor("veryBadHealth");
+                    }
+                    else if(isBetween(bestEnergy/5, energy, 2*bestEnergy/5)){
+                        animal.setColor("badHealth");
+                    }
+                    else if(isBetween(2*bestEnergy/5, energy, 3*bestEnergy/5)){
+                        animal.setColor("neutralHealth");
+                    }
+                    else if(isBetween(3*bestEnergy/5, energy, 4*bestEnergy/5)){
+                        animal.setColor("goodHealth");
+                    }
+                    else{
+                        animal.setColor("veryGoodHealth");
+                    }
+                } catch(ClassCastException | NullPointerException ignored){}
+
+            }
+        }
     }
 
     @Override
