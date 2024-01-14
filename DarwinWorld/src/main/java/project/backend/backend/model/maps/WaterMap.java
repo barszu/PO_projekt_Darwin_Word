@@ -11,23 +11,19 @@ import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.WorldElement_able;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class WaterMap extends AbstractWorldMap{
-    private final List<Vector2d> waterPositions = new ArrayList<>();
+    //TODO: bardzo duzy problem ze w waterPositions i waterEdges moze ta sama pozycja sie kilka razy pojawic -> solve sety
+    private final Set<Vector2d> waterPositions = new HashSet<>();
     private int waterPhase;
-    private List<Vector2d> waterEdges = new ArrayList<>(); //egdes from waterPositions
+    private Set<Vector2d> waterEdges = new HashSet<>(); //egdes from waterPositions
 
 
     public List<Vector2d> getWaterPositions() {
-        return waterPositions;
+        return new ArrayList<>(waterPositions);
     }
-    public List<Vector2d> getWaterEdges() {
-        return waterEdges;
-    }
+    public List<Vector2d> getWaterEdges() {return new ArrayList<>(waterEdges);}
 
 
 
@@ -38,8 +34,22 @@ public class WaterMap extends AbstractWorldMap{
         generateWater();
         waterEdges.addAll(findWaterEdges());
 //        if waterPositions does not contain a 'position' -> it is a free position (for grasses and maybe animals?)
+
+
+//        Set<Vector2d> uniqueSet = new HashSet<>(waterPositions);
+//        if (uniqueSet.size() != waterPositions.size()){
+//            System.out.println("sa wartosci nieunikalne");
+//        }
+
+
+
         for (Vector2d waterPosition : waterPositions) {
-            biomes.giveExactFreePosition(waterPosition); //kicking that position from free positions
+            biomes.giveExactFreePosition(waterPosition);
+//            try {biomes.giveExactFreePosition(waterPosition);}
+//            catch (IllegalArgumentException e){
+//                e.printStackTrace();
+//            }
+             //kicking that position from free positions
         }
 
         initAllAnimals();
@@ -117,10 +127,13 @@ public class WaterMap extends AbstractWorldMap{
             List<Vector2d> surroundings = fieldsInRadius(globalOptions.mapWidth()/20,newCenter);
             waterPositions.addAll(surroundings);
         }
-        Collections.shuffle(waterPositions);
-        int newNumberOfPools = Math.min(numberOfPools*4,waterPositions.size());
+
+        List<Vector2d> shuffledWaterPositions = new ArrayList<>(waterPositions);
+        Collections.shuffle(shuffledWaterPositions);
+
+        int newNumberOfPools = Math.min(numberOfPools*4,shuffledWaterPositions.size());
         for(int i=0; i<newNumberOfPools; i++){
-            List<Vector2d> surroundings = fieldsInRadius(globalOptions.mapWidth()/20, waterPositions.get(i));
+            List<Vector2d> surroundings = fieldsInRadius(globalOptions.mapWidth()/20, shuffledWaterPositions.get(i));
             waterPositions.addAll(surroundings);
         }
     }
@@ -142,7 +155,7 @@ public class WaterMap extends AbstractWorldMap{
         switch (waterPhase) {
             case 0, 1 -> {
 //                inflows 0, 1
-                List<Vector2d> newEdges = new ArrayList<>();
+                Set<Vector2d> newEdges = new HashSet<>();
                 for (Vector2d edge : waterEdges) {
                     for (Vector2d neighbor : getNeighbors(edge)) {
                         if (!waterPositions.contains(neighbor)) {
@@ -158,7 +171,14 @@ public class WaterMap extends AbstractWorldMap{
                             waterPositions.add(neighbor);
 //                          removeFromFreeFields(neighbor);
 
-                            if (rectangleBox.contains(neighbor)){biomes.giveExactFreePosition(neighbor);}
+                            if (rectangleBox.contains(neighbor)){
+                                biomes.giveExactFreePosition(neighbor);
+//                                try {biomes.giveExactFreePosition(neighbor);}
+//                                catch (IllegalArgumentException e){
+//                                    e.printStackTrace();
+//                                }
+
+                            }
 
                         }
                     }
@@ -167,7 +187,7 @@ public class WaterMap extends AbstractWorldMap{
             }
             case 2, 3 -> {
 //                outflows 2, 3
-                List<Vector2d> newEdges = new ArrayList<>();
+                Set<Vector2d> newEdges = new HashSet<>();
                 for (Vector2d edge : waterEdges) {
                     for (Vector2d neighbor : getNeighbors(edge)) {
                         if (waterPositions.contains(neighbor) && !waterEdges.contains(neighbor)){

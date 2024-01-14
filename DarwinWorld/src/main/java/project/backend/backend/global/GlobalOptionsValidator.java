@@ -22,8 +22,8 @@ public class GlobalOptionsValidator {
     );
 
     public static final GlobalOptions maxOptions = new GlobalOptions (
-            1000,
-            1000,
+            200,
+            200,
             null,
             null,
             10000,

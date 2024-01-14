@@ -21,8 +21,8 @@ public class Biomes {
         this.rectangleBox = rectangleBox;
 
         //TODO: of by one errors might be here!
-        this.equator = (rectangleBox.height()+1)/2;
-        this.radius = (rectangleBox.height()+1)/10;
+        this.equator = (rectangleBox.height())/2;
+        this.radius = (rectangleBox.height())/10;
         //all soft boundaries
         for(int x=0; x<rectangleBox.width();x++){
             for(int y=0; y<rectangleBox.height();y++){
@@ -39,16 +39,16 @@ public class Biomes {
 
     public Vector2d giveFreePosition() throws NoPositionLeftException {
         //random free position, logic inside
-        Collections.shuffle(stepFreePositions);
-        Collections.shuffle(jungleFreePositions);
 
         int decidingNumber = Random.randInt(1,5);
         if( (decidingNumber == 1 || jungleFreePositions.isEmpty()) && !stepFreePositions.isEmpty() ){ //step wins or no places in jungle
             //inserting into step
-            return stepFreePositions.remove(0);
+            Collections.shuffle(stepFreePositions);
+            return stepFreePositions.remove(stepFreePositions.size() - 1);
         }
         else if ( !jungleFreePositions.isEmpty() ){
-            return jungleFreePositions.remove(0);
+            Collections.shuffle(jungleFreePositions);
+            return jungleFreePositions.remove(jungleFreePositions.size() - 1);
         }
         throw new NoPositionLeftException(); //no places left in jungle or step
     }
