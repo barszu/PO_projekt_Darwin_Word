@@ -81,5 +81,9 @@ public class ListHashMap<K, V>{
         return normalHashMap.toString();
     }
 
+    public int size(){
+        return normalHashMap.size();
+    }
+
 }
 

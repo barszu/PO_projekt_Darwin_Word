@@ -42,9 +42,14 @@ public class SimulationController {
     public void setWorldMapSimulation(Simulation worldMapSimulation, int squareSize) {
     	this.worldMapSimulation = worldMapSimulation;
         worldMapSimulation.addListenerToMap( new SimulationMapListener(mapGrid, worldMapSimulation.getWorldMap(), squareSize, clickedAnimalHeader, clickedAnimalgrassEatenN0, clickedAnimalEnergyNo, clickedAnimalGenome, clickedAnimalDescendantsNo));
-        worldMapSimulation.addListenerToMap(new SimulationDayListener(simulationDayLabel));
-        worldMapSimulation.addListenerToMap(new SimulationAnimalNoListener(simulationAnimalsNoLabel));
-        worldMapSimulation.addListenerToMap(new SimulationGrassesNoListener(simulationGrassesNoLabel));
+
+        worldMapSimulation.addListenerToMap(new SimulationStatsListener()
+                        .toBuild()
+                        .setDayLabel(simulationDayLabel)
+                        .setAnimalsNoLabel(simulationAnimalsNoLabel)
+                        .setPlantsNoLabel(simulationGrassesNoLabel)
+                        .build()
+                );
 
         simulationStatusLabel.setText("Initialized & Running");
         worldMapSimulation.addListener(new SimulationStatusListener(simulationStatusLabel));

@@ -35,6 +35,15 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     protected final HashMap<Vector2d, Grass> grasses = new HashMap<>();
 
 
+
+    protected final List<Animal> recentlySlainedAnimals = new LinkedList<>();
+
+    @Override
+    public List<Animal> getRecentlySlainedAnimals() {
+        return recentlySlainedAnimals;
+    }
+
+
     public AbstractWorldMap(GlobalOptions globalOptions , GlobalVariables globalVariables) {
         this.globalOptions = globalOptions;
         this.globalVariables = globalVariables;
@@ -50,6 +59,8 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
     @Override
     public void updateEverything(){
+        recentlySlainedAnimals.clear();
+
         tryToRemoveAllDeadAnimals();
         makeAllAnimalsOlder();
         moveAllAnimals();
@@ -103,6 +114,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         for (Animal animal : getAllAnimals()) {
             if (animal.checkIfDead()){
 //                System.out.println("Animal "+animal+" has died at: " + animal.getPosition());
+                recentlySlainedAnimals.add(animal);
                 animalsDict.removeFrom(animal.getPosition() , animal); //remove from map
             }
         }
@@ -235,7 +247,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     }
 
     @Override
-    public int getBestGenotype() {
+    public int getTopGene() {
         HashMap<Integer , Integer> geneCntMap = new HashMap<>();
         for (Animal animal : getAllAnimals()) {
             for (int gene : animal.getGenotype()) {
@@ -259,6 +271,50 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     @Override
     public GlobalVariables getGlobalVariables() {
         return globalVariables;
+    }
+
+    @Override
+    public int getDay() {
+        return globalVariables.getDate();
+    }
+
+    @Override
+    public int getFieldsWithoutGrassNo(){
+        return rectangleBox.area() - grasses.size();
+    }
+
+    @Override
+    public int getFieldsWithoutAnimalsNo(){
+        return rectangleBox.area() - animalsDict.size();
+    }
+
+    @Override
+    public int getEmptyFieldsNo(){
+        Set<Vector2d> set = new HashSet<>();
+        set.addAll(animalsDict.keySet());
+        set.addAll(grasses.keySet());
+        return rectangleBox.area() - set.size();
+    }
+
+    @Override
+    public double getAvgEnergy(){
+        return getAllAnimals().stream().mapToDouble(Animal::getEnergy).average().orElse(0.0);
+    }
+
+    @Override
+    public double getAvgNumberOfChildren(){
+        return getAllAnimals().stream()
+                .mapToDouble(animal -> animal.getChildrenList().size())
+                .average()
+                .orElse(0.0);
+    }
+
+    @Override
+    public double getAvgNumberOfSuccessors(){
+        return getAllAnimals().stream()
+                .mapToDouble(animal -> animal.getSuccessorsNo())
+                .average()
+                .orElse(0.0);
     }
 
 

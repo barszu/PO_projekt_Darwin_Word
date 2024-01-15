@@ -98,9 +98,20 @@ public interface WorldMap_able extends MoveValidator_able{
     //    ------------------------------------------
 
     RectangleBoundary getBoundary();
-    int getBestGenotype();
+    int getTopGene();
     int getAnimalsNo();
     int getGrassesNo();
+    int getDay();
+    int getFieldsWithoutGrassNo();
+    int getFieldsWithoutAnimalsNo();
+    int getEmptyFieldsNo();
+    double getAvgEnergy();
+    double getAvgNumberOfChildren();
+    double getAvgNumberOfSuccessors();
+
+
+    List<Animal> getRecentlySlainedAnimals();
+
 
     GlobalVariables getGlobalVariables();
 
