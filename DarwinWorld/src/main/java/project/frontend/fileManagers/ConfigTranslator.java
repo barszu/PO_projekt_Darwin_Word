@@ -41,7 +41,7 @@ public class ConfigTranslator {
         res[2] = String.valueOf(globalOptions.mapType());
         res[3] = String.valueOf(globalOptions.mutationType());
         res[4] = String.valueOf(globalOptions.initAnimalEnergy());
-        res[5] = String.valueOf(globalOptions.initPlantEnergy());
+        res[5] = String.valueOf(globalOptions.initGrassNo());
         res[6] = String.valueOf(globalOptions.initAnimalsNo());
         res[7] = String.valueOf(globalOptions.genotypeLength());
         res[8] = String.valueOf(globalOptions.energyPerPlant());

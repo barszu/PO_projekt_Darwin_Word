@@ -33,27 +33,14 @@ public class WaterMap extends AbstractWorldMap{
         waterPhase = 0;
         generateWater();
         waterEdges.addAll(findWaterEdges());
-//        if waterPositions does not contain a 'position' -> it is a free position (for grasses and maybe animals?)
-
-
-//        Set<Vector2d> uniqueSet = new HashSet<>(waterPositions);
-//        if (uniqueSet.size() != waterPositions.size()){
-//            System.out.println("sa wartosci nieunikalne");
-//        }
-
-
 
         for (Vector2d waterPosition : waterPositions) {
             biomes.giveExactFreePosition(waterPosition);
-//            try {biomes.giveExactFreePosition(waterPosition);}
-//            catch (IllegalArgumentException e){
-//                e.printStackTrace();
-//            }
              //kicking that position from free positions
         }
 
         initAllAnimals();
-        placeGrasses(globalOptions.energyPerPlant());
+        placeGrasses(globalOptions.initGrassNo());
     }
 
     @Override
@@ -173,10 +160,6 @@ public class WaterMap extends AbstractWorldMap{
 
                             if (rectangleBox.contains(neighbor)){
                                 biomes.giveExactFreePosition(neighbor);
-//                                try {biomes.giveExactFreePosition(neighbor);}
-//                                catch (IllegalArgumentException e){
-//                                    e.printStackTrace();
-//                                }
 
                             }
 

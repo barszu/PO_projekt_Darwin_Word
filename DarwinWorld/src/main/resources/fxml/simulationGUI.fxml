@@ -18,6 +18,7 @@
         <HBox>
             <Button fx:id="startButton" text="Start" onAction="#onStartSimulationButtonClicked"/>
             <Button fx:id="stopButton" text="Stop" onAction="#onStopSimulationButtonClicked"/>
+            <Button fx:id="saveStatsButton" text="Save" onAction="#onSaveStatsButtonClicked"/>
         </HBox>
         <HBox>
             <Label text="Simulation Status: "/>

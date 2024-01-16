@@ -11,7 +11,7 @@ public class CylindricalGlobeMap extends AbstractWorldMap{
     public CylindricalGlobeMap(GlobalOptions globalOptions, GlobalVariables globalVariables) {
         super(globalOptions, globalVariables);
         initAllAnimals();
-        placeGrasses(globalOptions.energyPerPlant());
+        placeGrasses(globalOptions.initGrassNo());
     }
 
     @Override

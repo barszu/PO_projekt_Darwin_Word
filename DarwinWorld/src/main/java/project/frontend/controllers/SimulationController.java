@@ -5,8 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
 import project.backend.backend.Simulation;
+import project.frontend.fileManagers.SaveStatsManager;
 import project.frontend.listeners.*;
+
+import java.io.File;
 
 public class SimulationController {
 
@@ -37,14 +41,26 @@ public class SimulationController {
     @FXML
     private Button stopButton;
 
+    @FXML
+    private Button saveStatsButton;
+
     private Simulation worldMapSimulation;
+
+    private SimulationStatsListener simulationStatsListener ;
+
 
     public void setWorldMapSimulation(Simulation worldMapSimulation, int squareSize) {
     	this.worldMapSimulation = worldMapSimulation;
         worldMapSimulation.addListenerToMap( new SimulationMapListener(mapGrid, worldMapSimulation.getWorldMap(), squareSize, clickedAnimalHeader, clickedAnimalgrassEatenN0, clickedAnimalEnergyNo, clickedAnimalGenome, clickedAnimalDescendantsNo));
-        worldMapSimulation.addListenerToMap(new SimulationDayListener(simulationDayLabel));
-        worldMapSimulation.addListenerToMap(new SimulationAnimalNoListener(simulationAnimalsNoLabel));
-        worldMapSimulation.addListenerToMap(new SimulationGrassesNoListener(simulationGrassesNoLabel));
+
+        this.simulationStatsListener = new SimulationStatsListener()
+                .toBuild()
+                .setDayLabel(simulationDayLabel)
+                .setAnimalsNoLabel(simulationAnimalsNoLabel)
+                .setPlantsNoLabel(simulationGrassesNoLabel)
+                .build();
+
+        worldMapSimulation.addListenerToMap(this.simulationStatsListener);
 
         simulationStatusLabel.setText("Initialized & Running");
         worldMapSimulation.addListener(new SimulationStatusListener(simulationStatusLabel));
@@ -59,4 +75,26 @@ public class SimulationController {
     }
 
 
+    public void onSaveStatsButtonClicked(ActionEvent event) {
+        worldMapSimulation.stopSimulation();
+
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        fileChooser.setInitialDirectory(new File("./stats_export")); //TODO: stworzyc folder na te smieci i go oznaczyc ze to smieci
+        fileChooser.setInitialFileName("stats.csv");
+        fileChooser.setTitle("Save stats to file");
+
+
+        File file = fileChooser.showSaveDialog(null);
+
+        if (file != null) {
+            SaveStatsManager saveStatsManager = new SaveStatsManager(file);
+            saveStatsManager.saveToFile(simulationStatsListener.getSimulationStatsList());
+        }
+
+
+//        System.out.print(simulationStatsListener.getSimulationStatsList());
+    }
 }

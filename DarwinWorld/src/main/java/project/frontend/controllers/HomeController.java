@@ -199,7 +199,7 @@ public class HomeController{
         mapTypeChoiceBox.setValue(String.valueOf(g.mapType()));
         mutationTypeChoiceBox.setValue(String.valueOf(g.mutationType()));
         initAnimalEnergyField.setText(String.valueOf(g.initAnimalEnergy()));
-        initPlantEnergyField.setText(String.valueOf(g.initPlantEnergy()));
+        initPlantEnergyField.setText(String.valueOf(g.initGrassNo()));
         initAnimalsNoField.setText(String.valueOf(g.initAnimalsNo()));
         genotypeLengthField.setText(String.valueOf(g.genotypeLength()));
         energyPerPlantField.setText(String.valueOf(g.energyPerPlant()));

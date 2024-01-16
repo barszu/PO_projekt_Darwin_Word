@@ -125,4 +125,12 @@ public class Biomes {
         }
     }
 
+    public int getFreeSteppePositionsNo(){
+        return stepFreePositions.size();
+    }
+
+    public int getFreeJunglePositionsNo(){
+        return jungleFreePositions.size();
+    }
+
 }

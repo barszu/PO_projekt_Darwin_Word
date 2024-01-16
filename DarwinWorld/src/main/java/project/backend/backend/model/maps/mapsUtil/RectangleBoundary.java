@@ -17,6 +17,10 @@ public record RectangleBoundary(Vector2d lowerLeft , Vector2d upperRight) {
         return position.follows(lowerLeft) && position.precedes(upperRight);
     }
 
+    public int area() {
+        return height() * width();
+    }
+
     @Override
     public String toString() {
         return lowerLeft+" x "+upperRight;
