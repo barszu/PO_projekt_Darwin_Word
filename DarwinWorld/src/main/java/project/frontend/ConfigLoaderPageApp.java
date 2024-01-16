@@ -35,7 +35,7 @@ public class ConfigLoaderPageApp {
         stage.setTitle("Options Load");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-//                scene.getStylesheets().add("styles.css");
+//                scene.getStylesheets().add("grip-cell-style.css");
         stage.show();
 //        stage.showAndWait();
 

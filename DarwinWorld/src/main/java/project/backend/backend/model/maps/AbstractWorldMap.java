@@ -254,6 +254,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
                 geneCntMap.put(gene , geneCntMap.getOrDefault(gene , 0) + 1);
             }
         }
+        if (geneCntMap.size() == 0){return -1;} //no animals on map
         Integer bestGene = Collections.max(geneCntMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
         return (int) bestGene;
     }
