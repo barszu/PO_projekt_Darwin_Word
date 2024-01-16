@@ -49,8 +49,8 @@ public class GlobalOptionsValidator {
         if (!MathUtils.isBetween(minOptions.initAnimalEnergy(), options.initAnimalEnergy(), maxOptions.initAnimalEnergy())){
             throw new OptionsValidateException("initAnimalEnergy" , "initAnimalEnergy must be between " + minOptions.initAnimalEnergy() + " and " + maxOptions.initAnimalEnergy());
         }
-        if (!MathUtils.isBetween(minOptions.initPlantEnergy(), options.initPlantEnergy(), maxOptions.initPlantEnergy())){
-            throw new OptionsValidateException("initPlantEnergy" , "initPlantEnergy must be between " + minOptions.initPlantEnergy() + " and " + maxOptions.initPlantEnergy());
+        if (!MathUtils.isBetween(minOptions.initGrassNo(), options.initGrassNo(), maxOptions.initGrassNo())){
+            throw new OptionsValidateException("initGrassNo" , "initGrassNo must be between " + minOptions.initGrassNo() + " and " + maxOptions.initGrassNo());
         }
         if (!MathUtils.isBetween(minOptions.initAnimalsNo(), options.initAnimalsNo(), maxOptions.initAnimalsNo())){
             throw new OptionsValidateException("initAnimalsNo" , "initAnimalsNo must be between " + minOptions.initAnimalsNo() + " and " + maxOptions.initAnimalsNo());
@@ -83,6 +83,9 @@ public class GlobalOptionsValidator {
         }
         if (!(options.energyToBreeding() <= options.energyToBeFeed())){
             throw new OptionsValidateException("energyToBreeding" , "energyToBreeding must be <= energyToBeFeed");
+        }
+        if(!(options.maxMutationsNo() <= options.genotypeLength())){
+            throw new OptionsValidateException("maxMutationsNo" , "maxMutationsNo must be <= genotypeLength");
         }
 
 

@@ -14,7 +14,7 @@ public record GlobalOptions(
 
         //initial options
         int initAnimalEnergy,
-        int initPlantEnergy,
+        int initGrassNo,
         int initAnimalsNo,
 
         //general simulation options
@@ -37,7 +37,7 @@ public record GlobalOptions(
                 "mapType=" + mapType + "\n" +
                 "mutationType=" + mutationType + "\n" +
                 "initAnimalEnergy=" + initAnimalEnergy + "\n" +
-                "initPlantEnergy=" + initPlantEnergy + "\n" +
+                "initGrassNo=" + initGrassNo + "\n" +
                 "initAnimalsNo=" + initAnimalsNo + "\n" +
                 "genotypeLength=" + genotypeLength + "\n" +
                 "energyPerPlant=" + energyPerPlant + "\n" +
