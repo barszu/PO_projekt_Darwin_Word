@@ -1,18 +1,24 @@
 package project.backend.backend.model.sprites;
-import project.backend.backend.global.GlobalVariables;
+import project.backend.backend.globalViaSimulation.GlobalVariables;
 import project.backend.backend.model.enums.MapDirection;
 import project.backend.backend.model.sprites.animalUtil.SuccessorDFS;
 import project.backend.backend.model.sprites.animalUtil.GenotypeMerger;
 import project.backend.backend.extras.CyclicListExtras;
-import project.backend.backend.global.GlobalOptions;
-import project.backend.backend.model.maps.MoveValidator_able;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
+import project.backend.backend.model.maps.IMoveValidator;
 import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Animal implements WorldElement_able, Comparable<Animal> {
+/**
+ * This class represents an animal in the @IWorldMap (simulation).
+ * An animal has a direction, position, genotype, energy, age, list of children, and other properties.
+ * It provides methods to get and set these properties, move the animal, reproduce with another animal, and other operations.
+ */
+public class Animal implements IWorldElement, Comparable<Animal> {
 
 
     private MapDirection direction ;
@@ -49,7 +55,8 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
         return age;
     }
     public List<Animal> getChildrenList() {
-        return childrenList;
+//        return childrenList;
+        return Collections.unmodifiableList(childrenList);
     }
     public int getSpawnDate() {return spawnDate;}
 
@@ -81,7 +88,6 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
     }
 
     //constructor for initial animals using only globalOptions and globalVariables
-    //TODO: only works for RectangularMap
     public Animal(Vector2d fixedPosition , GlobalOptions globalOptions , GlobalVariables globalVariables){
         this.globalOptions = globalOptions;
         this.globalVariables = globalVariables;
@@ -182,7 +188,7 @@ public class Animal implements WorldElement_able, Comparable<Animal> {
         return SuccessorDFS.searchSuccessorsNo(this);
     }
 
-    public void move(MoveValidator_able moveValidatorable){
+    public void move(IMoveValidator moveValidatorable){
           if (isDead){
             throw new IllegalStateException("Animal is dead! Cannot move!");
         }

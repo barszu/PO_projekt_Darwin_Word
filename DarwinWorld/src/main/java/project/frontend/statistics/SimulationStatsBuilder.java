@@ -1,4 +1,4 @@
-package project.frontend.listeners.listenerUtil;
+package project.frontend.statistics;
 
 import javafx.scene.control.Label;
 import project.frontend.listeners.SimulationStatsListener;

@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import project.backend.backend.Simulation;
-import project.backend.backend.global.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
 import project.frontend.controllers.SimulationController;
 
 import java.io.IOException;

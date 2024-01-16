@@ -1,16 +1,25 @@
 package project.frontend.fileManagers;
 
-import project.backend.backend.global.GlobalOptions;
-import project.frontend.exceptions.ParsingStringsException;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
+import project.frontend.fileManagers.util.ConfigTranslator;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class manages the configuration files for the simulation.
+ * It provides methods to read, add, delete, and remove configurations.
+ */
 public class ConfigFileManager {
     private static final String CSV_FILE = "src/main/resources/config.csv";
     private static final String CSV_SPLIT_BY = ",";
 
+    /**
+     * This method reads all configurations from the configuration file.
+     * It returns a list of GlobalOptions objects representing the configurations.
+     * @return A list of GlobalOptions objects representing the configurations.
+     */
     public static List<GlobalOptions> readAllConfigs(){
         List<GlobalOptions> optionsList = new LinkedList<>();
         String line = "";
@@ -43,6 +52,12 @@ public class ConfigFileManager {
         return optionsList;
     }
 
+    /**
+     * This method adds a new configuration to the configuration file.
+     * It translates the GlobalOptions object to a string array and appends it to the file.
+     * @param globalOptions The GlobalOptions object representing the configuration to add.
+     * @throws Exception if an error occurs while writing to the file.
+     */
     public static void add(GlobalOptions globalOptions) throws Exception{
         // vithout smart validation -> if it's will be saved in csv, it's valid RULE
         String[] newConfig = ConfigTranslator.translateFromGlobalOptionsToStringArray(globalOptions);
@@ -55,6 +70,11 @@ public class ConfigFileManager {
         writer.close();
     }
 
+    /**
+     * This method deletes all configurations from the configuration file.
+     * It overwrites the file with an empty string.
+     * @throws IOException if an error occurs while writing to the file.
+     */
     public static void deleteAllConfigs() throws IOException {
         FileWriter writer = new FileWriter(CSV_FILE, false);
         writer.write("");
@@ -62,6 +82,12 @@ public class ConfigFileManager {
     }
 
 
+    /**
+     * This method removes a specific configuration from the configuration file.
+     * It reads all configurations, removes the specified one, deletes all configurations from the file, and then adds back the remaining ones.
+     * @param globalOptions The GlobalOptions object representing the configuration to remove.
+     * @throws Exception if an error occurs while reading from or writing to the file.
+     */
     public static void remove(GlobalOptions globalOptions) throws Exception{
         List<GlobalOptions> globalOptionsList = readAllConfigs();
         globalOptionsList.remove(globalOptions);

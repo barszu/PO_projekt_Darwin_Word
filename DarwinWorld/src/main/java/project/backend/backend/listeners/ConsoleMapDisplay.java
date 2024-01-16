@@ -1,8 +1,8 @@
 package project.backend.backend.listeners;
 
-import project.backend.backend.model.maps.WorldMap_able;
+import project.backend.backend.model.maps.IWorldMap;
 
-public class ConsoleMapDisplay implements MapChangeListener {
+public class ConsoleMapDisplay implements IMapChangeListener {
 
     private int updateCounter = 0;
 
@@ -22,7 +22,7 @@ public class ConsoleMapDisplay implements MapChangeListener {
 //    }
 
     @Override
-    public void mapChanged(WorldMap_able worldMap_able, String message) {
+    public void mapChanged(IWorldMap worldMap_able, String message) {
         System.out.println(message);
         System.out.println("Update no: " + updateCounter);
         System.out.print(worldMap_able);

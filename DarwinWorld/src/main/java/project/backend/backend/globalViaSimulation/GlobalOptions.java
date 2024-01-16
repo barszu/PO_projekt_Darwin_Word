@@ -1,4 +1,4 @@
-package project.backend.backend.global;
+package project.backend.backend.globalViaSimulation;
 
 import project.backend.backend.model.enums.MapType;
 import project.backend.backend.model.enums.MutationType;

@@ -1,11 +1,23 @@
-package project.frontend.fileManagers;
+package project.frontend.fileManagers.util;
 
-import project.backend.backend.global.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
 import project.backend.backend.model.enums.MapType;
 import project.backend.backend.model.enums.MutationType;
 import project.frontend.exceptions.ParsingStringsException;
 
+/**
+ * This class provides methods to translate between GlobalOptions objects and string arrays.
+ * This is used for reading and writing configurations to a file.
+ */
 public class ConfigTranslator {
+
+    /**
+     * This method translates a string array to a GlobalOptions object.
+     * It parses the elements of the string array and uses them to create a new GlobalOptions object.
+     * @param config The string array to translate. It should contain the values for the fields of the GlobalOptions object in the correct order.
+     * @return A GlobalOptions object with the values from the string array.
+     * @throws ParsingStringsException if an error occurs while parsing the string array.
+     */
     public static GlobalOptions translateFromStringArrayToGlobalOptions(String[] config) throws ParsingStringsException {
         GlobalOptions res = null;
         try {
@@ -34,6 +46,12 @@ public class ConfigTranslator {
 
     }
 
+    /**
+     * This method translates a GlobalOptions object to a string array.
+     * It gets the values of the fields of the GlobalOptions object and converts them to strings.
+     * @param globalOptions The GlobalOptions object to translate.
+     * @return A string array containing the values of the fields of the GlobalOptions object.
+     */
     public static String[] translateFromGlobalOptionsToStringArray(GlobalOptions globalOptions) {
         String[] res = new String[14];
         res[0] = String.valueOf(globalOptions.mapWidth());
@@ -52,6 +70,4 @@ public class ConfigTranslator {
         res[13] = String.valueOf(globalOptions.maxMutationsNo());
         return res;
     }
-
-
 }

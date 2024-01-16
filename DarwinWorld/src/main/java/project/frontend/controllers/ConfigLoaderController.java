@@ -2,24 +2,14 @@ package project.frontend.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import project.backend.backend.global.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
 import project.backend.backend.model.enums.MapType;
 import project.backend.backend.model.enums.MutationType;
 import project.frontend.fileManagers.ConfigFileManager;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class ConfigLoaderController  {
 

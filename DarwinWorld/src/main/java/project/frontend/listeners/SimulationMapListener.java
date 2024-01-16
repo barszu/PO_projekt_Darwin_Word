@@ -1,29 +1,23 @@
 package project.frontend.listeners;
 
 import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import project.backend.backend.extras.Vector2d;
-import project.backend.backend.listeners.MapChangeListener;
+import project.backend.backend.listeners.IMapChangeListener;
 import project.backend.backend.model.enums.BiomeField;
-import project.backend.backend.model.maps.WorldMap_able;
+import project.backend.backend.model.maps.IWorldMap;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.model.sprites.Animal;
-import project.backend.backend.model.sprites.WorldElement_able;
-import javafx.stage.Stage;
+import project.backend.backend.model.sprites.IWorldElement;
 
 import java.util.Arrays;
 
-public class SimulationMapListener implements MapChangeListener { //TODO: 2 razy jest worldMap ??? poprawic -> Simon
+public class SimulationMapListener implements IMapChangeListener { //TODO: 2 razy jest worldMap ??? poprawic -> Simon
 
-    private final WorldMap_able worldMap;
+    private final IWorldMap worldMap;
     private final GridPane mapGrid;
 
     private final Label clickedAnimalHeader;
@@ -33,7 +27,7 @@ public class SimulationMapListener implements MapChangeListener { //TODO: 2 razy
     private final Label clickedAnimalDescendantsNo;
     public final int squareSize;
 //    px
-    public SimulationMapListener(GridPane mapGrid, WorldMap_able worldMap, int squareSize,Label clickedAnimalHeader, Label clickedAnimalGrassEatenNo, Label clickedAnimalEnergyNo, Label clickedAnimalGenome, Label clickedAnimalDescendantsNo){
+    public SimulationMapListener(GridPane mapGrid, IWorldMap worldMap, int squareSize, Label clickedAnimalHeader, Label clickedAnimalGrassEatenNo, Label clickedAnimalEnergyNo, Label clickedAnimalGenome, Label clickedAnimalDescendantsNo){
         this.worldMap = worldMap;
         this.mapGrid = mapGrid;
         this.squareSize = squareSize;
@@ -46,9 +40,9 @@ public class SimulationMapListener implements MapChangeListener { //TODO: 2 razy
 
 
     @Override
-    public void mapChanged(WorldMap_able worldMap_able, String message) {
+    public void mapChanged(IWorldMap worldMap_able, String message) {
         Platform.runLater(() ->{
-            System.out.println("map UI has changed, day: " + worldMap_able.getDay() );
+//            System.out.println("map UI has changed, day: " + worldMap_able.getDay() );
 //            this.textLabel.setText(worldMap_able.toString());
             drawMap();
         });
@@ -68,7 +62,7 @@ public class SimulationMapListener implements MapChangeListener { //TODO: 2 razy
         for(int x=0; x<columns; x++){
             for(int y=0; y<rows; y++){
                 Vector2d position = new Vector2d(x,y);
-                WorldElement_able el = worldMap.getOccupantFrom(position);
+                IWorldElement el = worldMap.getOccupantFrom(position);
                 Rectangle square = new Rectangle(squareSize, squareSize);
                 square.setOnMouseClicked(event -> handleSquareClick(position, event));
                 mapGrid.add(square, x, y);

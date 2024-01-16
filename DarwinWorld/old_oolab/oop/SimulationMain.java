@@ -1,7 +1,7 @@
 package project.backend.backend;
 
-import project.backend.backend.global.GlobalOptions;
-import project.backend.backend.global.GlobalVariables;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalVariables;
 import project.backend.backend.model.enums.MapType;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.model.sprites.Animal;
