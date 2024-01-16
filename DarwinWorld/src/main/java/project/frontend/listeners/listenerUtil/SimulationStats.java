@@ -29,4 +29,37 @@ public record SimulationStats(
         if (avgNumberOfChildren < 0) throw new IllegalArgumentException("Average number of children cannot be negative");
         if (avgNumberOfSuccessors < 0) throw new IllegalArgumentException("Average number of descendants cannot be negative");
     }
+
+    private static final String CSV_SPLIT_BY = ",";
+
+    @Override
+    public String toString() {
+        return day + CSV_SPLIT_BY +
+                animalsNo + CSV_SPLIT_BY +
+                deadAnimalsNo + CSV_SPLIT_BY +
+                grassNo + CSV_SPLIT_BY +
+                topGene + CSV_SPLIT_BY +
+                fieldsWithoutGrassNo + CSV_SPLIT_BY +
+                fieldsWithoutAnimalsNo + CSV_SPLIT_BY +
+                emptyFieldsNo + CSV_SPLIT_BY +
+                avgEnergy + CSV_SPLIT_BY +
+                avgLifeTime + CSV_SPLIT_BY +
+                avgNumberOfChildren + CSV_SPLIT_BY +
+                avgNumberOfSuccessors;
+    }
+
+    public static String getAtributesName(){
+        return "day" + CSV_SPLIT_BY +
+                "animalsNo" + CSV_SPLIT_BY +
+                "deadAnimalsNo" + CSV_SPLIT_BY +
+                "grassNo" + CSV_SPLIT_BY +
+                "topGene" + CSV_SPLIT_BY +
+                "fieldsWithoutGrassNo" + CSV_SPLIT_BY +
+                "fieldsWithoutAnimalsNo" + CSV_SPLIT_BY +
+                "emptyFieldsNo" + CSV_SPLIT_BY +
+                "avgEnergy" + CSV_SPLIT_BY +
+                "avgLifeTime" + CSV_SPLIT_BY +
+                "avgNumberOfChildren" + CSV_SPLIT_BY +
+                "avgNumberOfSuccessors";
+    }
 }

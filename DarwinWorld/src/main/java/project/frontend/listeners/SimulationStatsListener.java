@@ -72,9 +72,9 @@ public class SimulationStatsListener implements MapChangeListener {
     public void mapChanged(WorldMap_able worldMap_able, String message) {
         addNewStat(worldMap_able);
         Platform.runLater(() ->{
+            //satisfy labels
             updateLabels(simulationStatsList.get(simulationStatsList.size()-1));
         });
-        //satisfy labels
     }
 
     private void updateLabels(SimulationStats simulationStats){
@@ -96,7 +96,7 @@ public class SimulationStatsListener implements MapChangeListener {
                 field.setAccessible(false);
             } catch (NullPointerException ignored){//field is null
             } catch (Exception e){
-                System.out.println("Error while updating labels -> IllegalAccessException?");
+                System.out.println("Error while updating labels -> " + e.getMessage());
             }
         }
     }

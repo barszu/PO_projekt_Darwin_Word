@@ -48,7 +48,7 @@ public class SimulationMapListener implements MapChangeListener { //TODO: 2 razy
     @Override
     public void mapChanged(WorldMap_able worldMap_able, String message) {
         Platform.runLater(() ->{
-            System.out.println("map UI has changed, day: TODO" );
+            System.out.println("map UI has changed, day: " + worldMap_able.getDay() );
 //            this.textLabel.setText(worldMap_able.toString());
             drawMap();
         });
