@@ -1,13 +1,11 @@
 package project.frontend.fileManagers;
 
 import org.junit.jupiter.api.Test;
-import project.backend.backend.global.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
 import project.backend.backend.model.enums.MapType;
 import project.backend.backend.model.enums.MutationType;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ConfigFileManagerTest {
     @Test

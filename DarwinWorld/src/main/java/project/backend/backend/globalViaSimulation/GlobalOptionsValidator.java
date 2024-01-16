@@ -1,4 +1,4 @@
-package project.backend.backend.global;
+package project.backend.backend.globalViaSimulation;
 
 import project.backend.backend.exceptions.OptionsValidateException;
 import project.backend.backend.extras.MathUtils;

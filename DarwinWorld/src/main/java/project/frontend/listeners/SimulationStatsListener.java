@@ -2,17 +2,17 @@ package project.frontend.listeners;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
-import project.backend.backend.listeners.MapChangeListener;
-import project.backend.backend.model.maps.WorldMap_able;
+import project.backend.backend.listeners.IMapChangeListener;
+import project.backend.backend.model.maps.IWorldMap;
 import project.backend.backend.model.sprites.Animal;
-import project.frontend.listeners.listenerUtil.SimulationStats;
-import project.frontend.listeners.listenerUtil.SimulationStatsBuilder;
+import project.frontend.statistics.SimulationStats;
+import project.frontend.statistics.SimulationStatsBuilder;
 
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SimulationStatsListener implements MapChangeListener {
+public class SimulationStatsListener implements IMapChangeListener {
 
     private final List<SimulationStats> simulationStatsList = new LinkedList<>();
     private int deadAnimalsNo = 0;
@@ -31,8 +31,6 @@ public class SimulationStatsListener implements MapChangeListener {
     private Label avgLifeTimeLabel = null;
     private Label avgNumberOfChildrenLabel = null;
     private Label avgNumberOfSuccessorsLabel = null;
-
-    @Deprecated
     public SimulationStatsListener(
             Label DayLabel,
             Label AnimalsNoLabel,
@@ -69,7 +67,7 @@ public class SimulationStatsListener implements MapChangeListener {
 
 
     @Override
-    public void mapChanged(WorldMap_able worldMap_able, String message) {
+    public void mapChanged(IWorldMap worldMap_able, String message) {
         addNewStat(worldMap_able);
         Platform.runLater(() ->{
             //satisfy labels
@@ -101,7 +99,7 @@ public class SimulationStatsListener implements MapChangeListener {
         }
     }
 
-    private void addNewStat(WorldMap_able worldMap_able){
+    private void addNewStat(IWorldMap worldMap_able){
         List<Animal> freshDeadAnimalsList= worldMap_able.getRecentlySlainedAnimals();
 
         if (freshDeadAnimalsList.size() > 0){ //otherwise it would divide by 0

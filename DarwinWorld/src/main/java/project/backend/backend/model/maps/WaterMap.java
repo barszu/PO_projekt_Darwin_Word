@@ -3,13 +3,10 @@ package project.backend.backend.model.maps;
 import project.backend.backend.extras.CyclicListExtras;
 import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
-import project.backend.backend.global.GlobalOptions;
-import project.backend.backend.global.GlobalVariables;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalVariables;
 import project.backend.backend.model.enums.BiomeField;
-import project.backend.backend.model.maps.mapsUtil.Biomes;
-import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.model.sprites.Animal;
-import project.backend.backend.model.sprites.WorldElement_able;
 
 import java.util.*;
 
@@ -35,7 +32,7 @@ public class WaterMap extends AbstractWorldMap{
         waterEdges.addAll(findWaterEdges());
 
         for (Vector2d waterPosition : waterPositions) {
-            biomes.giveExactFreePosition(waterPosition);
+            biomesBuffer.giveExactFreePosition(waterPosition);
              //kicking that position from free positions
         }
 
@@ -62,7 +59,7 @@ public class WaterMap extends AbstractWorldMap{
 
     @Override
     public void initAllAnimals() {
-        List<Vector2d> notWaterPositions = biomes.getAllFreePositions(); // positions without water
+        List<Vector2d> notWaterPositions = biomesBuffer.getAllFreePositions(); // positions without water
         for (int i = 0; i < globalOptions.initAnimalsNo(); i++) {
             int decidingNumber = Random.randInt(0, notWaterPositions.size()-1);
             Animal animal = new Animal(notWaterPositions.get(decidingNumber), globalOptions , globalVariables);
@@ -150,7 +147,7 @@ public class WaterMap extends AbstractWorldMap{
 
                             if (grasses.containsKey(neighbor)){ //flooded grass removed
                                 grasses.remove(neighbor);
-                                biomes.handOverPosition(neighbor);
+                                biomesBuffer.handOverPosition(neighbor);
                             }
 
 
@@ -159,7 +156,7 @@ public class WaterMap extends AbstractWorldMap{
 //                          removeFromFreeFields(neighbor);
 
                             if (rectangleBox.contains(neighbor)){
-                                biomes.giveExactFreePosition(neighbor);
+                                biomesBuffer.giveExactFreePosition(neighbor);
 
                             }
 
@@ -180,7 +177,7 @@ public class WaterMap extends AbstractWorldMap{
 //                          addToFreeFields(edge);
 
                             try { //try to hand over position to biomes
-                                biomes.handOverPosition(edge);
+                                biomesBuffer.handOverPosition(edge);
                             } catch (IllegalArgumentException ignored) {}
 
                         }

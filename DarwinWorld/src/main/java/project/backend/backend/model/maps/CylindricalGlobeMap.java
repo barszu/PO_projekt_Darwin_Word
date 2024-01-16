@@ -2,8 +2,8 @@ package project.backend.backend.model.maps;
 
 import project.backend.backend.extras.Random;
 import project.backend.backend.extras.Vector2d;
-import project.backend.backend.global.GlobalOptions;
-import project.backend.backend.global.GlobalVariables;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalVariables;
 import project.backend.backend.model.sprites.Animal;
 
 public class CylindricalGlobeMap extends AbstractWorldMap{

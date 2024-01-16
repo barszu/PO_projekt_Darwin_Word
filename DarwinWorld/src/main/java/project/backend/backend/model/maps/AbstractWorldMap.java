@@ -2,32 +2,29 @@ package project.backend.backend.model.maps;
 
 import project.backend.backend.exceptions.NoPositionLeftException;
 import project.backend.backend.extras.ListHashMap;
-import project.backend.backend.extras.MathUtils;
-import project.backend.backend.global.GlobalOptions;
-import project.backend.backend.global.GlobalVariables;
-import project.backend.backend.listeners.MapChangeListener;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalVariables;
+import project.backend.backend.listeners.IMapChangeListener;
 import project.backend.backend.model.enums.BiomeField;
-import project.backend.backend.model.maps.mapsUtil.Biomes;
+import project.backend.backend.model.maps.mapsUtil.BiomesBuffer;
 import project.backend.backend.model.maps.mapsUtil.RectangleBoundary;
 import project.backend.backend.extras.Vector2d;
 import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.Grass;
-import project.backend.backend.model.sprites.WorldElement_able;
+import project.backend.backend.model.sprites.IWorldElement;
 import project.backend.backend.util.MapVisualizer;
 
 import java.util.*;
 
 import static project.backend.backend.extras.MathUtils.isBetween;
 
-public abstract class AbstractWorldMap implements WorldMap_able{
-    private final List<MapChangeListener> observersList = new ArrayList<>();
+public abstract class AbstractWorldMap implements IWorldMap {
+    private final List<IMapChangeListener> observersList = new ArrayList<>();
 
-    @Override
-    public RectangleBoundary getBoundary() {
-        return rectangleBox;
-    }
-    protected final Biomes biomes;
+
+    protected final BiomesBuffer biomesBuffer;
     protected final RectangleBoundary rectangleBox;
+
     protected final GlobalOptions globalOptions;
     protected final GlobalVariables globalVariables;
     protected final ListHashMap<Vector2d, Animal> animalsDict = new ListHashMap<>();
@@ -40,9 +37,13 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
     @Override
     public List<Animal> getRecentlySlainedAnimals() {
-        return recentlySlainedAnimals;
+        return Collections.unmodifiableList(recentlySlainedAnimals);
     }
 
+    @Override
+    public RectangleBoundary getBoundary() {
+        return rectangleBox;
+    }
 
     public AbstractWorldMap(GlobalOptions globalOptions , GlobalVariables globalVariables) {
         this.globalOptions = globalOptions;
@@ -53,7 +54,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         this.rectangleBox = new RectangleBoundary(new Vector2d(0,0),
                 new Vector2d(globalOptions.mapWidth()-1,globalOptions.mapHeight()-1));
 
-        this.biomes = new Biomes(this.rectangleBox);
+        this.biomesBuffer = new BiomesBuffer(this.rectangleBox);
         //and others...
     }
 
@@ -107,10 +108,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         return oldPosition;
     }
 
-
-
-    @Override
-    public void tryToRemoveAllDeadAnimals() {
+    protected void tryToRemoveAllDeadAnimals() {
         for (Animal animal : getAllAnimals()) {
             if (animal.checkIfDead()){
 //                System.out.println("Animal "+animal+" has died at: " + animal.getPosition());
@@ -120,8 +118,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         }
     }
 
-    @Override
-    public void moveAllAnimals() {
+    protected void moveAllAnimals() {
         for (Animal animal : getAllAnimals()) {
             Vector2d oldPosition = animal.getPosition();
             animalsDict.removeFrom(animal.getPosition(), animal); //temp removal
@@ -131,20 +128,18 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         }
     }
 
-    @Override
-    public void makeAllAnimalsOlder(){
+    protected void makeAllAnimalsOlder(){
         for (Animal animal : getAllAnimals()) {
             animal.incrementAge();
             animal.subtractEnergy(1);
         }
     }
 
-
     @Override
     public void placeGrasses(int grassNo) { //init map , run
         for (int i=0; i<grassNo; i++){
             try {
-                Vector2d position = biomes.giveFreePosition();
+                Vector2d position = biomesBuffer.giveFreePosition();
                 Grass grass = new Grass(position);
                 grasses.put(position, grass);
 //                System.out.println("Grass has benn placed at: " + position);
@@ -155,10 +150,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
         }
     }
 
-
-
-    @Override
-    public void tryToBreedAllAnimals() {
+    protected void tryToBreedAllAnimals() {
         for(Vector2d position: animalsDict.keySet()){
             setHierarchy(position);
             List<Animal> animalsOnPosition = animalsDict.getListFrom(position); //raw list
@@ -181,7 +173,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     }
 
     @Override
-    public WorldElement_able getOccupantFrom(Vector2d position) {
+    public IWorldElement getOccupantFrom(Vector2d position) {
         if (animalsDict.containsKey(position)){
             setHierarchy(position);
             return animalsDict.getListFrom(position).get(0); //return first best animal
@@ -193,8 +185,8 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     }
 
     @Override
-    public List<WorldElement_able> getAllOccupantsFrom(Vector2d position) { // in sorted order
-        List<WorldElement_able> res = new ArrayList<>();
+    public List<IWorldElement> getAllOccupantsFrom(Vector2d position) { // in sorted order
+        List<IWorldElement> res = new ArrayList<>();
         List<Animal> animals = animalsDict.getListFrom(position);
         Grass grass = grasses.get(position);
 
@@ -219,7 +211,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
     }
 
     //claims one grass for one animal
-    public void feedAllAnimals(){
+    protected void feedAllAnimals(){
         for(Vector2d grassPosition: new ArrayList<>(grasses.keySet()) ){ //TODO: problem nadpisywania slownika?
             if (animalsDict.containsKey(grassPosition)){
                 setHierarchy(grassPosition);
@@ -229,7 +221,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
                 animal.addEnergy(globalOptions.energyPerPlant());
 
                 grasses.remove(grassPosition);
-                biomes.handOverPosition(grassPosition);
+                biomesBuffer.handOverPosition(grassPosition);
 //                System.out.println("Animal "+animal+" has eaten grass at: " + grassPosition);
             }
         }
@@ -243,7 +235,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
     @Override
     public BiomeField getBiomeRepresentation(Vector2d position) {
-        return biomes.getBiomeRepresentation(position);
+        return biomesBuffer.getBiomeRepresentation(position);
     }
 
     @Override
@@ -254,6 +246,7 @@ public abstract class AbstractWorldMap implements WorldMap_able{
                 geneCntMap.put(gene , geneCntMap.getOrDefault(gene , 0) + 1);
             }
         }
+        if (geneCntMap.size() == 0){return -1;} //no animals on map
         Integer bestGene = Collections.max(geneCntMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
         return (int) bestGene;
     }
@@ -328,13 +321,13 @@ public abstract class AbstractWorldMap implements WorldMap_able{
 
 
     @Override
-    public void addObserver(MapChangeListener observer) {observersList.add(observer);}
+    public void addObserver(IMapChangeListener observer) {observersList.add(observer);}
     @Override
-    public void removeObserver(MapChangeListener observer) {observersList.remove(observer);}
+    public void removeObserver(IMapChangeListener observer) {observersList.remove(observer);}
 
     @Override
     public void notifyAllObservers(String description) {
-        for (MapChangeListener observer : observersList) {
+        for (IMapChangeListener observer : observersList) {
             observer.mapChanged(this , description);
         }
 

@@ -1,6 +1,6 @@
 package project.backend.backend.model.sprites.animalUtil;
 
-import project.backend.backend.global.GlobalOptions;
+import project.backend.backend.globalViaSimulation.GlobalOptions;
 import project.backend.backend.extras.Random;
 import project.backend.backend.model.sprites.Animal;
 
@@ -29,9 +29,9 @@ public class GenotypeMerger {
             newGenotype[i] = AnimalsGenesOrder[1].getGenotype()[i];
         }
 
-        WayOfMutation_able wayOfMutation;
+        IWayOfMutation wayOfMutation;
         switch (globalOptions.mutationType()){
-            case SLIGHT_CORRECTION -> {wayOfMutation = new SlightCorrection(globalOptions);}
+            case SLIGHT_CORRECTION -> {wayOfMutation = new SlightCorrectionMutation(globalOptions);}
             case FULL_RANDOM -> {wayOfMutation = new FullRandomMutation(globalOptions);}
             default -> throw new IllegalStateException("Unexpected MutationType: " + globalOptions.mutationType());
         }

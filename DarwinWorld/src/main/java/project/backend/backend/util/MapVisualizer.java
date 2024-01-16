@@ -2,10 +2,10 @@ package project.backend.backend.util;
 
 
 import project.backend.backend.extras.Vector2d;
-import project.backend.backend.model.maps.WorldMap_able;
+import project.backend.backend.model.maps.IWorldMap;
 
 /**
- * The map visualizer converts the {@link WorldMap_able} map into a string
+ * The map visualizer converts the {@link IWorldMap} map into a string
  * representation.
  *
  * @author apohllo, idzik
@@ -14,14 +14,14 @@ public class MapVisualizer {
     private static final String EMPTY_CELL = " ";
     private static final String FRAME_SEGMENT = "-";
     private static final String CELL_SEGMENT = "|";
-    private final WorldMap_able map;
+    private final IWorldMap map;
 
     /**
      * Initializes the MapVisualizer with an instance of map to visualize.
      *
      * @param map
      */
-    public MapVisualizer(WorldMap_able map) {
+    public MapVisualizer(IWorldMap map) {
         this.map = map;
     }
 
