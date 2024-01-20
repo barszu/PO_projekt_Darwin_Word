@@ -21,7 +21,6 @@ import static project.backend.backend.extras.MathUtils.isBetween;
 public abstract class AbstractWorldMap implements IWorldMap {
     private final List<IMapChangeListener> observersList = new ArrayList<>();
 
-
     protected final BiomesBuffer biomesBuffer;
     protected final RectangleBoundary rectangleBox;
 
@@ -309,17 +308,6 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 .average()
                 .orElse(0.0);
     }
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public void addObserver(IMapChangeListener observer) {observersList.add(observer);}
     @Override
@@ -333,5 +321,15 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     }
 
+    public Set<Vector2d> getAnimalsPositionsHavingGene(int gene){
+        Set<Vector2d> res = new HashSet<>();
+        for (Animal animal : getAllAnimals()) {
+            // if animal has gene or more
+            if (Arrays.stream(animal.getGenotype()).filter(g -> g == gene).count() > 0){
+                res.add(animal.getPosition());
+            }
+        }
+        return res;
+    }
 
 }

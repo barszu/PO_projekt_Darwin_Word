@@ -12,6 +12,7 @@ HBox {
 
 Label {
     -fx-font-size: 14;
+    -fx-text-fill: white;
 }
 
 TextField {
@@ -20,4 +21,63 @@ TextField {
 
 ChoiceBox {
     -fx-pref-width: 150;
+}
+
+#rootPane {
+    -fx-background-image: url("/images/background.gif");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+Button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+}
+
+Button:hover {
+    -fx-background-color: #45a049;
+}
+
+TextField {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+}
+
+TextField:focused {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #4d90fe;
+}
+
+TextField:hover {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #ccc;
+}
+
+TextField:disabled {
+    -fx-opacity: 0.7;
+}
+
+TextField .prompt-text {
+    -fx-text-fill: #888;
+}
+
+#mutationTypeChoiceBox .label{
+    -fx-text-fill: #4a4848;
+}
+
+#mapTypeChoiceBox .label{
+    -fx-text-fill: #4a4848;
+}
+
+#header {
+    -fx-text-fill: #b3ffb3;
+    -fx-font-size: 20px;
+    -fx-padding: 10px 0px 10px 0px;
+    -fx-font-weight: bold;
 }

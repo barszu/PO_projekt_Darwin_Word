@@ -1,5 +1,6 @@
 package project.backend.backend;
 
+import project.backend.backend.extras.Vector2d;
 import project.backend.backend.globalViaSimulation.GlobalOptions;
 import project.backend.backend.globalViaSimulation.GlobalVariables;
 import project.backend.backend.listeners.IMapChangeListener;
@@ -8,10 +9,7 @@ import project.backend.backend.model.maps.WaterMap;
 import project.backend.backend.model.maps.IWorldMap;
 import project.frontend.listeners.SimulationStatusListener;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * This class represents a simulation of the world.
@@ -107,6 +105,12 @@ public class Simulation extends Thread{
             timer.purge();
 
             notifyListeners();
+
+//            int topGene = worldMap.getTopGene();
+//            Set<Vector2d> animalsToColor = worldMap.getAnimalsPositionsHavingGene(topGene);
+//            for (Vector2d animalPosition : animalsToColor) {
+//
+//            }
         }
     }
 

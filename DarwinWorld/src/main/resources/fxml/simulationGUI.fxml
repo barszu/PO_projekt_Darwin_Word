@@ -13,47 +13,64 @@
             fx:controller="project.frontend.controllers.SimulationController">
 
 <center>
-    <VBox>
+    <VBox fx:id="content">
         <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" />
-        <HBox>
+        <HBox fx:id="buttons">
             <Button fx:id="startButton" text="Start" onAction="#onStartSimulationButtonClicked"/>
             <Button fx:id="stopButton" text="Stop" onAction="#onStopSimulationButtonClicked"/>
             <Button fx:id="saveStatsButton" text="Save" onAction="#onSaveStatsButtonClicked"/>
         </HBox>
-        <HBox>
-            <Label text="Simulation Status: "/>
-            <Label fx:id="simulationStatusLabel"/>
-        </HBox>
-        <HBox>
-            <Label text="Simulation Day: "/>
-            <Label fx:id="simulationDayLabel"/>
-        </HBox>
-        <HBox>
-            <Label text="Simulation Animals No: "/>
-            <Label fx:id="simulationAnimalsNoLabel"/>
-        </HBox>
-        <HBox>
-            <Label text="Simulation Grasses No: "/>
-            <Label fx:id="simulationGrassesNoLabel"/>
-        </HBox>
-        <!--        Clicked animal data-->
+        <HBox fx:id="stats">
+            <VBox fx:id="globalStats">
+                <HBox>
+                    <Label text="Simulation Status: "/>
+                    <Label fx:id="simulationStatusLabel"/>
+                </HBox>
+                <HBox>
+                    <Label text="Simulation Day: "/>
+                    <Label fx:id="simulationDayLabel"/>
+                </HBox>
+                <HBox>
+                    <Label text="Simulation Animals No: "/>
+                    <Label fx:id="simulationAnimalsNoLabel"/>
+                </HBox>
+                <HBox>
+                    <Label text="Simulation Grasses No: "/>
+                    <Label fx:id="simulationGrassesNoLabel"/>
+                </HBox>
+            </VBox>
+            <VBox fx:id="animalStats">
+                <!--        Clicked animal data-->
+                <HBox>
+                    <Label fx:id="clickedAnimalHeader"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="clickedAnimalgrassEatenN0"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="clickedAnimalEnergyNo"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="clickedAnimalGenome"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="clickedAnimalActivatedGene"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="clickedAnimalDescendantsNo"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="clickedAnimalChildrenNo"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="clickedAnimalLifespan"/>
+                </HBox>
+                <HBox>
+                    <Label fx:id="clickedAnimalDeathDate"/>
+                </HBox>
 
-        <HBox>
-            <Label fx:id="clickedAnimalHeader"/>
+            </VBox>
         </HBox>
-        <HBox>
-            <Label fx:id="clickedAnimalgrassEatenN0"/>
-        </HBox>
-        <HBox>
-            <Label fx:id="clickedAnimalEnergyNo"/>
-        </HBox>
-        <HBox>
-            <Label fx:id="clickedAnimalGenome"/>
-        </HBox>
-        <HBox>
-            <Label fx:id="clickedAnimalDescendantsNo"/>
-        </HBox>
-
     </VBox>
 </center>
 </BorderPane>

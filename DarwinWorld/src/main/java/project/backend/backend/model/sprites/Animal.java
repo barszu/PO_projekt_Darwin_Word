@@ -32,6 +32,7 @@ public class Animal implements IWorldElement, Comparable<Animal> {
     private boolean isDead = false; //is dead on this moment
     private int eatenGrassNo = 0; //how much grass was eaten by this animal
     private final int spawnDate; //when animal was spawned
+    private final int lifespan = 0;
 
     //global variables / options
 
@@ -60,6 +61,13 @@ public class Animal implements IWorldElement, Comparable<Animal> {
     }
     public int getSpawnDate() {return spawnDate;}
 
+    public int getEatenGrassNo() {
+        return eatenGrassNo;
+    }
+
+    public int getCurrentGenotypeIndex() {
+        return currentGenotypeIndex;
+    }
 
     // constructors
 
@@ -225,4 +233,6 @@ public class Animal implements IWorldElement, Comparable<Animal> {
     public void setColor(String color) {
         this.color = color;
     }
+
 }
+

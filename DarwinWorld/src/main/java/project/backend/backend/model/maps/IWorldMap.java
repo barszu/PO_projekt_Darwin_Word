@@ -9,6 +9,7 @@ import project.backend.backend.model.sprites.Animal;
 import project.backend.backend.model.sprites.IWorldElement;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * The IWorldMap interface should be implemented by any class whose instances are intended to represent a world map.
@@ -162,4 +163,6 @@ public interface IWorldMap extends IMoveValidator {
      * @param description A description of the change.
      */
     void notifyAllObservers(String description);
+
+    Set<Vector2d> getAnimalsPositionsHavingGene(int gene);
 }

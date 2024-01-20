@@ -16,26 +16,36 @@ import project.backend.backend.model.sprites.IWorldElement;
 import java.util.Arrays;
 
 public class SimulationMapListener implements IMapChangeListener { //TODO: 2 razy jest worldMap ??? poprawic -> Simon
-
+    private final SimulationAnimalStatsListener animalListener;
     private final IWorldMap worldMap;
     private final GridPane mapGrid;
+    public final int squareSize;
 
     private final Label clickedAnimalHeader;
     private final Label clickedAnimalGrassEatenNo;
     private final Label clickedAnimalEnergyNo;
     private final Label clickedAnimalGenome;
     private final Label clickedAnimalDescendantsNo;
-    public final int squareSize;
+    private final Label clickedAnimalActivatedGene;
+    private final Label clickedAnimalChildrenNo;
+    private final Label clickedAnimalLifespan;
+    private final Label clickedAnimalDeathDate;
 //    px
-    public SimulationMapListener(GridPane mapGrid, IWorldMap worldMap, int squareSize, Label clickedAnimalHeader, Label clickedAnimalGrassEatenNo, Label clickedAnimalEnergyNo, Label clickedAnimalGenome, Label clickedAnimalDescendantsNo){
+    public SimulationMapListener(GridPane mapGrid, IWorldMap worldMap, int squareSize, SimulationAnimalStatsListener animalListener, Label clickedAnimalHeader, Label clickedAnimalGrassEatenNo, Label clickedAnimalEnergyNo, Label clickedAnimalGenome, Label clickedAnimalDescendantsNo, Label clickedAnimalActivatedGene, Label clickedAnimalChildrenNo, Label clickedAnimalLifespan, Label clickedAnimalDeathDate){
         this.worldMap = worldMap;
         this.mapGrid = mapGrid;
         this.squareSize = squareSize;
+        this.animalListener = animalListener;
+
         this.clickedAnimalHeader = clickedAnimalHeader;
         this.clickedAnimalGrassEatenNo = clickedAnimalGrassEatenNo;
         this.clickedAnimalEnergyNo = clickedAnimalEnergyNo;
         this.clickedAnimalGenome = clickedAnimalGenome;
         this.clickedAnimalDescendantsNo = clickedAnimalDescendantsNo;
+        this.clickedAnimalActivatedGene = clickedAnimalActivatedGene;
+        this.clickedAnimalChildrenNo = clickedAnimalChildrenNo;
+        this.clickedAnimalLifespan = clickedAnimalLifespan;
+        this.clickedAnimalDeathDate = clickedAnimalDeathDate;
     }
 
 
@@ -82,14 +92,28 @@ public class SimulationMapListener implements IMapChangeListener { //TODO: 2 raz
 
     private void handleSquareClick(Vector2d position, MouseEvent event) {
         try{
-            Animal animal = (Animal) worldMap.getOccupantFrom(position);
+            Animal trackedAnimal = (Animal) worldMap.getOccupantFrom(position);
+            animalListener.setTrackedAnimal(trackedAnimal);
+            clickedAnimalEnergyNo.setText("  Number of energy: " + trackedAnimal.getEnergy()+"  ");
+            clickedAnimalGrassEatenNo.setText("  Grass eaten number: " + trackedAnimal.getEatenGrassNo()+"  ");
+            clickedAnimalGenome.setText("  Genome: " + Arrays.toString(trackedAnimal.getGenotype())+"  ");
+            clickedAnimalDescendantsNo.setText("  Number of descendants: " + (trackedAnimal.getSuccessorsNo())+"  ");
+            clickedAnimalChildrenNo.setText("  Number of children: " + trackedAnimal.getChildrenList().size()+"  ");
+            clickedAnimalActivatedGene.setText("  Activated gene: " + trackedAnimal.getGenotype()[trackedAnimal.getCurrentGenotypeIndex()]+"  ");
+            clickedAnimalLifespan.setText("  Age: " + trackedAnimal.getAge()+"  ");
+            if (trackedAnimal.isDeadAlready()) {
+                int deathDate = trackedAnimal.getSpawnDate() + trackedAnimal.getAge();
+                clickedAnimalDeathDate.setText("  Death date: " + deathDate + " day"+"  ");
+            } else {
+                clickedAnimalDeathDate.setText("");
+            }
             clickedAnimalHeader.setText("---- <Clicked Animal statistics> ----");
-            clickedAnimalEnergyNo.setText("Number of energy: "+animal.getEnergy());
-//            clickedAnimalGrassEatenNo.setText(String.valueOf(animal.));
-            clickedAnimalGenome.setText("Genome: "+Arrays.toString(animal.getGenotype()));
-            clickedAnimalDescendantsNo.setText("Number of descendants: "+(animal.getSuccessorsNo()));
-        } catch(ClassCastException | NullPointerException ignored){}
-
+        } catch(ClassCastException | NullPointerException a){
+            animalListener.setTrackedAnimal(null);
+        }
     }
 
+    public int getSquareSize() {
+        return squareSize;
+    }
 }
