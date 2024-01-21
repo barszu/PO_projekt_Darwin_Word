@@ -34,6 +34,12 @@ public class SimulationController {
     @FXML
     public Label clickedAnimalDescendantsNo;
     @FXML
+    public Label simulationFieldsWithoutAnimalsNoLabel;
+    @FXML
+    public Label simulationAvgLifeLabel;
+    @FXML
+    public Label simulationDeadNoLabel;
+    @FXML
     private Label simulationAverageEnergyLabel;
     @FXML
     private Label simulationTopGeneLabel;
@@ -87,6 +93,9 @@ public class SimulationController {
                 .setPlantsNoLabel(simulationGrassesNoLabel)
                 .setTopGeneLabel(simulationTopGeneLabel)
                 .setAvgEnergyLabel(simulationAverageEnergyLabel)
+                .setAvgLifeTimeLabel(simulationAvgLifeLabel)
+                .setDeadAnimalsNoLabel(simulationDeadNoLabel)
+                .setFieldsWithoutAnimalsNoLabel(simulationFieldsWithoutAnimalsNoLabel)
                 .build();
 
         worldMapSimulation.addListenerToMap(this.simulationStatsListener);

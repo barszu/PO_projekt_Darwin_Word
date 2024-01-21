@@ -32,32 +32,32 @@
                         <Label fx:id="simulationDayLabel"/>
                     </HBox>
                     <HBox>
-                        <Label text="Simulation Animals No: "/>
+                        <Label text="Animals No: "/>
                         <Label fx:id="simulationAnimalsNoLabel"/>
                     </HBox>
                     <HBox>
-                        <Label text="Simulation Grasses No: "/>
+                        <Label text="Grasses No: "/>
                         <Label fx:id="simulationGrassesNoLabel"/>
                     </HBox>
                     <HBox>
-                        <Label text="Simulation Average Energy: "/>
+                        <Label text="Average Energy: "/>
                         <Label fx:id="simulationAverageEnergyLabel"/>
                     </HBox>
                     <HBox>
-                        <Label text="Simulation Top Gene: "/>
-                        <Label fx:id="fieldsWithoutAnimalsNoLabel"/>
-                    </HBox>
-                    <HBox>
-                        <Label text="Simulation Top Gene: "/>
+                        <Label text="Top Gene: "/>
                         <Label fx:id="simulationTopGeneLabel"/>
                     </HBox>
                     <HBox>
-                        <Label text="Simulation Top Gene: "/>
-                        <Label fx:id="simulationTopGeneLabel"/>
+                        <Label text="Fields without Animals: "/>
+                        <Label fx:id="simulationFieldsWithoutAnimalsNoLabel"/>
                     </HBox>
                     <HBox>
-                        <Label text="Simulation Top Gene: "/>
-                        <Label fx:id="simulationTopGeneLabel"/>
+                        <Label text="Avg life time len: "/>
+                        <Label fx:id="simulationAvgLifeLabel"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Dead No: "/>
+                        <Label fx:id="simulationDeadNoLabel"/>
                     </HBox>
                 </VBox>
                 <VBox fx:id="animalStats">
