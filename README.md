@@ -7,3 +7,8 @@ Projekt z dodatkowymi elementami:
 Autorzy:
 Szymon Kubiczek
 Bartłomiej Szubiak
+
+Uruchomienie:
+1. poprzez magiczny terminal Itelij
+2. ./gradlew build |aby zbudowac| (ewentualnie) uruchomic zbudowany recznie projekt z uzyciem javy
+   (powinno dzialac :) )
