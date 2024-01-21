@@ -139,6 +139,7 @@ public class SimulationController {
     private void handleSquareClick(Vector2d position, MouseEvent event) {
         try{
             Animal trackedAnimal = (Animal) worldMapSimulation.getWorldMap().getOccupantFrom(position);
+            simulationAnimalStatsListener.setTrackedAnimal(trackedAnimal);
             clickedAnimalEnergyNo.setText("  Number of energy: " + trackedAnimal.getEnergy()+"  ");
             clickedAnimalgrassEatenN0.setText("  Grass eaten number: " + trackedAnimal.getEatenGrassNo()+"  ");
             clickedAnimalGenome.setText("  Genome: " + Arrays.toString(trackedAnimal.getGenotype())+"  ");
@@ -154,6 +155,7 @@ public class SimulationController {
             }
             clickedAnimalHeader.setText("---- <Clicked Animal statistics> ----");
         } catch(ClassCastException | NullPointerException a){
+            simulationAnimalStatsListener.setTrackedAnimal(null);
         }
     }
 

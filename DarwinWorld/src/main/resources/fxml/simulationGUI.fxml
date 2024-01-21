@@ -45,6 +45,18 @@
                     </HBox>
                     <HBox>
                         <Label text="Simulation Top Gene: "/>
+                        <Label fx:id="fieldsWithoutAnimalsNoLabel"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Simulation Top Gene: "/>
+                        <Label fx:id="simulationTopGeneLabel"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Simulation Top Gene: "/>
+                        <Label fx:id="simulationTopGeneLabel"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Simulation Top Gene: "/>
                         <Label fx:id="simulationTopGeneLabel"/>
                     </HBox>
                 </VBox>
