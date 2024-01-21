@@ -13,10 +13,12 @@
             fx:controller="project.frontend.controllers.ConfigLoaderController">
 
     <center>
-        <HBox>
+        <VBox fx:id="content2">
             <ChoiceBox fx:id="configChoiceBox" />
-            <Button fx:id="loadSelected" text="Load Config" onAction="#loadSelectedConfig"/>
-            <Button fx:id="deleteSelected" text="Delete Config" onAction="#deleteSelectedConfig"/>
-        </HBox>
+            <HBox fx:id="buttons2">
+                <Button fx:id="loadSelected" text="Load Config" onAction="#loadSelectedConfig"/>
+                <Button fx:id="deleteSelected" text="Delete Config" onAction="#deleteSelectedConfig"/>
+            </HBox>
+        </VBox>
     </center>
 </BorderPane>

@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import project.backend.backend.exceptions.OptionsValidateException;
 import project.backend.backend.extras.Random;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class HomeController{
 
+    public BorderPane rootPane;
     @FXML
     private TextField mapWidthField;
 

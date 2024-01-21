@@ -86,7 +86,15 @@ public class SimulationStatsListener implements IMapChangeListener {
                     Field simulationStatsField = simulationStats.getClass().getDeclaredField(labelName);
                     simulationStatsField.setAccessible(true);
 
-                    String text = simulationStatsField.get(simulationStats).toString();
+                    String text;
+                    if (simulationStatsField.getType().equals(double.class)) {
+                        double value = (double) simulationStatsField.get(simulationStats);
+                        text = String.format("%.2f", value);
+                    } else {
+                        text = simulationStatsField.get(simulationStats).toString();
+                    }
+
+//                    String text = simulationStatsField.get(simulationStats).toString();
                     label.setText(text);
 
                     simulationStatsField.setAccessible(false);
@@ -128,10 +136,5 @@ public class SimulationStatsListener implements IMapChangeListener {
     public List<SimulationStats> getSimulationStatsList() {
         return simulationStatsList;
     }
-
-    public void dupa(){
-        new SimulationStatsListener().toBuild().build();
-    }
-
 
 }

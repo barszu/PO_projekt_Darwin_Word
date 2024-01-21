@@ -33,3 +33,67 @@
 .step {
     -fx-fill: green;
 }
+
+#content {
+        -fx-background-image: url("/images/backgroundDark.gif");
+        -fx-background-size: cover;
+        -fx-background-position: center center;
+        -fx-background-repeat: no-repeat;
+        -fx-spacing: 10px;
+}
+
+#content2 {
+    -fx-background-image: url("/images/backgroundDarker.gif");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+#mapGrid {
+    -fx-padding: 15;
+}
+
+Button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+}
+
+Button:hover {
+    -fx-background-color: #45a049;
+}
+
+#buttons {
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+#buttons2 {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+Label {
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+
+#animalStats {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+#globalStats {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-padding: 5px;
+}
+
+#stats{
+    -fx-alignment: center;
+}
+
+#configChoiceBox .label{
+    -fx-text-fill: #4a4848;
+}
