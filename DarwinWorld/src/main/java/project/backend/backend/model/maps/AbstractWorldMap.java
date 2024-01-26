@@ -58,7 +58,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
 
     @Override
-    public void updateEverything(){
+    public void updateEverything(){ // nazwa
         recentlySlainedAnimals.clear();
 
         tryToRemoveAllDeadAnimals();
@@ -70,7 +70,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         placeGrasses(globalOptions.plantsPerDay());
     }
 
-    private void updateColors() {
+    private void updateColors() { // czy to robota dla mapy?
         for(int x=0; x<rectangleBox.width();x++){
             for(int y=0; y<rectangleBox.height();y++){
                 try {

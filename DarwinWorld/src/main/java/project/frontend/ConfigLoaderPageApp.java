@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class ConfigLoaderPageApp {
 
-    ConfigLoaderController configLoaderController;
+    ConfigLoaderController configLoaderController; // modyfikator dostępu?
 
     HomeController homeController;
 
