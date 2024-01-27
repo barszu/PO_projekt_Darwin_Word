@@ -17,7 +17,7 @@ public enum MapDirection {
     NORTH_WEST(7);
 
     // The id of the direction, starting from 0
-    private final int id;
+    private final int id; // enum ma metodę ordinal
 
     /**
      * The constructor for the MapDirection enum.
@@ -74,7 +74,7 @@ public enum MapDirection {
     public MapDirection previous(){
         int newId = this.id - 1;
         if (newId < 0) { newId += 8;}
-        return getById(Math.abs(newId));
+        return getById(Math.abs(newId)); // abs?
     }
 
     /**
@@ -83,7 +83,7 @@ public enum MapDirection {
      */
     public Vector2d toUnitVector() {
         return switch (this) {
-            case NORTH      -> new Vector2d(0, 1);
+            case NORTH      -> new Vector2d(0, 1);  // to by było warto załatwić parametrem konstruktora
             case NORTH_EAST -> new Vector2d(1, 1);
             case EAST       -> new Vector2d(1, 0);
             case SOUTH_EAST -> new Vector2d(1, -1);

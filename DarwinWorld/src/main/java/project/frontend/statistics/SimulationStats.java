@@ -1,4 +1,4 @@
-package project.frontend.statistics;
+package project.frontend.statistics;  // to na pewno frontend?
 
 public record SimulationStats(
         int day,

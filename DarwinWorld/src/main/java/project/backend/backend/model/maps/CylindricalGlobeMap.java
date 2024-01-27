@@ -20,7 +20,7 @@ public class CylindricalGlobeMap extends AbstractWorldMap{
             return newPosition;
         }
         if (! newPosition.hasYbetween(0,super.globalOptions.mapHeight()-1)){// y not in rectangle
-            return oldPosition;
+            return oldPosition; // a co z orientacją zwierzęcia?
         }
         int x = newPosition.getX();
         int y = newPosition.getY();

@@ -189,7 +189,7 @@ public class WaterMap extends AbstractWorldMap{
     }
 
     private Vector2d[] getNeighbors(Vector2d position){
-        Vector2d neighborAbove = new Vector2d(position.getX(), position.getY() + 1);
+        Vector2d neighborAbove = new Vector2d(position.getX(), position.getY() + 1); // position.add(MapDirection.NORTH.toUnitVector())
         Vector2d neighborBelow = new Vector2d(position.getX(), position.getY() - 1);
         Vector2d neighborLeft = new Vector2d(position.getX() - 1, position.getY());
         Vector2d neighborRight = new Vector2d(position.getX() + 1, position.getY());

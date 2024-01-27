@@ -100,8 +100,8 @@ public class SimulationStatsListener implements IMapChangeListener {
                     simulationStatsField.setAccessible(false);
                 }
                 field.setAccessible(false);
-            } catch (NullPointerException ignored){//field is null
-            } catch (Exception e){
+            } catch (NullPointerException ignored){//field is null // to chyba źle?
+            } catch (Exception e){ // ?
                 System.out.println("Error while updating labels -> " + e.getMessage());
             }
         }

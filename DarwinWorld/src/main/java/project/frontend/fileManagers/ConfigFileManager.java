@@ -40,7 +40,7 @@ public class ConfigFileManager {
             System.out.println("File not found (config.csv)");
             e.printStackTrace();
         } catch (Exception e) { //any other exception
-            e.printStackTrace();
+            e.printStackTrace(); // i można działać dalej?
         } finally {
             try {
                 reader.close();

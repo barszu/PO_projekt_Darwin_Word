@@ -16,7 +16,7 @@ public class MathUtils {
      * @param c The upper bound.
      * @return true if b is between a and c (inclusive), false otherwise.
      */
-    public static <N extends Number> boolean isBetween(N a, N b, N c){
+    public static <N extends Number> boolean isBetween(N a, N b, N c){ // niejasne które jest między pozosytałymi -> isBetween(number, lowerBpund, upperBound)
         return (a.doubleValue() <= b.doubleValue() && b.doubleValue() <= c.doubleValue());
     }
 

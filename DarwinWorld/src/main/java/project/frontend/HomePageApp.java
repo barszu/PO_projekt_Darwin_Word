@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class HomePageApp extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception { // ?
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("fxml/homeGUI.fxml"));
         BorderPane viewRoot = loader.load();

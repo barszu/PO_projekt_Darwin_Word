@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class SimulationApp{ //strikte zajmuje sie sprawa watkow i okienek
 
-    private final GlobalOptions G_OPTIONS;
+    private final GlobalOptions G_OPTIONS; // wielkie litery raczej dla stałych statycznych
     private final Simulation worldMapSimulation;
 
     public SimulationApp(GlobalOptions G_OPTIONS , int simulationId) {
