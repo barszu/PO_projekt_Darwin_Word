@@ -1,57 +1,53 @@
 ---
-# 🐾 Projekt: Darwinowska Symulacja Zwierząt na Mapie 🌍
+# 🐾 Project: Darwin's Animal Simulation on a Map 🌍
 ---
 
-### 📝 Opis:
+### 📝 Description:
 
-Projekt ten jest symulacją środowiska inspirowanego przez teorię Darwina, gdzie zwierzęta walczą o przetrwanie w dynamicznie zmieniającym się środowisku. Implementacja jest napisana w języku Java.
+This project is a simulation of an environment inspired by Darwin's theory, where animals fight for survival in a dynamically changing environment. The implementation is written in Java.
 
-### 📄 Polecenie projektu:
+### 📄 Project Assignment:
 
-Polecenie do projektu znajduje się [tutaj](https://github.com/Soamid/obiektowe-lab/tree/master/proj).
+The project assignment can be found [here](https://github.com/Soamid/obiektowe-lab/tree/master/proj).
 
-### 👨‍💻 Autorzy:
+### 👨‍💻 Authors:
 
-Projekt został opracowany przez następujące osoby:
+The project was developed by the following individuals:
 
-1. **Kubiczek Szymon**
+1. **Szymon Kubiczek**
 2. **Bartłomiej Szubiak**
 
-### 🛠️ Dodatkowe elementy:
+### 🛠️ Additional Features:
 
-Nasza grupa projektowa skupiła się na następujących elementach:
+Our project group focused on the following elements:
 
-1. Wodna Mapa
-2. Drobna Poprawka dla genów
+1. Water Map
+2. Minor Gene Improvement
 
-### 🖼️ Zdjęcia:
+### 🖼️ Images:
 
-Kilka przykładowych zdjęć z działania aplikacji
+Several sample images from the application's functionality
 
-![Przykładowe zdjęcie](docs/Load_config.png)
-![Przykładowe zdjęcie](docs/Menu.png)
-![Przykładowe zdjęcie](docs/Symulacja_water_map_2.png)
-![Przykładowe zdjęcie](docs/Symulacja_mała_mapa.png)
+![Sample Image](docs/Load_config.png)
+![Sample Image](docs/Menu.png)
+![Sample Image](docs/Symulacja_water_map_2.png)
+![Sample Image](docs/Symulacja_mała_mapa.png)
 
-### 🔧 Instrukcja instalacji:
+### 🔧 Installation Instructions:
 
-1. Sklonuj repozytorium na swój komputer:
+1. Clone the repository to your computer:
    ```
-   git clone link_do_repozytorium
+   git clone repository_link
    ```
-2. Otwórz projekt w środowisku programistycznym (np. IntelliJ IDEA, Eclipse).
-3. Uruchom aplikację.
+2. Open the project in a development environment (e.g., IntelliJ IDEA, Eclipse).
+3. Run the application.
 
-### 🧪 Funkcje:
+### 🧪 Features:
 
-- Losowe generowanie środowiska z różnymi opcjami startowymi.
-- Symulacja zachowań zwierząt.
-- Statystyki dotyczące populacji i dynamiki zmian.
-- Wizualizacja symulacji za pomocą prostego graficznego interfejsu użytkownika.
-- Konfigurowalne parametry środowiska i zachowań zwierząt.
-- Możliwość zapisania i wczytania ustawień
-- Możliwośc zapisania statystyk symulacji do pliku **csv**
-
-### Grupa Projektowa:
-
-gr pt 9:40 Zbigniew Kaleta
+- Random generation of the environment with various starting options.
+- Simulation of animal behaviors.
+- Population statistics and dynamics.
+- Visualization of the simulation using a simple graphical user interface.
+- Configurable environment parameters and animal behaviors.
+- Ability to save and load settings.
+- Ability to save simulation statistics to a **csv** file.
