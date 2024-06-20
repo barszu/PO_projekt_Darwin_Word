@@ -1,4 +1,4 @@
-package project.backend.backend.extras;
+package project.backend.backend.extras; // jak interpretować nazwę pakietu?
 
 import java.util.Objects;
 
